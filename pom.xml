@@ -3,4 +3,14 @@
   <groupId>com.qa</groupId>
   <artifactId>NB_Warehouse_SCALA</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <name>WOTSscala</name>
+  <dependencies>
+
+<dependency>
+	<groupId>org.scalafx</groupId>
+	<artifactId>scalafx_2.11</artifactId>
+	<version>8.0.60-R9</version>
+</dependency>
+
+	</dependencies>
 </project>
