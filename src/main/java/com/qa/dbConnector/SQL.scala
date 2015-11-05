@@ -19,11 +19,11 @@ class SQL {
     def openSQLCon:Unit = {
       try { 
         val datasource = new MysqlDataSource()
-          datasource.setDatabaseName("nbgardensdata")
-          datasource.setUser("root")
-          datasource.setPassword("root")
-          datasource.setServerName("localhost")
-          conn=datasource.getConnection
+          datasource setDatabaseName("nbgardensdata")
+          datasource setUser("root")
+          datasource setPassword("root")
+          datasource setServerName("localhost")
+          conn=datasource getConnection
           }catch {
             case e: Exception=> println("Error Connecting to SQL Database")
           }

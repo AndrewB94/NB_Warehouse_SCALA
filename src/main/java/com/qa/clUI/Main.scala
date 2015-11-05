@@ -12,23 +12,13 @@ object Main {
   var col: CustomerOrderLogic = new CustomerOrderLogic
 
   def printGrid(grid: Array[Array[String]]): Unit = {
-    var currentX: Int = 0
-    var currentY: Int = 0
-    def printer {
-      if (currentX == grid.length) {
-        currentX = 0
-        currentY = currentY + 1
-        println(".")
-      } else if (currentX != 0) {
-        print(", ")
+  for (row <- 0 to grid.length-1) {
+      for (col <- 0 to grid(0).length-1) {
+        print(" " + grid(row)(col))
       }
-      if (currentY != grid.length) {
-        print(grid(currentX)(currentY))
-        currentX.+=(1)
-        printer
-      }
+      println(".")
     }
-    printer
+    
   }
 
   def printPurchaseOrders: Unit = {
@@ -43,7 +33,7 @@ object Main {
 
   def main(args: Array[String]) {
 //    printCustomerOrders
-//    printPurchaseOrders
-      val sss = new SQL().openSQLCon
+    printPurchaseOrders
+    
   }
 }
