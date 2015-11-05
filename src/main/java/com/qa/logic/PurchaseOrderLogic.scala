@@ -13,12 +13,12 @@ class PurchaseOrderLogic {
   
   def fetchAllPurchaseOrders: Array[Array[String]] = {
     var poS:ArrayBuffer[PurchaseOrder] = poL getAllPurchaseOrders
-    val purchaseOrders: Array[Array[String]] = Array.ofDim[String](poS size,2)
+    val purchaseOrders: Array[Array[String]] = Array.ofDim[String](poS size,3)
     val currentPO:PurchaseOrder = poS(0)
     purchaseOrders(0)(0) = ""+currentPO.idPurchaseOrder
     purchaseOrders(0)(1) = ""+currentPO.purchaseOrderStatus
-//    purchaseOrders(0)(1) = "2"
-//    purchaseOrders(1)(1) = "Avaliable"      
+    purchaseOrders(0)(2) = ""+currentPO.supplier
+ 
     purchaseOrders
   }
 }

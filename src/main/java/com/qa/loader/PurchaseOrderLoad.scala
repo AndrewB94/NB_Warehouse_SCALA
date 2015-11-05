@@ -22,7 +22,8 @@ class PurchaseOrderLoad {
         if (rs.next) {
           val pOS: Int = rs getInt ("idPurchaseOrderStatus")
           val pOSS:String = getPurchaseOrderStatusByID(pOS)
-          val supplier: Int = rs getInt ("idSupplier")
+          val supplier:Int = rs getInt ("idSupplier")
+          val supplierS:String = getSupplierByID(supplier)
           var pO: PurchaseOrder = new PurchaseOrder(pOSS, supplier);
           pO datePlaced = rs getDate ("purchaseorder.datePlaced")
           pO employee = rs getInt ("idEmployee")
@@ -54,7 +55,7 @@ class PurchaseOrderLoad {
   }
 
   def getPurchaseOrderStatusByID(id:Int): String  ={
-       val sql: String = "SELECT * FROM nbgardensdata.purchaseorderstatus where idPurchaseOrderStatus ="+id+";"
+       val sql: String = "SELECT * FROM nbgardensdata.purchaseorderstatus WHERE idPurchaseOrderStatus ="+id+";"
        var pOS: String = null
     try {
       connector openSQLCon
@@ -72,6 +73,27 @@ class PurchaseOrderLoad {
       connector closeSQLCon
     }
     pOS
+  }
+  
+   def getSupplierByID(id:Int): String  ={
+       val sql: String = "SELECT * FROM nbgardensdata.supplier WHERE idSupplier ="+id+";"
+       var s: String = null
+    try {
+      connector openSQLCon
+      val rs: ResultSet = connector querySQLDB (sql)
+      def scanResultSet: Unit = {
+        if (rs.next) {
+          s = rs getString("supplierName")
+        }
+      }
+      scanResultSet
+      rs.close
+    } catch {
+      case e: Exception => println("Error Executing Supplier Name Query")
+    } finally {
+      connector closeSQLCon
+    }
+    s
   }
   
 }
