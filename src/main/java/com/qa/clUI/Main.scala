@@ -8,7 +8,7 @@ import com.qa.dbConnector.SQL
  * @author abutcher
  */
 object Main {
-  var pol: PurchaseOrderLogic = new PurchaseOrderLogic
+//  var pol: PurchaseOrderLogic = new PurchaseOrderLogic
   var col: CustomerOrderLogic = new CustomerOrderLogic
 
   def printGrid(grid: Array[Array[String]]): Unit = {
@@ -23,7 +23,7 @@ object Main {
 
   def printPurchaseOrders: Unit = {
     println("=====PURCHASE ORDERS=====")
-    printGrid(pol fetchAllPurchaseOrders)
+//    printGrid(pol fetchAllPurchaseOrders)
   }
 
   def printCustomerOrders: Unit = {

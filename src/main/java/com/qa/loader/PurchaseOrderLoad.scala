@@ -3,14 +3,14 @@ package com.qa.loader
 import com.qa.dbConnector.SQL
 import com.qa.Entities.PurchaseOrder
 import java.sql.ResultSet
-import scala.collection.mutable.ArrayBuffer
+import scalafx.collections.ObservableBuffer
 
 /**
  * @author abutcher
  */
 class PurchaseOrderLoad {
   var connector: SQL = new SQL
-  var purchaseOrderList: ArrayBuffer[PurchaseOrder] = new ArrayBuffer[PurchaseOrder]
+  var purchaseOrderList: ObservableBuffer[PurchaseOrder] = new ObservableBuffer[PurchaseOrder]
 
   def constructResults(sql: String) = {
 
@@ -24,11 +24,11 @@ class PurchaseOrderLoad {
           val pOSS:String = getPurchaseOrderStatusByID(pOS)
           val supplier:Int = rs getInt ("idSupplier")
           val supplierS:String = getSupplierByID(supplier)
-          var pO: PurchaseOrder = new PurchaseOrder(pOSS, supplier);
-          pO datePlaced = rs getDate ("purchaseorder.datePlaced")
-          pO employee = rs getInt ("idEmployee")
-          pO idPurchaseOrder = rs getInt ("purchaseorder.idPurchaseOrder")
-          pO dateExpected = rs getDate ("purchaseorder.dateExpected")
+          val datePlaced = rs getDate ("purchaseorder.datePlaced")
+          val employee = rs getInt ("idEmployee")
+          val id = rs getInt ("purchaseorder.idPurchaseOrder")
+          val dateExpected = rs getDate ("purchaseorder.dateExpected")
+          var pO: PurchaseOrder = new PurchaseOrder(pOSS, supplierS, 1L, id, datePlaced, dateExpected, employee);
           purchaseOrderList += pO
           scanResultSet
         }
@@ -42,13 +42,13 @@ class PurchaseOrderLoad {
     }
   }
 
-  def getAllPurchaseOrders: ArrayBuffer[PurchaseOrder] = {
+  def getAllPurchaseOrders: ObservableBuffer[PurchaseOrder] = {
     val sql: String = "SELECT * FROM nbgardensdata.purchaseorder;"
     constructResults(sql)
     purchaseOrderList
   }
 
-  def getPurchaseOrderByID(id: Int): ArrayBuffer[PurchaseOrder] = {
+  def getPurchaseOrderByID(id: Int): ObservableBuffer[PurchaseOrder] = {
     val sql: String = "SELECT * FROM nbgardensdata.purchaseorder WHERE nbgardensdata.purchaseorder.idpurchaseorder ="+id+";"
     constructResults(sql)
     purchaseOrderList
@@ -84,6 +84,7 @@ class PurchaseOrderLoad {
       def scanResultSet: Unit = {
         if (rs.next) {
           s = rs getString("supplierName")
+          println (s)
         }
       }
       scanResultSet

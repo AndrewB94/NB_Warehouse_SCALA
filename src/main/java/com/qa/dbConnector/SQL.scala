@@ -5,6 +5,8 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource
 
 /**
  * @author abutcher
+ * @date 04/11/2015
+ * A class used to connect to the SQL database
  */
 class SQL {
       
@@ -43,12 +45,21 @@ class SQL {
       }
     }
     
+    /**
+     * @author abutcher
+     * Function to query the SQL Database
+     * @param sql the string of SQL to execute
+     */
     def querySQLDB(sql:String):ResultSet  =  {
       stmt =  conn createStatement
       val rs:ResultSet = stmt executeQuery(sql)
       rs
     }
-    
+    /**
+     * @author abutcher
+     * Function to update the SQL database
+     * @param sql the string of SQL to execute
+     */
     def updateSQLDB(sql:String):Unit = {
       stmt = conn createStatement()
       stmt executeUpdate(sql)
