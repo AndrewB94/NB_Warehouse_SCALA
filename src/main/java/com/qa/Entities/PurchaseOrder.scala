@@ -7,8 +7,9 @@ import scalafx.beans.property.IntegerProperty
 /**
  * @author abutcher
  */
-class PurchaseOrder(purchaseOrderStatus_ :String, supplier_ :String, serialVersionUID:Long, idPurchaseOrder_ :Int, datePlaced:Date,dateExpected:Date,  employee:Int) {  
+class PurchaseOrder(purchaseOrderStatus_ :String, supplier_ :String, serialVersionUID:Long, idPurchaseOrder_ :Int, datePlaced_ :Date,dateExpected:Date,  employee:Int) {  
   val status = new StringProperty(this, "Status", purchaseOrderStatus_)
   val id = new StringProperty(this, "ID",""+ idPurchaseOrder_)
   val supplier = new StringProperty(this, "Supplier", supplier_)
+  val datePlaced = new StringProperty(this, "datePlaced", datePlaced_.toString)
 }

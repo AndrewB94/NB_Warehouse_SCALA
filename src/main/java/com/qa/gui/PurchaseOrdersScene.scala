@@ -15,26 +15,40 @@ import com.qa.Entities.PurchaseOrder
 class PurchaseOrdersScene {
   val pol: PurchaseOrderLoad = new PurchaseOrderLoad
 
+  /**
+   * Function that returns a scene containing a table of purchase orders
+   * @return Scene for use in main frame
+   */
   def getScene: Scene  ={   
-    val orders = pol.getAllPurchaseOrders  
-    var scene = new Scene {
-      content = new TableView[PurchaseOrder](orders) {
-        columns ++= List(
-          new TableColumn[PurchaseOrder, String] {
+    val orders = pol.getAllPurchaseOrders
+    
+    //
+    var idColumn = new TableColumn [PurchaseOrder, String] {
             text = "ID"
             cellValueFactory = { _.value.id }
             prefWidth = 100
-          },
-          new TableColumn[PurchaseOrder, String]() {
+          }
+    
+    var statusCollumn = new TableColumn[PurchaseOrder, String]() {
             text = "Status"
             cellValueFactory = { _.value.status }
             prefWidth = 100
-          },
-          new TableColumn[PurchaseOrder, String] {
+          }
+    
+    var supplierCollumn = new TableColumn[PurchaseOrder, String] {
             text = "Supplier"
             cellValueFactory = { _.value.supplier }
             prefWidth = 100
-          })
+    }
+    
+      var datePlacedCollumn = new TableColumn[PurchaseOrder, String] {
+            text = "Date Placed"
+            cellValueFactory = { _.value.datePlaced }
+            prefWidth = 100
+    }
+    var scene = new Scene {
+      content = new TableView[PurchaseOrder](orders) {
+        columns ++= List(idColumn, statusCollumn,supplierCollumn, datePlacedCollumn)
       }
     }
     scene
