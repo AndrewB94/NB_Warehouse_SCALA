@@ -1,6 +1,5 @@
 package com.qa.clUI
 
-import com.qa.logic._
 import com.qa.loader._
 import com.qa.dbConnector.SQL
 
@@ -9,7 +8,7 @@ import com.qa.dbConnector.SQL
  */
 object Main {
 //  var pol: PurchaseOrderLogic = new PurchaseOrderLogic
-  var col: CustomerOrderLogic = new CustomerOrderLogic
+//  var col: CustomerOrderLogic = new CustomerOrderLogic
 
   def printGrid(grid: Array[Array[String]]): Unit = {
   for (row <- 0 to grid.length-1) {
@@ -28,7 +27,7 @@ object Main {
 
   def printCustomerOrders: Unit = {
     println("=====CUSTOMER ORDERS=====")
-    printGrid(col fetchAllCustomerOrders)
+//    printGrid(col fetchAllCustomerOrders)
   }
 
   def main(args: Array[String]) {
