@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * @author abutcher
  */
-case class PurchaseOrder( var purchaseOrderStatus:Int, var supplier:Int) {
+case class PurchaseOrder( var purchaseOrderStatus:String, var supplier:Int) {
    val serialVersionUID:Long  = 1L
    var idPurchaseOrder:Int = 0
    var datePlaced:Date = null

@@ -21,8 +21,9 @@ class PurchaseOrderLoad {
       def scanResultSet: Unit = {
         if (rs.next) {
           val pOS: Int = rs getInt ("idPurchaseOrderStatus")
+          val pOSS:String = getPurchaseOrderStatusByID(pOS)
           val supplier: Int = rs getInt ("idSupplier")
-          var pO: PurchaseOrder = new PurchaseOrder(pOS, supplier);
+          var pO: PurchaseOrder = new PurchaseOrder(pOSS, supplier);
           pO datePlaced = rs getDate ("purchaseorder.datePlaced")
           pO employee = rs getInt ("idEmployee")
           pO idPurchaseOrder = rs getInt ("purchaseorder.idPurchaseOrder")
@@ -53,7 +54,7 @@ class PurchaseOrderLoad {
   }
 
   def getPurchaseOrderStatusByID(id:Int): String  ={
-       val sql: String = "SELECT * FROM nbgardensdata.purchaseorderstate WHERE nbgardensdata.purchaseorder.idpurchaseorderstate ="+id+";"
+       val sql: String = "SELECT * FROM nbgardensdata.purchaseorderstatus where idPurchaseOrderStatus ="+id+";"
        var pOS: String = null
     try {
       connector openSQLCon
@@ -66,7 +67,7 @@ class PurchaseOrderLoad {
       scanResultSet
       rs.close
     } catch {
-      case e: Exception => println("Error Executing Query")
+      case e: Exception => println("Error Executing Status Query")
     } finally {
       connector closeSQLCon
     }
