@@ -1,19 +1,13 @@
 package com.qa.dbConnector
 
 import java.sql._
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource
 
 /**
  * @author abutcher
  */
 class SQL {
-  
-    val ip:String = "localhost"
-    val databaseURL:String = "jdbc:mysql//" + ip + ":3306/nbgardensdata"
-    val userName:String = "root"
-    val password:String = "root"
-    val driver:String = "com.mysql.jdbc.Driver"
-
-    
+      
     var conn:Connection = null
     var stmt:Statement = null
     var pstmt:PreparedStatement = null
@@ -23,14 +17,16 @@ class SQL {
      * Function to open a connection to the SQL database
      */
     def openSQLCon:Unit = {
-//      try {
-//        conn = DriverManager getConnection(databaseURL, userName, passwaord)
-//      } catch {
-//        case e: Exception=> println("Error Connecting to SQL Database")
-//      }
-      
-      Class.forName("com.mysql.jdbc.Driver");
-      conn = DriverManager.getConnection(databaseURL,userName, password);
+      try { 
+        val datasource = new MysqlDataSource()
+          datasource.setDatabaseName("nbgardensdata")
+          datasource.setUser("root")
+          datasource.setPassword("root")
+          datasource.setServerName("localhost")
+          conn=datasource.getConnection
+          }catch {
+            case e: Exception=> println("Error Connecting to SQL Database")
+          }
     }
 
     
@@ -43,7 +39,7 @@ class SQL {
         if (stmt != null)
           conn close()
       } catch {
-         case e: Exception=> println("Error Connecting to SQL Database")
+         case e: Exception=> println("Error closing connection to SQL Database")
       }
     }
     

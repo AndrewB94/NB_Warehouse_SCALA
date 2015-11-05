@@ -1,6 +1,8 @@
 package com.qa.clUI
 
 import com.qa.logic._
+import com.qa.loader._
+import com.qa.dbConnector.SQL
 
 /**
  * @author abutcher
@@ -40,7 +42,8 @@ object Main {
   }
 
   def main(args: Array[String]) {
-    printCustomerOrders
-    printPurchaseOrders
+//    printCustomerOrders
+//    printPurchaseOrders
+      val sss = new SQL().openSQLCon
   }
 }
