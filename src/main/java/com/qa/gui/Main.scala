@@ -12,7 +12,7 @@ import scalafx.scene.Scene
  * An object that creates a frame that scenes are passed into
  */
 object Main extends JFXApp {
-    var poScene: PurchaseOrdersScene = new PurchaseOrdersScene
+    var poScene: CustomerOrdersScene = new CustomerOrdersScene
     stage = new PrimaryStage {
       title = "NB Gardens - Warehouse Order Tracking System"
       scene = poScene.getScene

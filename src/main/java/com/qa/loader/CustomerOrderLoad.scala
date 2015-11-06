@@ -21,14 +21,14 @@ class CustomerOrderLoad {
       val rs: ResultSet = connector querySQLDB (sql)
       def scanResultSet: Unit = {
         if (rs.next) {
-          val cOS= rs.getInt("idCustomerOrderStatus")
-          val cOID = rs.getInt("idCustomerOrder")
-          val datePlaced = rs.getDate("datePlaced")
-          val dateShipped = rs.getDate("dateShipped")
-          val isPaid = rs.getBoolean("isPaid")
-          val idAddress = rs.getInt("idAddress")
-          val idEmployee = rs.getInt("idEmployee")
-          val idCistomer = rs.getInt("idCustomer")
+          val cOS= rs getInt("idCustomerOrderStatus")
+          val cOID = rs getInt("idCustomerOrder")
+          val datePlaced = rs getDate("datePlaced")
+          val dateShipped = rs getDate("dateShipped")
+          val isPaid = rs getBoolean("isPaid")
+          val idAddress = rs getInt("idAddress")
+          val idEmployee = rs getInt("idEmployee")
+          val idCistomer = rs getInt("idCustomer")
           var cO: CustomerOrder = new CustomerOrder(""+cOS, datePlaced, cOID, idEmployee, isPaid, idAddress, 1L,cOID, dateShipped) 
           customerOrderList += cO
           scanResultSet
