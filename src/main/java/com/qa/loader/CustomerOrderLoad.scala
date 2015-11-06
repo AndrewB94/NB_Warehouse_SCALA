@@ -22,6 +22,7 @@ class CustomerOrderLoad {
       def scanResultSet: Unit = {
         if (rs.next) {
           val cOS= rs getInt("idCustomerOrderStatus")
+          val cOSS = getCustomerOrderStatusByID(cOS)
           val cOID = rs getInt("idCustomerOrder")
           val datePlaced = rs getDate("datePlaced")
           val dateShipped = rs getDate("dateShipped")
@@ -29,7 +30,8 @@ class CustomerOrderLoad {
           val idAddress = rs getInt("idAddress")
           val idEmployee = rs getInt("idEmployee")
           val idCistomer = rs getInt("idCustomer")
-          var cO: CustomerOrder = new CustomerOrder(""+cOS, datePlaced, cOID, idEmployee, isPaid, idAddress, 1L,cOID, dateShipped) 
+          val customer = getUserByID(idCistomer)
+          var cO: CustomerOrder = new CustomerOrder(cOSS, datePlaced, customer, idEmployee, isPaid, idAddress, 1L,cOID, dateShipped) 
           customerOrderList += cO
           scanResultSet
         }
@@ -49,6 +51,50 @@ class CustomerOrderLoad {
     customerOrderList
   }
   
+   def getCustomerOrderStatusByID(id:Int): String  ={
+       val sql: String = "SELECT * FROM nbgardensdata.customerorderstatus WHERE idCustomerOrderStatus ="+id+";"
+       var cOS: String = null
+    try {
+      connector openSQLCon
+      val rs: ResultSet = connector querySQLDB (sql)
+      def scanResultSet: Unit = {
+        if (rs.next) {
+          cOS = rs getString("status")
+        }
+      }
+      scanResultSet
+      rs.close
+    } catch {
+      case e: Exception => println("Error Executing Status Query")
+    } finally {
+      connector closeSQLCon
+    }
+    cOS
+  }
   
-  
+     def getUserByID(id:Int): String  ={
+       print(id)
+       val sql: String = "SELECT * FROM nbgardensdata.user WHERE idUser ="+id+";"
+       var user: String = null
+    try {
+      connector openSQLCon
+      val rs: ResultSet = connector querySQLDB (sql)
+      def scanResultSet: Unit = {
+        if (rs.next) {
+          user = rs getString("forename")
+          user = user .+(" ")
+          user = user .+(rs getString("surname"))
+        }
+      }
+      scanResultSet
+      rs.close
+    } catch {
+      case e: Exception => println("Error Executing Status Query")
+    } finally {
+      connector closeSQLCon
+    }
+    print (user)
+    user
+  }
+   
 }

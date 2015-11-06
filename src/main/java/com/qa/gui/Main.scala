@@ -1,5 +1,4 @@
-
-package com.qa.gui
+ package com.qa.gui
 
 import com.qa.gui._
 import scalafx.application.JFXApp
@@ -15,6 +14,6 @@ object Main extends JFXApp {
     var poScene: CustomerOrdersScene = new CustomerOrdersScene
     stage = new PrimaryStage {
       title = "NB Gardens - Warehouse Order Tracking System"
-      scene = poScene.getScene
+      scene = poScene getScene
     }
 }
