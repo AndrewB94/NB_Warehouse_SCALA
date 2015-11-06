@@ -73,7 +73,6 @@ class CustomerOrderLoad {
   }
   
      def getUserByID(id:Int): String  ={
-       print(id)
        val sql: String = "SELECT * FROM nbgardensdata.user WHERE idUser ="+id+";"
        var user: String = null
     try {
@@ -93,8 +92,19 @@ class CustomerOrderLoad {
     } finally {
       connector closeSQLCon
     }
-    print (user)
     user
   }
    
+     def updateState(orderID:Int, statusID:Int) = {
+       val sql:String = "UPDATE `nbgardensdata`.`customerorder` SET `idCustomerOrderStatus`='"+statusID+"' WHERE `idCustomerOrder`='"+orderID+"';"
+       try {   
+         connector.openSQLCon
+         connector updateSQLDB(sql)
+       }catch {
+      case e: Exception => println("Error Executing Status Query")
+    } finally {
+      connector closeSQLCon
+    }
+     }
+     
 }

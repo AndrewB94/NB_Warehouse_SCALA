@@ -22,18 +22,17 @@ class PurchaseOrdersScene {
   def getScene: Scene  ={   
     val orders = pol.getAllPurchaseOrders
     
-    //
     var idColumn = new TableColumn [PurchaseOrder, String] {
             text = "ID"
             cellValueFactory = { _.value id }
             prefWidth = 100
-          }
+    }
     
     var statusCollumn = new TableColumn[PurchaseOrder, String]() {
             text = "Status"
             cellValueFactory = { _.value status }
             prefWidth = 100
-          }
+    }
     
     var supplierCollumn = new TableColumn[PurchaseOrder, String] {
             text = "Supplier"
@@ -46,7 +45,7 @@ class PurchaseOrdersScene {
             cellValueFactory = { _.value datePlaced }
             prefWidth = 100
     }
-    var scene = new Scene {
+     var scene:Scene = new Scene{
       content = new TableView[PurchaseOrder](orders) {
         columns ++= List(idColumn, statusCollumn,supplierCollumn, datePlacedCollumn)
       }
