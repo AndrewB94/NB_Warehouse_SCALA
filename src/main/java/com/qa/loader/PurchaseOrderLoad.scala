@@ -84,7 +84,6 @@ class PurchaseOrderLoad {
       def scanResultSet: Unit = {
         if (rs.next) {
           s = rs getString("supplierName")
-          println (s)
         }
       }
       scanResultSet

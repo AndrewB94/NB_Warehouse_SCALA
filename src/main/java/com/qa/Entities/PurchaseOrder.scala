@@ -1,8 +1,7 @@
 package com.qa.Entities
 
 import java.util.Date;
-import scalafx.beans.property.{DoubleProperty, StringProperty}
-import scalafx.beans.property.IntegerProperty
+import scalafx.beans.property.StringProperty
 
 /**
  * @author abutcher
