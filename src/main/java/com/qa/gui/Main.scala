@@ -7,13 +7,10 @@ import com.qa.logic.EncryptPassword
 
 /**
  * @author abutcher
- * 05/11/2015
- * An object that creates a frame that scenes are passed into
+ * @date 05/11/2015
+ * An object that creates a frame that stages are passed into
  */
 object Main extends JFXApp {
-
-   stage = new PrimaryStage()
+  stage = new PrimaryStage()
   val LoginStage = new LoginStage(stage)
-
-   
 }

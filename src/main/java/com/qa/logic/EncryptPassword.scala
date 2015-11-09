@@ -1,3 +1,4 @@
+
 package com.qa.logic
 
 import java.io.UnsupportedEncodingException
@@ -9,48 +10,48 @@ import java.lang.Byte
 
 /**
  * @author abutcher
+ * @date 09/11/201
+ * class to encrypt passwords
  */
 class EncryptPassword {
-  var crypt: MessageDigest  = null;
-  
-  def EncryptPassword() {
-    
-  }
+  var crypt: MessageDigest = null;
 
   /**
-   *
-   * Method to convert a given string into SHA1 for comparison against SHA1 password stored in MySQL database
-   *
+   * Function to convert a given string into SHA1 for comparison against SHA1 password stored in MySQL database
    * @param passwordString: Takes on a string to convert into SHA1
    * @return returns string encrypted in SHA1
    */
-  def checkSHA1(passwordString:String):String  ={
-    
+  def checkSHA1(passwordString: String): String = {
+
     try {
       crypt = MessageDigest.getInstance("SHA1");
-     } catch {
-         case e: Exception=> println("Error")
-      }
+    } catch {
+      case e: Exception => println("Error")
+    }
     crypt.reset();
     try {
       crypt.update(passwordString.getBytes("UTF-8"));
     } catch {
-         case e: Exception=> println("Error")
-      }
-    var sha1:String  = byteToHex(crypt.digest());
-    
+      case e: Exception => println("Error")
+    }
+    var sha1: String = byteToHex(crypt.digest());
+
     return sha1;
   }
-  
-def  byteToHex( hash:Array[scala.Byte] ):String  ={
-   val formatter:Formatter  = new Formatter()
-    
-   
-    for(b <- hash) {
-      formatter format("%02x", b.asInstanceOf[Object])
+
+  /**
+   * function to turn an array of bytes into hexidecimal format
+   * @param Arra[scala.Byte] the array to be converted
+   * @return result the result of the conversion as a string
+   */
+  def byteToHex(hash: Array[scala.Byte]): String = {
+    val formatter: Formatter = new Formatter()
+
+    for (b <- hash) {
+      formatter format ("%02x", b.asInstanceOf[Object])
     }
-    val result:String  = formatter.toString()
+    val result: String = formatter.toString()
     formatter.close()
-     result
+    result
   }
 }

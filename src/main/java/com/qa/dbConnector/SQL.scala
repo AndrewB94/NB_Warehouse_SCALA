@@ -34,7 +34,7 @@ class SQL {
     
    /**
      * @author abutcher
-     * Function to close a connection to the SQL database
+     * Function to close the connection to the SQL database
      */
     def closeSQLCon:Unit = {
       try {
@@ -49,12 +49,14 @@ class SQL {
      * @author abutcher
      * Function to query the SQL Database
      * @param sql the string of SQL to execute
+     * @return resultSet recieved from the SQL 
      */
     def querySQLDB(sql:String):ResultSet  =  {
       stmt =  conn createStatement
       val rs:ResultSet = stmt executeQuery(sql)
       rs
     }
+    
     /**
      * @author abutcher
      * Function to update the SQL database

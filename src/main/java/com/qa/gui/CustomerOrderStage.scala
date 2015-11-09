@@ -17,19 +17,27 @@ import scalafx.scene.Node
 
 /**
  * @author abutcher
+ * @date 09/11/2015
+ * class thatcreates a node contains a table of customer orders
  */
 class CustomerOrderStage(stage: PrimaryStage) {
 
+  /**
+   * function that creates a node containning the content
+   * @retgurn Node the node containning the customer orders table
+   */
   def createPane: Node = {
+    /**
+     * Initialize values / variables
+     */
     val col: CustomerOrderLoad = new CustomerOrderLoad
     val orders = col.getAllCustomerOrders
-    val label: Label = new Label("Customer Orders");
-    val button:Button = new Button("Purchase Orders")
-    var table = new TableView[CustomerOrder](orders)
-
-    button.onAction = { ae: ActionEvent => new PurchaseOrderStage(stage)}
+    val label: Label = new Label("Customer Orders")
+    var table = new TableView[CustomerOrder](orders)    
     
-    //
+    /**
+     * set up table collumns
+     */
     var idColumn = new TableColumn[CustomerOrder, String] {
       text = "ID"
       cellValueFactory = { _.value id }
@@ -53,6 +61,10 @@ class CustomerOrderStage(stage: PrimaryStage) {
       cellValueFactory = { _.value datePlaced }
       prefWidth = 100
     }
+    
+    /**
+     * Create table and add collumns to it
+     */
     table = new TableView[CustomerOrder](orders) {
       columns ++= List(idColumn, statusCollumn, customerCollumn, datePlacedCollumn)
     }

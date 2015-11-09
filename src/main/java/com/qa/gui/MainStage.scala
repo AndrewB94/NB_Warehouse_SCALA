@@ -15,8 +15,12 @@ import scalafx.scene.paint.Color
 
 /**
  * @author abutcher
+ * Class that surrounds the content
  */
 class MainStage(stage: PrimaryStage) {  
+  /**
+   * initialize values
+   */
   val titleS:String = "NB Gardens - Warehouse Order Tracking System - "
   stage.setTitle(titleS+ "Purchase Orders")
   val label: Label = new Label("Purchase Orders")
@@ -26,10 +30,16 @@ class MainStage(stage: PrimaryStage) {
   val coB: Button = new Button("Customer Orders")
   val logOB:Button = new Button("Logout")
 
+  /**
+   * Initialize the sidebar 
+   */
   val sideBar:VBox = new VBox
     sideBar.setPadding(new Insets(10));
     sideBar.setSpacing(8);
   
+    /**
+     * set up action events for buttons
+     */
   poB.onAction = { ae: ActionEvent => 
     stage.setTitle(titleS + "Purchase Orders")
     label.setText("Purchase Orders")
@@ -41,10 +51,16 @@ class MainStage(stage: PrimaryStage) {
   
   logOB.onAction={ae: ActionEvent => new LoginStage(stage)}
   
+  /**
+   * add buttons to side bar
+   */
   sideBar.children add(poB)
   sideBar.children add(coB)
   sideBar.children add(logOB)
   
+  /**
+   * function that stores all the components in a scene
+   */
   def createScene: Scene = {
 
     var scene: Scene = new Scene {
@@ -56,5 +72,8 @@ class MainStage(stage: PrimaryStage) {
     scene
   }
 
+  /**
+   * set the main scene
+   */
   stage.setScene(createScene)
 }
