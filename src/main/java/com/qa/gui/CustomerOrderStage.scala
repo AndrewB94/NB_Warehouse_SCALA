@@ -1,30 +1,20 @@
 package com.qa.gui
 
-import com.qa.loader.CustomerOrderLoad
-import scalafx.collections.ObservableBuffer
+import scalafx.application.JFXApp.PrimaryStage
 import scalafx.scene.Scene
-import scalafx.scene.control.TableColumn._
-import scalafx.scene.control.{ TableCell, TableColumn, TableView }
-import scalafx.scene.paint.Color
-import scalafx.scene.shape.Circle
+import com.qa.loader.CustomerOrderLoad
 import com.qa.Entities.CustomerOrder
 import scalafx.scene.control.Label
-import scalafx.scene.layout.VBox
-import javafx.geometry.Insets
-import scalafx.scene.Parent
-import scalafx.scene.layout.Border
+import scalafx.scene.control.TableView
+import scalafx.scene.control.TableColumn
 
 /**
  * @author abutcher
  */
-class CustomerOrdersScene {
-  val col: CustomerOrderLoad = new CustomerOrderLoad
-
-  /**
-   * Function that returns a scene containing a table of purchase orders
-   * @return Scene for use in main frame
-   */
-  def getScene:Scene = {
+class CustomerOrderStage(stage:PrimaryStage) {
+  stage.setTitle("Customer Orders")
+  
+  def createScene:Scene = {
     val col: CustomerOrderLoad = new CustomerOrderLoad
     
      val orders = col.getAllCustomerOrders
@@ -62,4 +52,6 @@ class CustomerOrdersScene {
     }
     scene
   }
+  
+   stage.setScene(createScene)
 }

@@ -6,6 +6,8 @@ import scalafx.application.JFXApp.PrimaryStage
 import scalafx.scene.Scene
 import scalafx.scene.control._
 import scalafx.scene.shape.Rectangle
+import scalafx.scene.Group
+import scalafx.scene.text.Text;
 
 /**
  * @author abutcher
@@ -16,8 +18,8 @@ object Main extends JFXApp {
   var poScene: PurchaseOrdersScene = new PurchaseOrdersScene
   var coScene: CustomerOrdersScene = new CustomerOrdersScene
 
-  stage = new PrimaryStage {
-    title = "NB Gardens - Warehouse Order Tracking System"
-    scene = poScene.getScene
-  }
+   stage = new PrimaryStage()
+  val CustomerOrderStage = new CustomerOrderStage(stage)
+
+
 }
