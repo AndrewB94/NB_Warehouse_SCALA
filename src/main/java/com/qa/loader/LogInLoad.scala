@@ -34,12 +34,10 @@ class LogInLoad {
     } finally {
       connector closeSQLCon
     }
-    println(rowCount)
     var boo:Boolean = false
     if(rowCount == 1) {
       boo = true
     }
-    println(boo)
     boo
   }
   

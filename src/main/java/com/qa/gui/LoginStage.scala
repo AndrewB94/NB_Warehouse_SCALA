@@ -33,7 +33,7 @@ class LoginStage(stage: PrimaryStage) {
     userNameL setFont (Font.font("Arial", FontWeight.BOLD, 20))
     passwordL setFont (Font.font("Arial", FontWeight.BOLD, 20))
 
-    val logInB: Button = new Button("Log in") {
+    val logInB: Button = new Button("Log In") {
       onAction = { ae: ActionEvent =>
         if (checkLogin(userT.getText, passT.getText)) {
           new MainStage(stage)
@@ -42,9 +42,9 @@ class LoginStage(stage: PrimaryStage) {
     }
 
     val cancelB: Button = new Button {
-      text = "Cancel"
+      text = "Close"
       cancelButton = true
-      onAction = { ae: ActionEvent => println("some message") }
+      onAction = { ae: ActionEvent => stage.hide() }
     }
 
     var scene: Scene = new Scene {

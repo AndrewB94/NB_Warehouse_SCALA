@@ -19,7 +19,6 @@ import scalafx.scene.Node
  * @author abutcher
  */
 class CustomerOrderStage(stage: PrimaryStage) {
-  stage.setTitle("Customer Orders")
 
   def createPane: Node = {
     val col: CustomerOrderLoad = new CustomerOrderLoad
