@@ -7,9 +7,7 @@ import scalafx.scene.Scene
 import scalafx.scene.layout.HBox
 import scalafx.scene.control.Button
 import java.awt.event.ActionEvent
-
-
-
+import com.qa.logic.EncryptPassword
 
 /**
  * @author abutcher
@@ -21,4 +19,5 @@ object Main extends JFXApp {
    stage = new PrimaryStage()
   val LoginStage = new LoginStage(stage)
 
+   
 }
