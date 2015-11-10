@@ -34,7 +34,8 @@ class PurchaseOrderLoad {
           val employee = rs getInt ("idEmployee")
           val id = rs getInt ("purchaseorder.idPurchaseOrder")
           val dateExpected = rs getDate ("purchaseorder.dateExpected")
-          var pO: PurchaseOrder = new PurchaseOrder(pOSS, supplierS, 1L, id, datePlaced, dateExpected, employee);
+          val checkedOut = rs.getBoolean("isCheckedOut")
+          var pO: PurchaseOrder = new PurchaseOrder(pOSS, supplierS, 1L, id, datePlaced, dateExpected, employee, pOS, checkedOut)
           purchaseOrderList += pO
           scanResultSet
         }
@@ -119,6 +120,44 @@ class PurchaseOrderLoad {
       connector closeSQLCon
     }
     s
+  }
+
+  def upadteState(purchaseOrderID: Int, newStatusID: Int) = {
+    val sql: String = "UPDATE `nbgardensdata`.`purchaseorder` SET `idPurchaseOrderStatus`='" + newStatusID + "' WHERE `idpurchaseorder`='" + purchaseOrderID + "';"
+    try {
+      connector.openSQLCon
+      connector.updateSQLDB(sql)
+    } catch {
+      case e: Exception => println("Error Executing Supplier Name Query")
+    } finally {
+      connector closeSQLCon
+    }
+  }
+
+  def updateCheckedOut(purchaseOrderID: Int, newCheckedOut: Int) = {
+    val sql: String = "UPDATE `nbgardensdata`.`purchaseorder` SET `isCheckedOut`='" + newCheckedOut + "' WHERE `idpurchaseorder`='" + purchaseOrderID + "';"
+    println("Here")
+    try {
+      connector.openSQLCon
+      connector.updateSQLDB(sql)
+    } catch {
+      case e: Exception => println("Error Executing Update checked out Query")
+    } finally {
+      connector closeSQLCon
+    }
+  }
+
+  def updateDeliverd(purchaseOrderID: Int) = {
+    val sql: String = "UPDATE nbgardensdata.purchaseorder SET dateExpected = CURDATE() WHERE purchaseorder.idpurchaseorder=" + purchaseOrderID + ";"
+    println("Here")
+    try {
+      connector.openSQLCon
+      connector.updateSQLDB(sql)
+    } catch {
+      case e: Exception => println("Error Executing update delivered Query")
+    } finally {
+      connector closeSQLCon
+    }
   }
 
 }

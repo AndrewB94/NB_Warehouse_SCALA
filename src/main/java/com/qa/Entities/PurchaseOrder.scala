@@ -8,7 +8,7 @@ import scalafx.beans.property.StringProperty
  * @date 03/11/2015
  * class that contains all the information that makes up a customer order
  */
-case class PurchaseOrder(purchaseOrderStatus_ :String, supplier_ :String, serialVersionUID:Long, idPurchaseOrder_ :Int, datePlaced_ :Date,dateExpected:Date,  employee:Int) {  
+case class PurchaseOrder(purchaseOrderStatus_ :String, supplier_ :String, serialVersionUID:Long, idPurchaseOrder_ :Int, datePlaced_ :Date,dateExpected:Date,  employee:Int, idStatus:Int, isCheckedOut:Boolean) {  
     /**
    * String properties used in GUI
    */

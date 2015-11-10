@@ -13,6 +13,16 @@ import scalafx.Includes._
 import com.qa.logic.EncryptPassword
 import scalafx.scene.control.Alert.AlertType
 import com.qa.loader.LogInLoad
+import scalafx.stage.StageStyle
+import scalafx.scene.layout.BorderPane
+import scalafx.event.ActionEvent
+import scalafx.scene.Node
+import scalafx.scene.control._
+import scalafx.scene.input.MouseEvent
+import scalafx.scene.layout._
+import scalafx.scene.{ Scene, Group, Node }
+import scalafx.Includes._
+import scalafx.beans.property.BooleanProperty
 
 /**
  * @author abutcher
@@ -70,7 +80,7 @@ class LoginStage(stage: PrimaryStage) {
       /**
        * Initialize grid pane
        */
-      val grid: GridPane = new GridPane
+      var grid: GridPane = new GridPane
       grid setHgap (10);
       grid setVgap (10);
       grid setPadding (new Insets(0, 10, 0, 10));
@@ -89,6 +99,7 @@ class LoginStage(stage: PrimaryStage) {
        * add gridpane to scene
        */
       content.addAll(grid)
+      
     }
     scene
   }
@@ -161,6 +172,39 @@ class LoginStage(stage: PrimaryStage) {
     }
     returner
   }
+  
+    def makeDraggable(node: Node): Node = {
+
+    val dragContext = new DragContext()
+
+    new Group(node) {
+      filterEvent(MouseEvent.Any) {
+        (me: MouseEvent) =>
+          if (true) {
+            me.eventType match {
+              case MouseEvent.MousePressed =>
+                dragContext.mouseAnchorX = me.x
+                dragContext.mouseAnchorY = me.y
+                dragContext.initialTranslateX = node.translateX()
+                dragContext.initialTranslateY = node.translateY()
+              case MouseEvent.MouseDragged =>
+                stage.setX(dragContext.initialTranslateX + me.x - dragContext.mouseAnchorX)
+                stage.setY (dragContext.initialTranslateY + me.y - dragContext.mouseAnchorY)
+              case _ =>
+            }
+            me.consume()
+          }
+      }
+    }
+  }
+
+  private final class DragContext {
+    var mouseAnchorX: Double = 0d
+    var mouseAnchorY: Double = 0d
+    var initialTranslateX: Double = 0d
+    var initialTranslateY: Double = 0d
+  }
+  
   /**
    * set the cene
    */
