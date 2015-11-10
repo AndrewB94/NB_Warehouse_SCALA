@@ -59,6 +59,16 @@ class CustomerOrderLoad {
     customerOrderList
   }
 
+    /**
+   * function that retrieves all the customer orders in the database excluding dispatched orders
+   * @return purchaseOrderLine an observable buffer containing every customer order
+   */
+  def getAllNotStoredCustomerOrders: ObservableBuffer[CustomerOrder] = {
+    val sql: String = "SELECT * FROM nbgardensdata.customerorder WHERE idCustomerOrderStatus !=6"
+    constructResults(sql)
+    customerOrderList
+  }
+  
   /**
    * function that retrieves the status of the order
    * @param id the ID of the status to be retrieved

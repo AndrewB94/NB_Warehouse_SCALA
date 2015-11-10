@@ -48,7 +48,7 @@ class MainStage(stage: PrimaryStage, employee: String) {
   coB.onAction = { ae: ActionEvent =>
     stage.setTitle(titleS + "Customer Orders")
     label.setText("Customer Orders")
-    border.center = new CustomerOrderStage(stage).createPane
+    new CustomerOrderStage(stage, employee, border).createPane(true)
   }
 
   logOB.onAction = { ae: ActionEvent => new LoginStage(stage) }

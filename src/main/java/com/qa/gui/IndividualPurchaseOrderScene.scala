@@ -194,9 +194,13 @@ class IndividualPurchaseOrderScene {
         case 1 => newStateID = 2
         case 2 => {
           newStateID = 3
+          //TODO update no of damaged
           pol.updateDeliverd(selectedPO.idPurchaseOrder_)
         }
-        case _ => newStateID = 4
+        case _ => {
+         //TODO add item to inventory Lines
+          newStateID = 4
+        }
       }
 
       var alert: Alert = new Alert(AlertType.Confirmation)
@@ -247,7 +251,6 @@ class IndividualPurchaseOrderScene {
         stage.hide
         Open(pol.getPurchaseOrderByID(selectedPO.idPurchaseOrder_)(0), employee)
       } else {
-
       }
     }
 

@@ -14,27 +14,28 @@ import scalafx.scene.layout.HBox
 import scalafx.scene.control.Button
 import scalafx.event.ActionEvent
 import scalafx.scene.Node
+import javafx.geometry.Insets
 
 /**
  * @author abutcher
  * @date 09/11/2015
  * class thatcreates a node contains a table of customer orders
  */
-class CustomerOrderStage(stage: PrimaryStage) {
+class CustomerOrderStage(stage: PrimaryStage, employee: String, pane: BorderPane) {
+var layout: BorderPane = new BorderPane
 
-  /**
-   * function that creates a node containning the content
-   * @retgurn Node the node containning the customer orders table
-   */
-  def createPane: Node = {
-    /**
-     * Initialize values / variables
-     */
+  def createTable(showStored: Boolean) = {
     val col: CustomerOrderLoad = new CustomerOrderLoad
-    val orders = col.getAllCustomerOrders
-    val label: Label = new Label("Customer Orders")
-    var table = new TableView[CustomerOrder](orders)    
-    
+    var orders = col.getAllNotStoredCustomerOrders
+
+    if (showStored) {
+      orders = col.getAllCustomerOrders
+    }
+
+    var table = new TableView[CustomerOrder](orders)
+    val selectB: Button = new Button("Select Order")
+    val toggleB: Button = new Button("Show/Hide - Dispatched Orders")
+
     /**
      * set up table collumns
      */
@@ -51,7 +52,7 @@ class CustomerOrderStage(stage: PrimaryStage) {
     }
 
     var customerCollumn = new TableColumn[CustomerOrder, String] {
-      text = "Customer"
+      text = "Supplier"
       cellValueFactory = { _.value customer }
       prefWidth = 100
     }
@@ -61,14 +62,48 @@ class CustomerOrderStage(stage: PrimaryStage) {
       cellValueFactory = { _.value datePlaced }
       prefWidth = 100
     }
-    
+
     /**
      * Create table and add collumns to it
      */
     table = new TableView[CustomerOrder](orders) {
       columns ++= List(idColumn, statusCollumn, customerCollumn, datePlacedCollumn)
     }
-    table
+    layout.setCenter(table)
+
+    def addButtons = {
+      /**
+       * set up action event on select button
+       */
+      selectB.onAction = { ae: ActionEvent =>
+        val sCO: CustomerOrder = table.getSelectionModel.getSelectedItem
+//        val iCOS: IndividualPurchaseOrderScene = new IndividualPurchaseOrderScene
+
+//        iPOS.Open(sCO, employee)
+      }
+
+      toggleB.onAction = { ae: ActionEvent =>
+        createPane(!showStored)
+      }
+
+    }
+    addButtons
+
+    val box: HBox = new HBox
+    box setPadding (new Insets(10));
+    box setSpacing (8);
+    box.children add (selectB)
+    box.children add (toggleB)
+
+    layout.setBottom(box)
   }
 
+  /**
+   * function that creates a node containning the content
+   * @retgurn Node the node containning the purchase orders table
+   */
+  def createPane(showStored: Boolean): Unit = {
+    createTable(showStored)
+    pane.center = layout
+  }
 }
