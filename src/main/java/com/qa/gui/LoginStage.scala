@@ -62,7 +62,7 @@ class LoginStage(stage: PrimaryStage) {
     val logInB: Button = new Button("Log In") {
       onAction = { ae: ActionEvent =>
         if (checkLogin(userT.getText, passT.getText)) {
-          new MainStage(stage)
+          new MainStage(stage, userT.getText)
         }
       }
     }

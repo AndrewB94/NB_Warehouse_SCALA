@@ -60,6 +60,16 @@ class PurchaseOrderLoad {
   }
 
   /**
+   * function that retrieves all the purchase orders in the database
+   * @return purchaseOrderLine an observable buffer containing every purchase order
+   */
+  def getAllNotStoredPurchaseOrders: ObservableBuffer[PurchaseOrder] = {
+    val sql: String = "SELECT * FROM nbgardensdata.purchaseorder WHERE idPurchaseOrderStatus !=4;"
+    constructResults(sql)
+    purchaseOrderList
+  }
+
+  /**
    * function that retrieves a specific purchase order from the database
    * @param id the purchase order id of the order to be retrieved
    * @return purchaseOrderLine an observable buffer containing the purchase order
@@ -136,7 +146,6 @@ class PurchaseOrderLoad {
 
   def updateCheckedOut(purchaseOrderID: Int, newCheckedOut: Int) = {
     val sql: String = "UPDATE `nbgardensdata`.`purchaseorder` SET `isCheckedOut`='" + newCheckedOut + "' WHERE `idpurchaseorder`='" + purchaseOrderID + "';"
-    println("Here")
     try {
       connector.openSQLCon
       connector.updateSQLDB(sql)
@@ -149,12 +158,25 @@ class PurchaseOrderLoad {
 
   def updateDeliverd(purchaseOrderID: Int) = {
     val sql: String = "UPDATE nbgardensdata.purchaseorder SET dateExpected = CURDATE() WHERE purchaseorder.idpurchaseorder=" + purchaseOrderID + ";"
-    println("Here")
     try {
       connector.openSQLCon
       connector.updateSQLDB(sql)
     } catch {
       case e: Exception => println("Error Executing update delivered Query")
+    } finally {
+      connector closeSQLCon
+    }
+  }
+
+  def updateCheckOutBy(purchaseOrderID: Int, employeeID: String) = {
+    println(employeeID)
+    val sql: String = "UPDATE `nbgardensdata`.`purchaseorder` SET `idEmployee`='" + employeeID + "' WHERE `idpurchaseorder`='" + purchaseOrderID + "';"
+
+    try {
+      connector.openSQLCon
+      connector.updateSQLDB(sql)
+    } catch {
+      case e: Exception => println("Error Executing update checked out by Query")
     } finally {
       connector closeSQLCon
     }

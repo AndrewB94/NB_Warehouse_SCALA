@@ -29,7 +29,7 @@ import scalafx.stage.StageStyle
  * class for creating a pane for displaying purchase orders
  */
 class IndividualPurchaseOrderScene {
-  def getScene(selectedPO: PurchaseOrder, stage: Stage): Node = {
+  def getScene(selectedPO: PurchaseOrder, stage: Stage, employee:String): Node = {
     /**
      * Initialize values
      */
@@ -149,7 +149,7 @@ class IndividualPurchaseOrderScene {
       grid setVgap (10)
       grid setPadding (new Insets(0, 10, 0, 10))
       val closeB: Button = new Button("Close")
-      val upadteB: Button = new Button("Update State")
+      val updateB: Button = new Button("Update State")
       val checkInB: Button = new Button("Check In Order")
       val checkOutB: Button = new Button("Check Out Order")
 
@@ -157,19 +157,28 @@ class IndividualPurchaseOrderScene {
        * set up action event on buttons
        */
       closeB onAction = { ae: ActionEvent => stage.hide }
-      upadteB onAction = { ae: ActionEvent => updateStatus }
+      updateB onAction = { ae: ActionEvent => updateStatus }
       checkOutB onAction = { ae: ActionEvent => checkOut }
       checkInB onAction = { ae: ActionEvent => checkIn }
+      
+      if (!selectedPO.isCheckedOut)
+        checkInB.setDisable(true)
+      
+        if (selectedPO.isCheckedOut || selectedPO.idStatus == 4)
+          checkOutB.setDisable(true)
+          
+          if ( !selectedPO.isCheckedOut || selectedPO.idStatus == 4)
+           updateB.setDisable(true)
+            
+            if (selectedPO.isCheckedOut)
+           closeB.setDisable(true)
+           
       /**
        * add componenents to grid pane
-       */
-      if (selectedPO.isCheckedOut)
-        grid.add(checkInB, 1, 1)
-      if (!selectedPO.isCheckedOut)
+       */    
+        grid.add(checkInB, 1, 1)    
         grid.add(checkOutB, 2, 1)
-      if (selectedPO.idStatus != 4 && selectedPO.isCheckedOut)
-        grid.add(upadteB, 1, 2)
-      if (!selectedPO.isCheckedOut)
+        grid.add(updateB, 1, 2)
         grid.add(closeB, 2, 2)
       grid
     }
@@ -198,10 +207,9 @@ class IndividualPurchaseOrderScene {
       var result: Optional[javafx.scene.control.ButtonType] = alert.showAndWait()
       if (result.get() == javafx.scene.control.ButtonType.OK) {
         // ... user chose OK        
-
         pol.upadteState(selectedPO.idPurchaseOrder_, newStateID)
         stage.hide
-        Open(pol.getPurchaseOrderByID(selectedPO.idPurchaseOrder_)(0))
+        Open(pol.getPurchaseOrderByID(selectedPO.idPurchaseOrder_ )(0),employee)
       } else {
         // ... user chose CANCEL or closed the dialog
       }
@@ -222,8 +230,9 @@ class IndividualPurchaseOrderScene {
         alert showAndWait
       } else {
         pol updateCheckedOut (selectedPO idPurchaseOrder_, 1)
+        pol.updateCheckOutBy(selectedPO idPurchaseOrder_, employee)
         stage.hide
-        Open(pol.getPurchaseOrderByID(selectedPO idPurchaseOrder_)(0))
+        Open(pol.getPurchaseOrderByID(selectedPO idPurchaseOrder_)(0), employee)
       }
     }
 
@@ -236,7 +245,7 @@ class IndividualPurchaseOrderScene {
       if (selectedPO.isCheckedOut) {
         pol.updateCheckedOut(selectedPO.idPurchaseOrder_, 0)
         stage.hide
-        Open(pol.getPurchaseOrderByID(selectedPO.idPurchaseOrder_)(0))
+        Open(pol.getPurchaseOrderByID(selectedPO.idPurchaseOrder_)(0), employee)
       } else {
 
       }
@@ -248,7 +257,7 @@ class IndividualPurchaseOrderScene {
   /**
    * open a new frame showing a purchase order's details
    */
-  def Open(selectedPO: PurchaseOrder): Unit = {
+  def Open(selectedPO: PurchaseOrder, employee:String): Unit = {
     /**
      * set up and show stage
      */
@@ -256,7 +265,7 @@ class IndividualPurchaseOrderScene {
     val secondStage: Stage = new Stage
     secondStage.initStyle(StageStyle.UNDECORATED)
 
-    secondScene.getChildren.add(getScene(selectedPO, secondStage))
+    secondScene.getChildren.add(getScene(selectedPO, secondStage, employee))
     secondStage setTitle ("Purchase Order")
     secondStage setScene (secondScene)
 
