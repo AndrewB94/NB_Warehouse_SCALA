@@ -77,9 +77,9 @@ var layout: BorderPane = new BorderPane
        */
       selectB.onAction = { ae: ActionEvent =>
         val sCO: CustomerOrder = table.getSelectionModel.getSelectedItem
-//        val iCOS: IndividualPurchaseOrderScene = new IndividualPurchaseOrderScene
+        val iCOS: IndividualCustomerOrderScene = new IndividualCustomerOrderScene
 
-//        iPOS.Open(sCO, employee)
+        iCOS.Open(sCO, employee)
       }
 
       toggleB.onAction = { ae: ActionEvent =>

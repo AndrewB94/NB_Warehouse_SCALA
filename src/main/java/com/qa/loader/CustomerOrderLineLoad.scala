@@ -24,10 +24,11 @@ class CustomerOrderLineLoad {
       val rs: ResultSet = connector querySQLDB (sql)
       def scanResultSet: Unit = {
         if (rs.next) {
-          val cOID = rs.getShort("idCustomerOrder")
-          val itemID = rs.getString("idItem")
-          val quantity = rs.getInt("quantity")
-          val cOL = new CustomerOrderLine //TODO
+          val cOID = rs getInt("idCustomerOrder")
+          val itemID = rs getInt("idItem")
+          val itemName = ""
+          val quantity = rs getInt("quantity")
+          val cOL = new CustomerOrderLine(cOID, itemID, itemName, quantity)
           customerOrderLineList += cOL
           scanResultSet
         }

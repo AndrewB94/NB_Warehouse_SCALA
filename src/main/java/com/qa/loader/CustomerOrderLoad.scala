@@ -4,6 +4,7 @@ import com.qa.dbConnector.SQL
 import com.qa.Entities.CustomerOrder
 import java.sql.ResultSet
 import scalafx.collections.ObservableBuffer
+import com.qa.Entities.CustomerOrder
 
 /**
  * @author abutcher
@@ -35,8 +36,9 @@ class CustomerOrderLoad {
           val idAddress = rs getInt ("idAddress")
           val idEmployee = rs getInt ("idEmployee")
           val idCistomer = rs getInt ("idCustomer")
+          val isCheckedIn = rs getBoolean("isCheckedOut")
           val customer = getUserByID(idCistomer)
-          var cO: CustomerOrder = new CustomerOrder(cOSS, datePlaced, customer, idEmployee, isPaid, idAddress, 1L, cOID, dateShipped)
+          var cO: CustomerOrder = new CustomerOrder(cOSS, datePlaced, customer, idEmployee, isPaid, idAddress, 1L, cOID, dateShipped, isCheckedIn, cOS)
           customerOrderList += cO
           scanResultSet
         }
@@ -65,6 +67,17 @@ class CustomerOrderLoad {
    */
   def getAllNotStoredCustomerOrders: ObservableBuffer[CustomerOrder] = {
     val sql: String = "SELECT * FROM nbgardensdata.customerorder WHERE idCustomerOrderStatus !=6"
+    constructResults(sql)
+    customerOrderList
+  }
+  
+    /**
+   * function that retrieves a specific customer order from the database
+   * @param id the customer order id of the order to be retrieved
+   * @return customerOrderLine an observable buffer containing the customer order
+   */
+  def getCustomerOrderByID(id: Int): ObservableBuffer[CustomerOrder] = {
+    val sql: String = "SELECT * FROM nbgardensdata.customerorder WHERE idCustomerOrder ="+id+";"
     constructResults(sql)
     customerOrderList
   }
@@ -138,4 +151,31 @@ class CustomerOrderLoad {
       connector closeSQLCon
     }
   }
+ 
+    def updateCheckedOut(orderID: Int, newCheckedOut: Int) = {
+    val sql: String = "UPDATE `nbgardensdata`.`customerorder` SET `isCheckedOut`='" + newCheckedOut + "' WHERE `idcustomerorder`='" + orderID + "';"
+    try {
+      connector.openSQLCon
+      connector.updateSQLDB(sql)
+    } catch {
+      case e: Exception => println("Error Executing Update checked out Query")
+    } finally {
+      connector closeSQLCon
+    }
+  }
+  
+      def updateCheckOutBy(orderID: Int, employeeID: String) = {
+    println(employeeID)
+    val sql: String = "UPDATE `nbgardensdata`.`customerorder` SET `idEmployee`='" + employeeID + "' WHERE `idcustomerorder`='" + orderID + "';"
+
+    try {
+      connector.openSQLCon
+      connector.updateSQLDB(sql)
+    } catch {
+      case e: Exception => println("Error Executing update checked out by Query")
+    } finally {
+      connector closeSQLCon
+    }
+  }
+    
 }
