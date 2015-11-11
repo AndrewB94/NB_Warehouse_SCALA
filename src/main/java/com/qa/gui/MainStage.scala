@@ -71,7 +71,7 @@ class MainStage(stage: PrimaryStage, employee: String) {
 
     var scene: Scene = new Scene {
       border setTop (label)
-      new PurchaseOrderStage(stage, employee, border).createPane(true)
+      new CustomerOrderStage(stage, employee, border).createPane(true)
       content addAll (border)
       border setLeft (sideBar)
     }

@@ -17,6 +17,7 @@ import scalafx.scene.text.Font
 import scalafx.scene.layout.VBox
 import javafx.geometry.Insets
 import scalafx.scene.control.Button
+import com.qa.logic.TravelingSales
 
 /**
  * @author abutcher
@@ -27,11 +28,14 @@ class TravelScene {
     val coll: CustomerOrderLineLoad = new CustomerOrderLineLoad
     val layout: BorderPane = new BorderPane
     val label: Label = new Label("Customer Order - ID: " + selectedCO.idCustomerOrder_)
+    
     label setFont (Font.font("Verdana", 30))
-
+    
     layout.top = label
     layout.center = createModel
     layout.left = sideBar
+    
+//    val alg:TravelingSales = new TravelingSales(recs)
     layout
   }
 
@@ -44,8 +48,6 @@ class TravelScene {
     val nextSB: Button = new Button("Next step")
     val clearPB: Button = new Button("Clear parth")
 
-    
-    
     sideBar.children add (startRB)
     sideBar.children add (nextSB)
     sideBar.children add (clearPB)
@@ -53,23 +55,24 @@ class TravelScene {
     sideBar
   }
 
-  
   def createModel: GridPane = {
     val grid: GridPane = new GridPane
     grid.gridLinesVisible = true
+        val recs = Array(
+      Array(3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,3),
+      Array(3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3,3),
+      Array(3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,3),
+      Array(3, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1,3),
+      Array(3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1,3),
+      Array(3, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1,3),
+      Array(3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1,3),
+      Array(3, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1,3),
+      Array(3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1,3),
+      Array(3, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1,3),
+      Array(3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,3),
+      Array(3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1,3),
+      Array(3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,3))
 
-    val recs = Array(
-      Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 3),
-      Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
-      Array(1, 0, 1, 1, 1, 1, 1, 1, 0, 1),
-      Array(1, 0, 0, 0, 0, 0, 0, 0, 0, 1),
-      Array(1, 0, 1, 1, 1, 1, 1, 1, 0, 1),
-      Array(1, 0, 0, 0, 0, 0, 0, 0, 0, 1),
-      Array(1, 0, 1, 1, 1, 1, 1, 1, 0, 1),
-      Array(1, 0, 0, 0, 0, 0, 0, 0, 0, 1),
-      Array(1, 0, 1, 1, 1, 1, 1, 1, 0, 1),
-      Array(1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      Array(3, 1, 1, 1, 1, 1, 1, 1, 1, 1))
     def createSquare(x: Int, y: Int): Rectangle = {
       val square: Rectangle = new Rectangle
       square.setStroke(Color.BLACK);
@@ -82,8 +85,8 @@ class TravelScene {
         case _ => colour = Color.White //Walkable area
       }
 
-      square.width = 70
-      square.height = 70
+      square.width = 60
+      square.height = 60
       square.fill = colour
       square
     }
