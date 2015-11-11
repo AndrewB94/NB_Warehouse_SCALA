@@ -22,6 +22,7 @@ import javafx.geometry.Insets
 import java.util.Optional
 import scalafx.scene.Scene
 import scalafx.stage.StageStyle
+import scalafx.scene.paint.Color
 
 /**
  * @author abutcher
@@ -29,7 +30,7 @@ import scalafx.stage.StageStyle
  * class for creating a pane for displaying purchase orders
  */
 class IndividualPurchaseOrderScene {
-  def getScene(selectedPO: PurchaseOrder, stage: Stage, employee:String): Node = {
+  def getScene(selectedPO: PurchaseOrder, stage: Stage, employee: String): Node = {
     /**
      * Initialize values
      */
@@ -92,19 +93,19 @@ class IndividualPurchaseOrderScene {
     var itemNmaeCollumn = new TableColumn[PurchaseOrderLine, String] {
       text = "Item Name"
       cellValueFactory = { _.value itemName }
-      prefWidth = 100
+      prefWidth = 200
     }
 
     var quantityCollumn = new TableColumn[PurchaseOrderLine, String] {
       text = "Quantity Ordered"
       cellValueFactory = { _.value quantity }
-      prefWidth = 100
+      prefWidth = 250
     }
 
     var quantityDamagedCollumn = new TableColumn[PurchaseOrderLine, String] {
       text = "Quantity Damaged"
       cellValueFactory = { _.value.quantityDamaged }
-      prefWidth = 100
+      prefWidth = 250
     }
 
     /**
@@ -160,26 +161,26 @@ class IndividualPurchaseOrderScene {
       updateB onAction = { ae: ActionEvent => updateStatus }
       checkOutB onAction = { ae: ActionEvent => checkOut }
       checkInB onAction = { ae: ActionEvent => checkIn }
-      
+
       if (!selectedPO.isCheckedOut)
         checkInB.setDisable(true)
-      
-        if (selectedPO.isCheckedOut || selectedPO.idStatus == 4)
-          checkOutB.setDisable(true)
-          
-          if ( !selectedPO.isCheckedOut || selectedPO.idStatus == 4)
-           updateB.setDisable(true)
-            
-            if (selectedPO.isCheckedOut)
-           closeB.setDisable(true)
-           
+
+      if (selectedPO.isCheckedOut || selectedPO.idStatus == 4)
+        checkOutB.setDisable(true)
+
+      if (!selectedPO.isCheckedOut || selectedPO.idStatus == 4)
+        updateB.setDisable(true)
+
+      if (selectedPO.isCheckedOut)
+        closeB.setDisable(true)
+
       /**
        * add componenents to grid pane
-       */    
-        grid.add(checkInB, 1, 1)    
-        grid.add(checkOutB, 2, 1)
-        grid.add(updateB, 1, 2)
-        grid.add(closeB, 2, 2)
+       */
+      grid.add(checkInB, 1, 1)
+      grid.add(checkOutB, 2, 1)
+      grid.add(updateB, 1, 2)
+      grid.add(closeB, 2, 2)
       grid
     }
 
@@ -198,7 +199,7 @@ class IndividualPurchaseOrderScene {
           pol.updateDeliverd(selectedPO.idPurchaseOrder_)
         }
         case _ => {
-         //TODO add item to inventory Lines
+          //TODO add item to inventory Lines
           newStateID = 4
         }
       }
@@ -213,7 +214,7 @@ class IndividualPurchaseOrderScene {
         // ... user chose OK        
         pol.upadteState(selectedPO.idPurchaseOrder_, newStateID)
         stage.hide
-        Open(pol.getPurchaseOrderByID(selectedPO.idPurchaseOrder_ )(0),employee)
+        Open(pol.getPurchaseOrderByID(selectedPO.idPurchaseOrder_)(0), employee)
       } else {
         // ... user chose CANCEL or closed the dialog
       }
@@ -260,13 +261,16 @@ class IndividualPurchaseOrderScene {
   /**
    * open a new frame showing a purchase order's details
    */
-  def Open(selectedPO: PurchaseOrder, employee:String): Unit = {
+  def Open(selectedPO: PurchaseOrder, employee: String): Unit = {
     /**
      * set up and show stage
      */
     val secondScene: Scene = new Scene
+    secondScene stylesheets = List(getClass.getResource("controlStyle2.css").toExternalForm)
+    secondScene.fill = Color.rgb(109, 158, 104)
     val secondStage: Stage = new Stage
-    secondStage.initStyle(StageStyle.UNDECORATED)
+//    secondStage.initStyle(StageStyle.UNDECORATED)
+    
 
     secondScene.getChildren.add(getScene(selectedPO, secondStage, employee))
     secondStage setTitle ("Purchase Order")

@@ -23,6 +23,7 @@ import scalafx.scene.layout._
 import scalafx.scene.{ Scene, Group, Node }
 import scalafx.Includes._
 import scalafx.beans.property.BooleanProperty
+import scalafx.scene.paint.Color
 
 /**
  * @author abutcher
@@ -101,6 +102,8 @@ class LoginStage(stage: PrimaryStage) {
       content.addAll(grid)
       
     }
+    scene stylesheets = List(getClass.getResource("controlStyle2.css").toExternalForm)
+    scene.fill = Color.rgb(109, 158, 104)
     scene
   }
 

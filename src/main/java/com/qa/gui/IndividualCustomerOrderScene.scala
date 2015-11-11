@@ -21,18 +21,18 @@ import scalafx.scene.Scene
 import com.qa.Entities.CustomerOrder
 import scalafx.stage.StageStyle
 import scalafx.Includes._
-
+import scalafx.scene.paint.Color
 
 /**
  * @author abutcher
  */
 class IndividualCustomerOrderScene {
-  def getScene(selectedCO: CustomerOrder, stage: Stage, employee:String): Node = {
+  def getScene(selectedCO: CustomerOrder, stage: Stage, employee: String): Node = {
     /**
      * Initialize values
      */
     val coL: CustomerOrderLoad = new CustomerOrderLoad
-    val coll:CustomerOrderLineLoad = new CustomerOrderLineLoad
+    val coll: CustomerOrderLineLoad = new CustomerOrderLineLoad
     val secondLabel: Label = new Label("Customer Order - ID: " + selectedCO.idCustomerOrder_)
     val secondaryLayout: BorderPane = new BorderPane
     val lines = coll.getPurchaseOrderLinesByPurchaseOrderID(selectedCO.idCustomerOrder_)
@@ -69,7 +69,7 @@ class IndividualCustomerOrderScene {
     statusV setFont (Font.font("Arial", 20))
     val datePlacedV: Label = new Label("" + selectedCO.datePlaced_)
     datePlacedV setFont (Font.font("Arial", 20))
-    val customerV: Label = new Label(""+selectedCO.customer_)
+    val customerV: Label = new Label("" + selectedCO.customer_)
     customerV setFont (Font.font("Arial", 20))
     val employeeV: Label = new Label(coL.getUserByID(selectedCO.employee_))
     employeeV setFont (Font.font("Arial", 20))
@@ -86,13 +86,13 @@ class IndividualCustomerOrderScene {
     var itemNmaeCollumn = new TableColumn[CustomerOrderLine, String] {
       text = "Item Name"
       cellValueFactory = { _.value itemName }
-      prefWidth = 100
+      prefWidth = 200
     }
 
     var quantityCollumn = new TableColumn[CustomerOrderLine, String] {
-      text = "Quantity Ordered"
+      text = "Quantity"
       cellValueFactory = { _.value quantity }
-      prefWidth = 100
+      prefWidth = 200
     }
 
     /**
@@ -114,7 +114,7 @@ class IndividualCustomerOrderScene {
     contentPane add (idV, 2, 1)
     contentPane add (statusV, 2, 2)
     contentPane add (datePlacedV, 2, 3)
-    contentPane add (customerV, 2,4)
+    contentPane add (customerV, 2, 4)
     contentPane add (employeeV, 2, 5)
     contentPane add (lineTable, 3, 1, 1, 6)
     contentPane add (buttonPane, 1, 6, 2, 1)
@@ -134,6 +134,7 @@ class IndividualCustomerOrderScene {
       grid setHgap (10)
       grid setVgap (10)
       grid setPadding (new Insets(0, 10, 0, 10))
+      val travelB: Button = new Button("Find Products")
       val closeB: Button = new Button("Close")
       val updateB: Button = new Button("Update State")
       val checkInB: Button = new Button("Check In Order")
@@ -142,30 +143,44 @@ class IndividualCustomerOrderScene {
       /**
        * set up action event on buttons
        */
+      travelB onAction = { ae: ActionEvent =>
+        val ts = new TravelScene
+        ts.open(selectedCO, employee)
+      }
       closeB onAction = { ae: ActionEvent => stage.hide }
       updateB onAction = { ae: ActionEvent => updateStatus }
       checkOutB onAction = { ae: ActionEvent => checkOut }
       checkInB onAction = { ae: ActionEvent => checkIn }
-      
+
+      /**
+       * Disable/Enable buttons
+       */
       if (!selectedCO.isCheckedOut)
         checkInB.setDisable(true)
-      
-        if (selectedCO.isCheckedOut || selectedCO.customerOrderStatus_ == 6)
-          checkOutB.setDisable(true)
-          
-          if ( !selectedCO.isCheckedOut || selectedCO.customerOrderStatus_ == 6)
-           updateB.setDisable(true)
-            
-            if (selectedCO.isCheckedOut)
-           closeB.setDisable(true)
-           
+
+      if (selectedCO.isCheckedOut || selectedCO.customerOrderStatus_ == 6)
+        checkOutB.setDisable(true)
+
+      if (!selectedCO.isCheckedOut || selectedCO.customerOrderStatus_ == 6)
+        updateB.setDisable(true)
+
+      if (selectedCO.isCheckedOut)
+        closeB.setDisable(true)
+
+        travelB.prefWidth = 510
+        closeB.prefWidth = 250
+        checkInB.prefWidth = 250
+        checkOutB.prefWidth = 250
+        updateB.prefWidth = 250
+        
       /**
        * add componenents to grid pane
-       */    
-        grid.add(checkInB, 1, 1)    
-        grid.add(checkOutB, 2, 1)
-        grid.add(updateB, 1, 2)
-        grid.add(closeB, 2, 2)
+       */
+      grid.add(travelB, 1, 1, 2, 1)
+      grid.add(checkInB, 1, 2)
+      grid.add(checkOutB, 2, 2)
+      grid.add(updateB, 1, 3)
+      grid.add(closeB, 2, 3)
       grid
     }
 
@@ -194,7 +209,7 @@ class IndividualCustomerOrderScene {
         // ... user chose OK        
         col.updateState(selectedCO.idCustomerOrder_, newStateID)
         stage.hide
-        Open(col.getCustomerOrderByID(selectedCO.idCustomerOrder_ )(0),employee)
+        Open(col.getCustomerOrderByID(selectedCO.idCustomerOrder_)(0), employee)
       } else {
         // ... user chose CANCEL or closed the dialog
       }
@@ -241,13 +256,15 @@ class IndividualCustomerOrderScene {
   /**
    * open a new frame showing a purchase order's details
    */
-  def Open(selectedCO: CustomerOrder, employee:String): Unit = {
+  def Open(selectedCO: CustomerOrder, employee: String): Unit = {
     /**
      * set up and show stage
      */
     val secondScene: Scene = new Scene
+    secondScene stylesheets = List(getClass.getResource("controlStyle2.css").toExternalForm)    
+    secondScene.fill = Color.rgb(109, 158, 104)
     val secondStage: Stage = new Stage
-    secondStage.initStyle(StageStyle.UNDECORATED)
+//    secondStage.initStyle(StageStyle.UNDECORATED)
 
     secondScene.getChildren.add(getScene(selectedCO, secondStage, employee))
     secondStage setTitle ("Purchase Order")

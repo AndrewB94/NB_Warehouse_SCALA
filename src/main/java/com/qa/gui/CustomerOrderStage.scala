@@ -48,19 +48,19 @@ var layout: BorderPane = new BorderPane
     var statusCollumn = new TableColumn[CustomerOrder, String]() {
       text = "Status"
       cellValueFactory = { _.value status }
-      prefWidth = 100
+      prefWidth = 150
     }
 
     var customerCollumn = new TableColumn[CustomerOrder, String] {
       text = "Supplier"
       cellValueFactory = { _.value customer }
-      prefWidth = 100
+      prefWidth = 200
     }
 
     var datePlacedCollumn = new TableColumn[CustomerOrder, String] {
       text = "Date Placed"
       cellValueFactory = { _.value datePlaced }
-      prefWidth = 100
+      prefWidth = 200
     }
 
     /**

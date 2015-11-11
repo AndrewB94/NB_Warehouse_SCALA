@@ -30,6 +30,10 @@ class MainStage(stage: PrimaryStage, employee: String) {
   val coB: Button = new Button("Customer Orders")
   val logOB: Button = new Button("Logout")
 
+  logOB.prefWidth = 300
+  coB.prefWidth = 300
+  poB.prefWidth = 300
+  
   /**
    * Initialize the sidebar
    */
@@ -71,6 +75,8 @@ class MainStage(stage: PrimaryStage, employee: String) {
       content addAll (border)
       border setLeft (sideBar)
     }
+    scene stylesheets = List(getClass.getResource("controlStyle2.css").toExternalForm)
+    scene.fill = Color.rgb(109, 158, 104)
     scene
   }
 

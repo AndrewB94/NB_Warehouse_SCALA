@@ -58,13 +58,13 @@ class PurchaseOrderStage(stage: PrimaryStage, employee: String, pane: BorderPane
     var supplierCollumn = new TableColumn[PurchaseOrder, String] {
       text = "Supplier"
       cellValueFactory = { _.value supplier }
-      prefWidth = 100
+      prefWidth = 200
     }
 
     var datePlacedCollumn = new TableColumn[PurchaseOrder, String] {
       text = "Date Placed"
       cellValueFactory = { _.value datePlaced }
-      prefWidth = 100
+      prefWidth = 200
     }
 
     /**
