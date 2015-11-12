@@ -4,7 +4,6 @@ import com.qa.dbConnector.SQL
 import com.qa.Entities.CustomerOrder
 import java.sql.ResultSet
 import scalafx.collections.ObservableBuffer
-import com.qa.Entities.CustomerOrder
 
 /**
  * @author abutcher

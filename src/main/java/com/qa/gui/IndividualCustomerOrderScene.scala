@@ -86,7 +86,7 @@ class IndividualCustomerOrderScene {
     var itemNmaeCollumn = new TableColumn[CustomerOrderLine, String] {
       text = "Item Name"
       cellValueFactory = { _.value itemName }
-      prefWidth = 200
+      prefWidth = 250
     }
 
     var quantityCollumn = new TableColumn[CustomerOrderLine, String] {
@@ -249,8 +249,12 @@ class IndividualCustomerOrderScene {
       } else {
       }
     }
-
-    secondaryLayout
+     var grid: GridPane = new GridPane
+      grid setHgap (10)
+      grid setVgap (10)
+      grid setPadding (new Insets(0, 10, 10, 10))
+      grid.add(secondaryLayout, 1, 1)
+    grid
   }
 
   /**

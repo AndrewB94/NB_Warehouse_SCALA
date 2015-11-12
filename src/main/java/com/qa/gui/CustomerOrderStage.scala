@@ -52,7 +52,7 @@ var layout: BorderPane = new BorderPane
     }
 
     var customerCollumn = new TableColumn[CustomerOrder, String] {
-      text = "Supplier"
+      text = "Customer"
       cellValueFactory = { _.value customer }
       prefWidth = 200
     }

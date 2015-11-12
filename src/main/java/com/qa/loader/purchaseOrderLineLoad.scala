@@ -26,7 +26,7 @@ class purchaseOrderLineLoad {
         if (rs.next) {
           val pOID = rs.getInt("idpurchaseorder")
           val itemId = rs.getInt("idItem")
-          val itemName = null
+          val itemName = getItemNameByItemID(itemId)
           val quantity = rs.getInt("quantity")
           val quantityDamaged = rs.getInt("quantityDamaged")
           val pOL = new PurchaseOrderLine(pOID, itemId, itemName, quantity, quantityDamaged)
@@ -47,5 +47,26 @@ class purchaseOrderLineLoad {
     val sql: String = "SELECT * FROM nbgardensdata.purchaseorderline WHERE idpurchaseorder =" + id + ";"
     constructResults(sql)
     purchaseOrderLineList
+  }
+  
+    def getItemNameByItemID(id:Int):String = {
+        val sql: String = "SELECT * FROM nbgardensdata.item WHERE itemID =" + id + ";"
+    var iN: String = null
+    try {
+      connector openSQLCon
+      val rs: ResultSet = connector querySQLDB (sql)
+      def scanResultSet: Unit = {
+        if (rs.next) {
+          iN = rs getString ("itemName")
+        }
+      }
+      scanResultSet
+      rs.close
+    } catch {
+      case e: Exception => println("Error Executing Name Query")
+    } finally {
+      connector closeSQLCon
+    }
+    iN
   }
 }

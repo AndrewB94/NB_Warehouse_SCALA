@@ -82,9 +82,9 @@ class LoginStage(stage: PrimaryStage) {
        * Initialize grid pane
        */
       var grid: GridPane = new GridPane
-      grid setHgap (10);
-      grid setVgap (10);
-      grid setPadding (new Insets(0, 10, 0, 10));
+      grid setHgap (10)
+      grid setVgap (10)
+      grid setPadding (new Insets(0, 10, 10, 10))
 
       /**
        * add components to grid pane

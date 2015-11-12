@@ -22,17 +22,19 @@ class MainStage(stage: PrimaryStage, employee: String) {
    * initialize values
    */
   val titleS: String = "NB Gardens - Warehouse Order Tracking System - "
-  stage.setTitle(titleS + "Purchase Orders")
-  val label: Label = new Label("Purchase Orders")
+  stage.setTitle(titleS + "Inventory")
+  val label: Label = new Label("Inventory")
   label.setFont(Font.font("Verdana", 30))
   val border: BorderPane = new BorderPane()
   val poB: Button = new Button("Purchase Orders")
   val coB: Button = new Button("Customer Orders")
   val logOB: Button = new Button("Logout")
+  val invB:Button = new Button("Inventory")
 
-  logOB.prefWidth = 300
-  coB.prefWidth = 300
-  poB.prefWidth = 300
+  logOB prefWidth = 300
+  invB prefWidth = 300
+  coB prefWidth = 300
+  poB prefWidth = 300
   
   /**
    * Initialize the sidebar
@@ -55,11 +57,18 @@ class MainStage(stage: PrimaryStage, employee: String) {
     new CustomerOrderStage(stage, employee, border).createPane(true)
   }
 
+    invB.onAction = { ae: ActionEvent =>
+    stage.setTitle(titleS + "Inventory")
+    label.setText("Inventory")
+    new InventoryStage(stage, employee, border).createPane
+  }
+  
   logOB.onAction = { ae: ActionEvent => new LoginStage(stage) }
 
   /**
    * add buttons to side bar
    */
+  sideBar.children add (invB)
   sideBar.children add (poB)
   sideBar.children add (coB)
   sideBar.children add (logOB)
@@ -71,9 +80,15 @@ class MainStage(stage: PrimaryStage, employee: String) {
 
     var scene: Scene = new Scene {
       border setTop (label)
-      new CustomerOrderStage(stage, employee, border).createPane(true)
-      content addAll (border)
-      border setLeft (sideBar)
+      new InventoryStage(stage, employee, border).createPane
+            border setLeft (sideBar)
+      var grid: GridPane = new GridPane
+      grid setHgap (10)
+      grid setVgap (10)
+      grid setPadding (new Insets(0, 10, 10, 10))
+      grid.add(border, 1, 1)
+      content addAll (grid)
+
     }
     scene stylesheets = List(getClass.getResource("controlStyle2.css").toExternalForm)
     scene.fill = Color.rgb(109, 158, 104)

@@ -23,6 +23,22 @@ import com.qa.logic.TravelingSales
  * @author abutcher
  */
 class TravelScene {
+
+  val recs = Array(
+      Array(3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,3),
+      Array(3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3,3),
+      Array(3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,3),
+      Array(3, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1,3),
+      Array(3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1,3),
+      Array(3, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1,3),
+      Array(3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1,3),
+      Array(3, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1,3),
+      Array(3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1,3),
+      Array(3, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1,3),
+      Array(3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,3),
+      Array(3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1,3),
+      Array(3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,3))
+  
   def getScene(selectedCO: CustomerOrder, stage: Stage, employee: String): Node = {
     val coL: CustomerOrderLoad = new CustomerOrderLoad
     val coll: CustomerOrderLineLoad = new CustomerOrderLineLoad
@@ -35,8 +51,15 @@ class TravelScene {
     layout.center = createModel
     layout.left = sideBar
     
-//    val alg:TravelingSales = new TravelingSales(recs)
-    layout
+    val alg:TravelingSales = new TravelingSales(recs)
+//    alg.calculate
+    
+         var grid: GridPane = new GridPane
+      grid setHgap (10)
+      grid setVgap (10)
+      grid setPadding (new Insets(0, 10, 10, 10))
+      grid.add(layout, 1, 1)
+    grid
   }
 
   def sideBar: VBox = {
@@ -58,20 +81,7 @@ class TravelScene {
   def createModel: GridPane = {
     val grid: GridPane = new GridPane
     grid.gridLinesVisible = true
-        val recs = Array(
-      Array(3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,3),
-      Array(3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3,3),
-      Array(3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,3),
-      Array(3, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1,3),
-      Array(3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1,3),
-      Array(3, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1,3),
-      Array(3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1,3),
-      Array(3, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1,3),
-      Array(3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1,3),
-      Array(3, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1,3),
-      Array(3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,3),
-      Array(3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1,3),
-      Array(3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,3))
+        
 
     def createSquare(x: Int, y: Int): Rectangle = {
       val square: Rectangle = new Rectangle

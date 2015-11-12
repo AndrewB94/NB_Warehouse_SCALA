@@ -93,7 +93,7 @@ class IndividualPurchaseOrderScene {
     var itemNmaeCollumn = new TableColumn[PurchaseOrderLine, String] {
       text = "Item Name"
       cellValueFactory = { _.value itemName }
-      prefWidth = 200
+      prefWidth = 250
     }
 
     var quantityCollumn = new TableColumn[PurchaseOrderLine, String] {
@@ -215,6 +215,11 @@ class IndividualPurchaseOrderScene {
         pol.upadteState(selectedPO.idPurchaseOrder_, newStateID)
         stage.hide
         Open(pol.getPurchaseOrderByID(selectedPO.idPurchaseOrder_)(0), employee)
+
+        if (newStateID == 4) {
+          val storer:LocationScene = new LocationScene
+          lines.foreach { x => storer.open(x.itemID_) }
+        }
       } else {
         // ... user chose CANCEL or closed the dialog
       }
@@ -254,8 +259,12 @@ class IndividualPurchaseOrderScene {
       } else {
       }
     }
-
-    secondaryLayout
+    var grid: GridPane = new GridPane
+    grid setHgap (10)
+    grid setVgap (10)
+    grid setPadding (new Insets(0, 10, 10, 10))
+    grid.add(secondaryLayout, 1, 1)
+    grid
   }
 
   /**
@@ -269,8 +278,7 @@ class IndividualPurchaseOrderScene {
     secondScene stylesheets = List(getClass.getResource("controlStyle2.css").toExternalForm)
     secondScene.fill = Color.rgb(109, 158, 104)
     val secondStage: Stage = new Stage
-//    secondStage.initStyle(StageStyle.UNDECORATED)
-    
+    //    secondStage.initStyle(StageStyle.UNDECORATED)
 
     secondScene.getChildren.add(getScene(selectedPO, secondStage, employee))
     secondStage setTitle ("Purchase Order")
