@@ -218,7 +218,7 @@ class IndividualPurchaseOrderScene {
 
         if (newStateID == 4) {
           val storer:LocationScene = new LocationScene
-          lines.foreach { x => storer.open(x.itemID_) }
+          lines.foreach { x => storer.open(x.itemID_, x.quantity_) }
         }
       } else {
         // ... user chose CANCEL or closed the dialog

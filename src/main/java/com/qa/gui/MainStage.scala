@@ -22,20 +22,20 @@ class MainStage(stage: PrimaryStage, employee: String) {
    * initialize values
    */
   val titleS: String = "NB Gardens - Warehouse Order Tracking System - "
-  stage.setTitle(titleS + "Inventory")
-  val label: Label = new Label("Inventory")
+  stage.setTitle(titleS + "Purchase Order")
+  val label: Label = new Label("Purchase Order")
   label.setFont(Font.font("Verdana", 30))
   val border: BorderPane = new BorderPane()
   val poB: Button = new Button("Purchase Orders")
   val coB: Button = new Button("Customer Orders")
-  val logOB: Button = new Button("Logout")
-  val invB:Button = new Button("Inventory")
+  val logOB: Button = new Button("Close")
+  val invB: Button = new Button("Inventory")
 
   logOB prefWidth = 300
   invB prefWidth = 300
   coB prefWidth = 300
   poB prefWidth = 300
-  
+
   /**
    * Initialize the sidebar
    */
@@ -57,20 +57,20 @@ class MainStage(stage: PrimaryStage, employee: String) {
     new CustomerOrderStage(stage, employee, border).createPane(true)
   }
 
-    invB.onAction = { ae: ActionEvent =>
+  invB.onAction = { ae: ActionEvent =>
     stage.setTitle(titleS + "Inventory")
     label.setText("Inventory")
     new InventoryStage(stage, employee, border).createPane
   }
-  
-  logOB.onAction = { ae: ActionEvent => new LoginStage(stage) }
+
+  logOB.onAction = { ae: ActionEvent => stage.hide }
 
   /**
    * add buttons to side bar
    */
-  sideBar.children add (invB)
   sideBar.children add (poB)
   sideBar.children add (coB)
+  sideBar.children add (invB)
   sideBar.children add (logOB)
 
   /**
@@ -80,8 +80,8 @@ class MainStage(stage: PrimaryStage, employee: String) {
 
     var scene: Scene = new Scene {
       border setTop (label)
-      new InventoryStage(stage, employee, border).createPane
-            border setLeft (sideBar)
+      new PurchaseOrderStage(stage, employee, border).createPane(true)
+      border setLeft (sideBar)
       var grid: GridPane = new GridPane
       grid setHgap (10)
       grid setVgap (10)
@@ -99,4 +99,8 @@ class MainStage(stage: PrimaryStage, employee: String) {
    * set the main scene
    */
   stage.setScene(createScene)
+  stage.minWidth = 1120
+  stage.maxWidth = 1120
+  stage.minHeight = 550
+  stage.maxHeight = 550
 }
