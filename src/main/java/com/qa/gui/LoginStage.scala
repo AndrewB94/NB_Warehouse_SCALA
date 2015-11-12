@@ -102,7 +102,7 @@ class LoginStage(stage: PrimaryStage) {
       content.addAll(grid)
       
     }
-    scene stylesheets = List(getClass.getResource("controlStyle2.css").toExternalForm)
+   scene stylesheets = List(getClass.getResource("/controlStyle2.css").toExternalForm)
     scene.fill = Color.rgb(109, 158, 104)
     scene
   }

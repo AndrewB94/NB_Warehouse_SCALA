@@ -275,7 +275,7 @@ class IndividualPurchaseOrderScene {
      * set up and show stage
      */
     val secondScene: Scene = new Scene
-    secondScene stylesheets = List(getClass.getResource("controlStyle2.css").toExternalForm)
+    secondScene stylesheets = List(getClass.getResource("/controlStyle2.css").toExternalForm)
     secondScene.fill = Color.rgb(109, 158, 104)
     val secondStage: Stage = new Stage
     //    secondStage.initStyle(StageStyle.UNDECORATED)
