@@ -21,9 +21,9 @@ class PurchaseOrderLoad {
   def constructResults(sql: String) = {
 
     purchaseOrderList clear ()
-    try {
-      connector openSQLCon
-      val rs: ResultSet = connector querySQLDB (sql)
+    val conn =connector.openSQLCon
+    try {    
+      val rs: ResultSet = connector querySQLDB (sql, conn)
       def scanResultSet: Unit = {
         if (rs.next) {
           val pOS: Int = rs getInt ("idPurchaseOrderStatus")
@@ -45,7 +45,7 @@ class PurchaseOrderLoad {
     } catch {
       case e: Exception => println("Error Executing Query")
     } finally {
-      connector closeSQLCon
+      connector closeSQLCon(conn)
     }
   }
 
@@ -88,9 +88,9 @@ class PurchaseOrderLoad {
   def getPurchaseOrderStatusByID(id: Int): String = {
     val sql: String = "SELECT * FROM nbgardensdata.purchaseorderstatus WHERE idPurchaseOrderStatus =" + id + ";"
     var pOS: String = null
-    try {
-      connector openSQLCon
-      val rs: ResultSet = connector querySQLDB (sql)
+    val conn = connector.openSQLCon
+    try {    
+      val rs: ResultSet = connector querySQLDB (sql, conn)
       def scanResultSet: Unit = {
         if (rs.next) {
           pOS = rs getString ("status")
@@ -101,7 +101,7 @@ class PurchaseOrderLoad {
     } catch {
       case e: Exception => println("Error Executing Status Query")
     } finally {
-      connector closeSQLCon
+      connector closeSQLCon(conn)
     }
     pOS
   }
@@ -114,9 +114,9 @@ class PurchaseOrderLoad {
   def getSupplierByID(id: Int): String = {
     val sql: String = "SELECT * FROM nbgardensdata.supplier WHERE idSupplier =" + id + ";"
     var s: String = null
-    try {
-      connector openSQLCon
-      val rs: ResultSet = connector querySQLDB (sql)
+    val conn =connector.openSQLCon
+    try {   
+      val rs: ResultSet = connector querySQLDB (sql, conn)
       def scanResultSet: Unit = {
         if (rs.next) {
           s = rs getString ("supplierName")
@@ -127,58 +127,57 @@ class PurchaseOrderLoad {
     } catch {
       case e: Exception => println("Error Executing Supplier Name Query")
     } finally {
-      connector closeSQLCon
+      connector closeSQLCon(conn)
     }
     s
   }
 
   def upadteState(purchaseOrderID: Int, newStatusID: Int) = {
     val sql: String = "UPDATE `nbgardensdata`.`purchaseorder` SET `idPurchaseOrderStatus`='" + newStatusID + "' WHERE `idpurchaseorder`='" + purchaseOrderID + "';"
-    try {
-      connector.openSQLCon
-      connector.updateSQLDB(sql)
+    val conn = connector.openSQLCon
+    try {    
+      connector.updateSQLDB(sql, conn)
     } catch {
       case e: Exception => println("Error Executing Supplier Name Query")
     } finally {
-      connector closeSQLCon
+      connector closeSQLCon(conn)
     }
   }
 
   def updateCheckedOut(purchaseOrderID: Int, newCheckedOut: Int) = {
     val sql: String = "UPDATE `nbgardensdata`.`purchaseorder` SET `isCheckedOut`='" + newCheckedOut + "' WHERE `idpurchaseorder`='" + purchaseOrderID + "';"
-    try {
-      connector.openSQLCon
-      connector.updateSQLDB(sql)
+    val conn = connector.openSQLCon
+    try {  
+      connector.updateSQLDB(sql, conn)
     } catch {
       case e: Exception => println("Error Executing Update checked out Query")
     } finally {
-      connector closeSQLCon
+      connector closeSQLCon(conn)
     }
   }
 
   def updateDeliverd(purchaseOrderID: Int) = {
     val sql: String = "UPDATE nbgardensdata.purchaseorder SET dateExpected = CURDATE() WHERE purchaseorder.idpurchaseorder=" + purchaseOrderID + ";"
-    try {
-      connector.openSQLCon
-      connector.updateSQLDB(sql)
+    val conn = connector.openSQLCon
+    try {  
+      connector.updateSQLDB(sql, conn)
     } catch {
       case e: Exception => println("Error Executing update delivered Query")
     } finally {
-      connector closeSQLCon
+      connector closeSQLCon(conn)
     }
   }
 
   def updateCheckOutBy(purchaseOrderID: Int, employeeID: String) = {
     println(employeeID)
     val sql: String = "UPDATE `nbgardensdata`.`purchaseorder` SET `idEmployee`='" + employeeID + "' WHERE `idpurchaseorder`='" + purchaseOrderID + "';"
-
-    try {
-      connector.openSQLCon
-      connector.updateSQLDB(sql)
+    val conn = connector.openSQLCon
+    try {  
+      connector.updateSQLDB(sql, conn)
     } catch {
       case e: Exception => println("Error Executing update checked out by Query")
     } finally {
-      connector closeSQLCon
+      connector closeSQLCon(conn)
     }
   }
 

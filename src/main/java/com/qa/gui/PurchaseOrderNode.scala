@@ -24,7 +24,7 @@ import scalafx.scene.layout.HBox
  * @date 09/11/2015
  * class that creates a node containing the purchase orders
  */
-class PurchaseOrderStage(stage: PrimaryStage, employee: String, pane: BorderPane) {
+class PurchaseOrderNode(stage: PrimaryStage, employee: String, pane: BorderPane) {
 
   var layout: BorderPane = new BorderPane
 
@@ -81,7 +81,7 @@ class PurchaseOrderStage(stage: PrimaryStage, employee: String, pane: BorderPane
        */
       selectB.onAction = { ae: ActionEvent =>
         val sPO: PurchaseOrder = table.getSelectionModel.getSelectedItem
-        val iPOS: IndividualPurchaseOrderScene = new IndividualPurchaseOrderScene
+        val iPOS: IndividualPurchaseOrderStage = new IndividualPurchaseOrderStage
 
         iPOS.Open(sPO, employee)
       }

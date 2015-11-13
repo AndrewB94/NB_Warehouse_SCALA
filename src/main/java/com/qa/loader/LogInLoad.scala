@@ -18,17 +18,18 @@ class LogInLoad {
    * @return : Returns a boolean; true if ResulSet only contains one record, false if not
    */
   def checkDetails(idUser: Int, password: String): Boolean = {
-    connector.openSQLCon
+    val sql = "SELECT idUser, user.password FROM nbgardensdata.user where idUser =  " + idUser + "  and user.password = '" + password + "' and isEmployee = 1"
+    val conn = connector.openSQLCon
     var rowCount: Int = 0
     try {
-      var rSet: ResultSet = connector.querySQLDB("SELECT idUser, user.password FROM nbgardensdata.user where idUser =  " + idUser + "  and user.password = '" + password + "' and isEmployee = 1")
+      var rSet: ResultSet = connector.querySQLDB(sql ,conn)
       if (rSet.next()) {
         rowCount = rowCount.+(1)
       }
     } catch {
       case e: Exception => println("Error Executing Query")
     } finally {
-      connector closeSQLCon
+      connector closeSQLCon(conn)
     }
     var boo: Boolean = false
     if (rowCount == 1) {

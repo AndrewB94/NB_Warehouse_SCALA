@@ -19,6 +19,6 @@ object Main extends JFXApp {
   stage = new PrimaryStage()
 //  stage.initStyle(StageStyle.UNDECORATED);
 
-  val LoginStage = new LoginStage(stage)
+  val LoginStage = new LoginNode(stage)
 
 }

@@ -29,7 +29,7 @@ import scalafx.scene.paint.Color
  * @date 10/11/2015
  * class for creating a pane for displaying purchase orders
  */
-class IndividualPurchaseOrderScene {
+class IndividualPurchaseOrderStage {
   def getScene(selectedPO: PurchaseOrder, stage: Stage, employee: String): Node = {
     /**
      * Initialize values
@@ -217,7 +217,7 @@ class IndividualPurchaseOrderScene {
         Open(pol.getPurchaseOrderByID(selectedPO.idPurchaseOrder_)(0), employee)
 
         if (newStateID == 4) {
-          val storer:LocationScene = new LocationScene
+          val storer:LocationStage = new LocationStage
           lines.foreach { x => storer.open(x.itemID_, x.quantity_) }
         }
       } else {

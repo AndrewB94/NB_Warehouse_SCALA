@@ -26,7 +26,7 @@ import scalafx.scene.paint.Color
 /**
  * @author abutcher
  */
-class IndividualCustomerOrderScene {
+class IndividualCustomerOrderStage {
   def getScene(selectedCO: CustomerOrder, stage: Stage, employee: String): Node = {
     /**
      * Initialize values
@@ -35,7 +35,7 @@ class IndividualCustomerOrderScene {
     val coll: CustomerOrderLineLoad = new CustomerOrderLineLoad
     val secondLabel: Label = new Label("Customer Order - ID: " + selectedCO.idCustomerOrder_)
     val secondaryLayout: BorderPane = new BorderPane
-    val lines = coll.getPurchaseOrderLinesByPurchaseOrderID(selectedCO.idCustomerOrder_)
+    val lines = coll.getCustomerOrderLinesByCustomerOrderID(selectedCO.idCustomerOrder_)
     var lineTable = new TableView[CustomerOrderLine](lines)
 
     /**

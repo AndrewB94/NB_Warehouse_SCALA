@@ -19,9 +19,9 @@ class purchaseOrderLineLoad {
   def constructResults(sql: String) = {
 
     purchaseOrderLineList clear ()
-    try {
-      connector openSQLCon
-      val rs: ResultSet = connector querySQLDB (sql)
+    val conn = connector.openSQLCon
+    try {     
+      val rs: ResultSet = connector querySQLDB (sql, conn)
       def scanResultSet: Unit = {
         if (rs.next) {
           val pOID = rs.getInt("idpurchaseorder")
@@ -39,7 +39,7 @@ class purchaseOrderLineLoad {
     } catch {
       case e: Exception => println("Error Executing Query")
     } finally {
-      connector closeSQLCon
+      connector closeSQLCon(conn)
     }
   }
 
@@ -52,9 +52,10 @@ class purchaseOrderLineLoad {
     def getItemNameByItemID(id:Int):String = {
         val sql: String = "SELECT * FROM nbgardensdata.item WHERE itemID =" + id + ";"
     var iN: String = null
+    val conn = connector.openSQLCon
     try {
-      connector openSQLCon
-      val rs: ResultSet = connector querySQLDB (sql)
+      
+      val rs: ResultSet = connector querySQLDB (sql, conn)
       def scanResultSet: Unit = {
         if (rs.next) {
           iN = rs getString ("itemName")
@@ -65,7 +66,7 @@ class purchaseOrderLineLoad {
     } catch {
       case e: Exception => println("Error Executing Name Query")
     } finally {
-      connector closeSQLCon
+      connector closeSQLCon(conn)
     }
     iN
   }

@@ -30,7 +30,7 @@ import scalafx.scene.paint.Color
  * @09/11/2015
  * stage that displays log in form
  */
-class LoginStage(stage: PrimaryStage) {
+class LoginNode(stage: PrimaryStage) {
   stage.setTitle("LOG IN")
 
   /**
@@ -63,7 +63,7 @@ class LoginStage(stage: PrimaryStage) {
     val logInB: Button = new Button("Log In") {
       onAction = { ae: ActionEvent =>
         if (checkLogin(userT.getText, passT.getText)) {
-          new MainStage(stage, userT.getText)
+          new MainNode(stage, userT.getText)
         }
       }
     }

@@ -17,13 +17,13 @@ import scalafx.scene.paint.Color
  * @author abutcher
  * Class that surrounds the content
  */
-class MainStage(stage: PrimaryStage, employee: String) {
+class MainNode(stage: PrimaryStage, employee: String) {
   /**
    * initialize values
    */
   val titleS: String = "NB Gardens - Warehouse Order Tracking System - "
-  stage.setTitle(titleS + "Purchase Order")
-  val label: Label = new Label("Purchase Order")
+  stage.setTitle(titleS + "Inventory")
+  val label: Label = new Label("Inventory")
   label.setFont(Font.font("Verdana", 30))
   val border: BorderPane = new BorderPane()
   val poB: Button = new Button("Purchase Orders")
@@ -49,18 +49,18 @@ class MainStage(stage: PrimaryStage, employee: String) {
   poB.onAction = { ae: ActionEvent =>
     stage.setTitle(titleS + "Purchase Orders")
     label.setText("Purchase Orders")
-    new PurchaseOrderStage(stage, employee, border).createPane(true)
+    new PurchaseOrderNode(stage, employee, border).createPane(true)
   }
   coB.onAction = { ae: ActionEvent =>
     stage.setTitle(titleS + "Customer Orders")
     label.setText("Customer Orders")
-    new CustomerOrderStage(stage, employee, border).createPane(true)
+    new CustomerOrderNode(stage, employee, border).createPane(true)
   }
 
   invB.onAction = { ae: ActionEvent =>
     stage.setTitle(titleS + "Inventory")
     label.setText("Inventory")
-    new InventoryStage(stage, employee, border).createPane
+    new InventoryNode(stage, employee, border).createPane
   }
 
   logOB.onAction = { ae: ActionEvent => stage.hide }
@@ -80,7 +80,7 @@ class MainStage(stage: PrimaryStage, employee: String) {
 
     var scene: Scene = new Scene {
       border setTop (label)
-      new PurchaseOrderStage(stage, employee, border).createPane(true)
+      new InventoryNode(stage, employee, border).createPane
       border setLeft (sideBar)
       var grid: GridPane = new GridPane
       grid setHgap (10)

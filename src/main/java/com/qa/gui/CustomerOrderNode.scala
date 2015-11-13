@@ -19,10 +19,10 @@ import javafx.geometry.Insets
 /**
  * @author abutcher
  * @date 09/11/2015
- * class thatcreates a node contains a table of customer orders
+ * class that creates a node contains a table of customer orders
  */
-class CustomerOrderStage(stage: PrimaryStage, employee: String, pane: BorderPane) {
-var layout: BorderPane = new BorderPane
+class CustomerOrderNode(stage: PrimaryStage, employee: String, pane: BorderPane) {
+  var layout: BorderPane = new BorderPane
 
   def createTable(showStored: Boolean) = {
     val col: CustomerOrderLoad = new CustomerOrderLoad
@@ -77,7 +77,7 @@ var layout: BorderPane = new BorderPane
        */
       selectB.onAction = { ae: ActionEvent =>
         val sCO: CustomerOrder = table.getSelectionModel.getSelectedItem
-        val iCOS: IndividualCustomerOrderScene = new IndividualCustomerOrderScene
+        val iCOS: IndividualCustomerOrderStage = new IndividualCustomerOrderStage
 
         iCOS.Open(sCO, employee)
       }
