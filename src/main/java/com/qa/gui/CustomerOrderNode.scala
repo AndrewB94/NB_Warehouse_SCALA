@@ -25,11 +25,10 @@ class CustomerOrderNode(stage: PrimaryStage, employee: String, pane: BorderPane)
   var layout: BorderPane = new BorderPane
 
   def createTable(showStored: Boolean) = {
-    val col: CustomerOrderLoad = new CustomerOrderLoad
-    var orders = col.getAllNotStoredCustomerOrders
+    var orders = CustomerOrderLoad.getAllNotStoredCustomerOrders
 
     if (showStored) {
-      orders = col.getAllCustomerOrders
+      orders = CustomerOrderLoad.getAllCustomerOrders
     }
 
     var table = new TableView[CustomerOrder](orders)

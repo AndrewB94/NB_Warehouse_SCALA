@@ -8,7 +8,7 @@ import scalafx.collections.ObservableBuffer
 /**
  * @author abutcher
  */
-class purchaseOrderLineLoad {
+object purchaseOrderLineLoad {
   var connector: SQL = new SQL
   var purchaseOrderLineList: ObservableBuffer[PurchaseOrderLine] = new ObservableBuffer[PurchaseOrderLine]
 

@@ -10,7 +10,7 @@ import scalafx.collections.ObservableBuffer
  * @date 06/11/2015
  * Class that uses the DB connector to manipulate customer orders
  */
-class CustomerOrderLoad {
+object CustomerOrderLoad {
   var connector: SQL = new SQL
   var customerOrderList: ObservableBuffer[CustomerOrder] = new ObservableBuffer[CustomerOrder]
 

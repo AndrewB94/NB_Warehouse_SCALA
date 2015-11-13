@@ -29,11 +29,10 @@ class PurchaseOrderNode(stage: PrimaryStage, employee: String, pane: BorderPane)
   var layout: BorderPane = new BorderPane
 
   def createTable(showStored: Boolean) = {
-    val pol: PurchaseOrderLoad = new PurchaseOrderLoad
-    var orders = pol.getAllNotStoredPurchaseOrders
+    var orders = PurchaseOrderLoad.getAllNotStoredPurchaseOrders
 
     if (showStored) {
-      orders = pol.getAllPurchaseOrders
+      orders = PurchaseOrderLoad.getAllPurchaseOrders
     }
 
     var table = new TableView[PurchaseOrder](orders)

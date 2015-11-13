@@ -8,7 +8,7 @@ import scalafx.collections.ObservableBuffer
  * @author abutcher
  * @date 09/11/201
  */
-class LogInLoad {
+object LogInLoad {
   var connector: SQL = new SQL
 
   /**

@@ -114,7 +114,6 @@ class LoginNode(stage: PrimaryStage) {
    */
   def checkLogin(username: String, password: String): Boolean = {
     val encryption: EncryptPassword = new EncryptPassword
-    val loginLoader: LogInLoad = new LogInLoad
     var returner: Boolean = true
     /**
      * check for empty user name
@@ -161,7 +160,7 @@ class LoginNode(stage: PrimaryStage) {
     /**
      * check the credentials
      */
-    if (!loginLoader.checkDetails(userID, encryptedPassword)) {
+    if (!LogInLoad.checkDetails(userID, encryptedPassword)) {
       returner = false
       /**
        * Alert the user the information given was not valid

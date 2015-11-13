@@ -31,11 +31,9 @@ class IndividualCustomerOrderStage {
     /**
      * Initialize values
      */
-    val coL: CustomerOrderLoad = new CustomerOrderLoad
-    val coll: CustomerOrderLineLoad = new CustomerOrderLineLoad
     val secondLabel: Label = new Label("Customer Order - ID: " + selectedCO.idCustomerOrder_)
     val secondaryLayout: BorderPane = new BorderPane
-    val lines = coll.getCustomerOrderLinesByCustomerOrderID(selectedCO.idCustomerOrder_)
+    val lines = CustomerOrderLineLoad.getCustomerOrderLinesByCustomerOrderID(selectedCO.idCustomerOrder_)
     var lineTable = new TableView[CustomerOrderLine](lines)
 
     /**
@@ -71,7 +69,7 @@ class IndividualCustomerOrderStage {
     datePlacedV setFont (Font.font("Arial", 20))
     val customerV: Label = new Label("" + selectedCO.customer_)
     customerV setFont (Font.font("Arial", 20))
-    val employeeV: Label = new Label(coL.getUserByID(selectedCO.employee_))
+    val employeeV: Label = new Label(CustomerOrderLoad.getUserByID(selectedCO.employee_))
     employeeV setFont (Font.font("Arial", 20))
 
     /**
@@ -189,7 +187,6 @@ class IndividualCustomerOrderStage {
      */
     def updateStatus: Unit = {
       var newStateID = 0
-      val col: CustomerOrderLoad = new CustomerOrderLoad
       selectedCO.customerOrderStatusID match {
         case 0 => newStateID = 1
         case 1 => newStateID = 2
@@ -202,14 +199,14 @@ class IndividualCustomerOrderStage {
       var alert: Alert = new Alert(AlertType.Confirmation)
       alert.setTitle("Update Status")
       alert.setHeaderText(null)
-      alert.setContentText("New status: " + col.getCustomerOrderStatusByID(newStateID) + "\nAre you ok with this?")
+      alert.setContentText("New status: " + CustomerOrderLoad.getCustomerOrderStatusByID(newStateID) + "\nAre you ok with this?")
 
       var result: Optional[javafx.scene.control.ButtonType] = alert.showAndWait()
       if (result.get() == javafx.scene.control.ButtonType.OK) {
         // ... user chose OK        
-        col.updateState(selectedCO.idCustomerOrder_, newStateID)
+        CustomerOrderLoad.updateState(selectedCO.idCustomerOrder_, newStateID)
         stage.hide
-        Open(col.getCustomerOrderByID(selectedCO.idCustomerOrder_)(0), employee)
+        Open(CustomerOrderLoad.getCustomerOrderByID(selectedCO.idCustomerOrder_)(0), employee)
       } else {
         // ... user chose CANCEL or closed the dialog
       }
@@ -220,7 +217,6 @@ class IndividualCustomerOrderStage {
      */
     def checkOut: Unit = {
       var newCheckedOut = 0
-      val col: CustomerOrderLoad = new CustomerOrderLoad
       if (selectedCO.isCheckedOut) {
         val alert: Alert = new Alert(AlertType.Error)
         alert setTitle ("Error - Can't check out")
@@ -229,10 +225,10 @@ class IndividualCustomerOrderStage {
 
         alert showAndWait
       } else {
-        col updateCheckedOut (selectedCO idCustomerOrder_, 1)
-        col.updateCheckOutBy(selectedCO idCustomerOrder_, employee)
+        CustomerOrderLoad updateCheckedOut (selectedCO idCustomerOrder_, 1)
+        CustomerOrderLoad.updateCheckOutBy(selectedCO idCustomerOrder_, employee)
         stage.hide
-        Open(col.getCustomerOrderByID(selectedCO idCustomerOrder_)(0), employee)
+        Open(CustomerOrderLoad.getCustomerOrderByID(selectedCO idCustomerOrder_)(0), employee)
       }
     }
 
@@ -241,11 +237,10 @@ class IndividualCustomerOrderStage {
      */
     def checkIn: Unit = {
       var newCheckedOut = 0
-      val col: CustomerOrderLoad = new CustomerOrderLoad
       if (selectedCO.isCheckedOut) {
-        col.updateCheckedOut(selectedCO.idCustomerOrder_, 0)
+        CustomerOrderLoad.updateCheckedOut(selectedCO.idCustomerOrder_, 0)
         stage.hide
-        Open(col.getCustomerOrderByID(selectedCO idCustomerOrder_)(0), employee)
+        Open(CustomerOrderLoad.getCustomerOrderByID(selectedCO idCustomerOrder_)(0), employee)
       } else {
       }
     }

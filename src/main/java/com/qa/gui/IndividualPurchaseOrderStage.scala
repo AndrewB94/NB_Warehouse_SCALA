@@ -34,11 +34,9 @@ class IndividualPurchaseOrderStage {
     /**
      * Initialize values
      */
-    val coL: CustomerOrderLoad = new CustomerOrderLoad
     val secondLabel: Label = new Label("Purchase Order - ID: " + selectedPO.idPurchaseOrder_)
     val secondaryLayout: BorderPane = new BorderPane
-    val poll: purchaseOrderLineLoad = new purchaseOrderLineLoad
-    val lines = poll.getPurchaseOrderLinesByPurchaseOrderID(selectedPO.idPurchaseOrder_)
+    val lines = purchaseOrderLineLoad.getPurchaseOrderLinesByPurchaseOrderID(selectedPO.idPurchaseOrder_)
     var lineTable = new TableView[PurchaseOrderLine](lines)
 
     /**
@@ -78,7 +76,7 @@ class IndividualPurchaseOrderStage {
     dateDeliveredV setFont (Font.font("Arial", 20))
     val supplierV: Label = new Label(selectedPO.supplier_)
     supplierV setFont (Font.font("Arial", 20))
-    val employeeV: Label = new Label(coL.getUserByID(selectedPO.employee))
+    val employeeV: Label = new Label(CustomerOrderLoad.getUserByID(selectedPO.employee))
     employeeV setFont (Font.font("Arial", 20))
 
     /**
@@ -189,14 +187,13 @@ class IndividualPurchaseOrderStage {
      */
     def updateStatus: Unit = {
       var newStateID = 0
-      val pol: PurchaseOrderLoad = new PurchaseOrderLoad
       selectedPO.idStatus match {
         case 0 => newStateID = 1
         case 1 => newStateID = 2
         case 2 => {
           newStateID = 3
           //TODO update no of damaged
-          pol.updateDeliverd(selectedPO.idPurchaseOrder_)
+          PurchaseOrderLoad.updateDeliverd(selectedPO.idPurchaseOrder_)
         }
         case _ => {
           //TODO add item to inventory Lines
@@ -207,14 +204,14 @@ class IndividualPurchaseOrderStage {
       var alert: Alert = new Alert(AlertType.Confirmation)
       alert.setTitle("Update Status")
       alert.setHeaderText(null)
-      alert.setContentText("New status: " + pol.getPurchaseOrderStatusByID(newStateID) + "\nAre you ok with this?")
+      alert.setContentText("New status: " + PurchaseOrderLoad.getPurchaseOrderStatusByID(newStateID) + "\nAre you ok with this?")
 
       var result: Optional[javafx.scene.control.ButtonType] = alert.showAndWait()
       if (result.get() == javafx.scene.control.ButtonType.OK) {
         // ... user chose OK        
-        pol.upadteState(selectedPO.idPurchaseOrder_, newStateID)
+        PurchaseOrderLoad.upadteState(selectedPO.idPurchaseOrder_, newStateID)
         stage.hide
-        Open(pol.getPurchaseOrderByID(selectedPO.idPurchaseOrder_)(0), employee)
+        Open(PurchaseOrderLoad.getPurchaseOrderByID(selectedPO.idPurchaseOrder_)(0), employee)
 
         if (newStateID == 4) {
           val storer:LocationStage = new LocationStage
@@ -230,7 +227,6 @@ class IndividualPurchaseOrderStage {
      */
     def checkOut: Unit = {
       var newCheckedOut = 0
-      val pol: PurchaseOrderLoad = new PurchaseOrderLoad
       if (selectedPO.isCheckedOut) {
         val alert: Alert = new Alert(AlertType.Error)
         alert setTitle ("Error - Can't check out")
@@ -239,10 +235,10 @@ class IndividualPurchaseOrderStage {
 
         alert showAndWait
       } else {
-        pol updateCheckedOut (selectedPO idPurchaseOrder_, 1)
-        pol.updateCheckOutBy(selectedPO idPurchaseOrder_, employee)
+        PurchaseOrderLoad updateCheckedOut (selectedPO idPurchaseOrder_, 1)
+        PurchaseOrderLoad.updateCheckOutBy(selectedPO idPurchaseOrder_, employee)
         stage.hide
-        Open(pol.getPurchaseOrderByID(selectedPO idPurchaseOrder_)(0), employee)
+        Open(PurchaseOrderLoad.getPurchaseOrderByID(selectedPO idPurchaseOrder_)(0), employee)
       }
     }
 
@@ -251,11 +247,10 @@ class IndividualPurchaseOrderStage {
      */
     def checkIn: Unit = {
       var newCheckedOut = 0
-      val pol: PurchaseOrderLoad = new PurchaseOrderLoad
       if (selectedPO.isCheckedOut) {
-        pol.updateCheckedOut(selectedPO.idPurchaseOrder_, 0)
+        PurchaseOrderLoad.updateCheckedOut(selectedPO.idPurchaseOrder_, 0)
         stage.hide
-        Open(pol.getPurchaseOrderByID(selectedPO.idPurchaseOrder_)(0), employee)
+        Open(PurchaseOrderLoad.getPurchaseOrderByID(selectedPO.idPurchaseOrder_)(0), employee)
       } else {
       }
     }

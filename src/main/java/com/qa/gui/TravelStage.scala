@@ -40,8 +40,6 @@ class TravelScene {
       Array(3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,3))
   
   def getScene(selectedCO: CustomerOrder, stage: Stage, employee: String): Node = {
-    val coL: CustomerOrderLoad = new CustomerOrderLoad
-    val coll: CustomerOrderLineLoad = new CustomerOrderLineLoad
     val layout: BorderPane = new BorderPane
     val label: Label = new Label("Customer Order - ID: " + selectedCO.idCustomerOrder_)
     
