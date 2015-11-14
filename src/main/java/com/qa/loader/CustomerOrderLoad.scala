@@ -148,8 +148,13 @@ object CustomerOrderLoad {
     }
   }
 
-  def updateCheckedOut(orderID: Int, newCheckedOut: Int) = {
-    val sql: String = "UPDATE `nbgardensdata`.`customerorder` SET `isCheckedOut`='" + newCheckedOut + "' WHERE `idcustomerorder`='" + orderID + "';"
+  def updateCheckedOut(orderID: Int, newCheckedOut: Boolean) = {
+    var checkedOutInt = 1
+    if (newCheckedOut) {
+      var checkedOutInt = 0
+    }
+
+    val sql: String = "UPDATE `nbgardensdata`.`customerorder` SET `isCheckedOut`='" + checkedOutInt + "' WHERE `idcustomerorder`='" + orderID + "';"
     val conn = connector.openSQLCon
     try {
       connector updateSQLDB (sql, conn)
@@ -160,7 +165,7 @@ object CustomerOrderLoad {
     }
   }
 
-  def updateCheckOutBy(orderID: Int, employeeID: String) = {
+  def updateCheckOutBy(orderID: Int, employeeID: Int) = {
     println(employeeID)
     val sql: String = "UPDATE `nbgardensdata`.`customerorder` SET `idEmployee`='" + employeeID + "' WHERE `idcustomerorder`='" + orderID + "';"
     val conn = connector.openSQLCon

@@ -225,8 +225,8 @@ class IndividualCustomerOrderStage {
 
         alert showAndWait
       } else {
-        CustomerOrderLoad updateCheckedOut (selectedCO idCustomerOrder_, 1)
-        CustomerOrderLoad.updateCheckOutBy(selectedCO idCustomerOrder_, employee)
+        CustomerOrderLoad updateCheckedOut (selectedCO idCustomerOrder_, true)
+        CustomerOrderLoad.updateCheckOutBy(selectedCO idCustomerOrder_, Integer.parseInt(employee))
         stage.hide
         Open(CustomerOrderLoad.getCustomerOrderByID(selectedCO idCustomerOrder_)(0), employee)
       }
@@ -238,7 +238,7 @@ class IndividualCustomerOrderStage {
     def checkIn: Unit = {
       var newCheckedOut = 0
       if (selectedCO.isCheckedOut) {
-        CustomerOrderLoad.updateCheckedOut(selectedCO.idCustomerOrder_, 0)
+        CustomerOrderLoad.updateCheckedOut(selectedCO.idCustomerOrder_, false)
         stage.hide
         Open(CustomerOrderLoad.getCustomerOrderByID(selectedCO idCustomerOrder_)(0), employee)
       } else {
