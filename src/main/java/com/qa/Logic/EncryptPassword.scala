@@ -20,37 +20,40 @@ object EncryptPassword {
    * @param passwordString: Takes on a string to convert into SHA1
    * @return returns string encrypted in SHA1
    */
-  def checkSHA1(passwordString: String): String = {
-    var crypt: MessageDigest = null;
+  def convertToSHA1(passwordString: String): String = {
+    var crypt: MessageDigest = null
     try {
-      crypt = MessageDigest.getInstance("SHA1");
+      crypt = MessageDigest.getInstance("SHA1")
     } catch {
       case e: Exception => println("Error")
     }
-    crypt.reset();
+    crypt.reset()
     try {
-      crypt.update(passwordString.getBytes("UTF-8"));
+      crypt.update(passwordString.getBytes("UTF-8"))
     } catch {
       case e: Exception => println("Error")
     }
-    var sha1: String = byteToHex(crypt.digest());
 
+
+    /**
+     * function to turn an array of bytes into hexidecimal format
+     * @param Arra[scala.Byte] the array to be converted
+     * @return result the result of the conversion as a string
+     */
+    def byteToHex(hash: Array[scala.Byte]): String = {
+      val formatter: Formatter = new Formatter()
+
+      for (b <- hash) {
+        formatter format ("%02x", b.asInstanceOf[Object])
+      }
+      val result: String = formatter.toString()
+      formatter.close()
+      result
+    }
+
+        var sha1: String = byteToHex(crypt.digest())
+    
     return sha1;
   }
 
-  /**
-   * function to turn an array of bytes into hexidecimal format
-   * @param Arra[scala.Byte] the array to be converted
-   * @return result the result of the conversion as a string
-   */
-  def byteToHex(hash: Array[scala.Byte]): String = {
-    val formatter: Formatter = new Formatter()
-
-    for (b <- hash) {
-      formatter format ("%02x", b.asInstanceOf[Object])
-    }
-    val result: String = formatter.toString()
-    formatter.close()
-    result
-  }
 }

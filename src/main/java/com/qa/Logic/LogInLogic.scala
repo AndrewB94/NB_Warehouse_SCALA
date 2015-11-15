@@ -10,26 +10,16 @@ import com.qa.Loader.LogInLoad
  * @author abutcher
  */
 object LogInLogic {
-  def checkLoginEntered(user: TextField, password: PasswordField): Boolean = {
+  def checkLoginEntered(user: String, password: String): Boolean = {
     var returner: Boolean = true
-
-    var string = ""
-
-    if (user.getText.equals("")) {
+    if (user.equals("")) {
       returner = false
-      string = string + "Please enter a user"
     }
 
-    if (password.getText.equals("")) {
+    if (password.equals("")) {
       returner = false
-      string = string + "\nPlease enter a password"
     }
     if (!returner) {
-      val alert: Alert = new Alert(AlertType.Information)
-      alert.setTitle("Information")
-      alert.setHeaderText(null)
-      alert setContentText (string)
-      alert showAndWait ()
     }
     returner
   }
@@ -43,15 +33,9 @@ object LogInLogic {
 
     var returner = true
     val userID: Int = Integer.parseInt(username)
-    val encryptedPassword: String = EncryptPassword.checkSHA1(password)
+    val encryptedPassword: String = EncryptPassword.convertToSHA1(password)
     if (!LogInLoad.checkDetails(userID, encryptedPassword)) {
       returner = false
-      val alert: Alert = new Alert(AlertType.Information);
-      alert.setTitle("Information");
-      alert.setHeaderText(null);
-      alert.setContentText("Incorrect user name or password");
-
-      alert.showAndWait()
     }
     returner
   }

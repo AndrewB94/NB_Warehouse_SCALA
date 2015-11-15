@@ -9,6 +9,6 @@ import com.qa.Logic.EncryptPassword
  */
 object PasswordToEncrypt {
   def main(args: Array[String]) {
-    println(EncryptPassword.checkSHA1("1"))
+    println(EncryptPassword.convertToSHA1("Hello"))
   }
 }

@@ -170,7 +170,6 @@ object PurchaseOrderLoad {
   }
 
   def updateCheckOutBy(purchaseOrderID: Int, employeeID: Int) = {
-    println(employeeID)
     val sql: String = "UPDATE `nbgardensdata`.`purchaseorder` SET `idEmployee`='" + employeeID + "' WHERE `idpurchaseorder`='" + purchaseOrderID + "';"
     val conn = connector.openSQLCon
     try {
