@@ -23,15 +23,17 @@ import javafx.geometry.Insets
  */
 object CustomerOrderNode {
 
+  /**
+   * Function to create a table of customer orders
+   * @param showStored : Boolean show dispatched or not
+   * @return TableView[CustomerOrder]
+   */
   private def createTable(showStored: Boolean) = {
     var orders = CustomerOrderLoad.getAllNotDispatchedCustomerOrders
 
     if (showStored) {
       orders = CustomerOrderLoad.getAllCustomerOrders
     }
-    /**
-     * set up table collumns
-     */
     var idColumn = new TableColumn[CustomerOrder, String] {
       text = "ID"
       cellValueFactory = { _.value id }
@@ -56,15 +58,20 @@ object CustomerOrderNode {
       prefWidth = 200
     }
 
-    /**
-     * Create table and add collumns to it
-     */
     val table = new TableView[CustomerOrder](orders) {
       columns ++= List(idColumn, statusCollumn, customerCollumn, datePlacedCollumn)
     }
     table
   }
 
+  /**
+   * Function create a HBox containning buttons
+   * @param table : TableView the table to select
+   * @param employee : String employee currently logged in
+   * @param border : BorderPane to add HBox too
+   * @param showStored : Boolean show dispatched or not
+   * @return HBox : containing buttons
+   */
   private def addButtons(table: TableView[CustomerOrder], employee: String, pane: BorderPane, showStored: Boolean): HBox = {
     val selectB: Button = new Button("Select Order")
     val toggleB: Button = new Button("Show/Hide - Stored Orders")
@@ -88,6 +95,12 @@ object CustomerOrderNode {
     box
   }
 
+  /**
+   * Function to add all the content to the main pane
+      * @param employee : String employee currently logged in
+   * @param showStored : Boolean show dispatched or not
+   * @return BorderPane
+   */
   private def createLayout(showStored: Boolean, pane: BorderPane, employee: String): BorderPane = {
     var layout: BorderPane = new BorderPane
     val table: TableView[CustomerOrder] = createTable(showStored)

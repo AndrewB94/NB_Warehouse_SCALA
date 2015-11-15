@@ -24,15 +24,12 @@ import com.qa.Entities.Item
 object InventoryNode {
   var layout: BorderPane = new BorderPane
 
-  def createTable() = {
-    
+     /**
+   * Function to create a table of customer items
+   */
+  def createTable() = { 
     var orders = ItemLoad.getAllItems
-
     var table = new TableView[Item](orders)
-
-    /**
-     * set up table collumns
-     */
     var idColumn = new TableColumn[Item, String] {
       text = "ID"
       cellValueFactory = { _.value id }
@@ -57,9 +54,6 @@ object InventoryNode {
       prefWidth = 200
     }
 
-    /**
-     * Create table and add collumns to it
-     */
     table = new TableView[Item](orders) {
       columns ++= List(idColumn, statusCollumn, customerCollumn, datePlacedCollumn)
     }

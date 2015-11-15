@@ -33,17 +33,15 @@ import com.qa.Logic.PurchaseOrderLogic
  * class for creating a frame for displaying purchase orders
  */
 object IndividualPurchaseOrderStage {
-  def getScene(selectedPO: PurchaseOrder, stage: Stage, employee: String): Node = {
+  
     /**
-     * Initialize values
-     */
+   * Function to create the scene for a purchase order
+   */
+  def getScene(selectedPO: PurchaseOrder, stage: Stage, employee: String): Node = {
     val secondaryLayout: BorderPane = new BorderPane
     val secondLabel: Label = new Label("Purchase Order - ID: " + selectedPO.idPurchaseOrder_)
     secondLabel setFont (Font.font("Verdana", 30))
 
-    /**
-     * add components to border pane
-     */
     secondaryLayout.top = secondLabel
     secondaryLayout.center = createContentPane(selectedPO, stage, employee)
 
@@ -55,11 +53,11 @@ object IndividualPurchaseOrderStage {
     grid
   }
 
-  def createTable(selectedPO: PurchaseOrder, lines: ObservableBuffer[PurchaseOrderLine]): TableView[PurchaseOrderLine] = {
     /**
-     * set up table columns
-     */
-    var itemIDCollumn = new TableColumn[PurchaseOrderLine, String] {
+   * Function to create a table of customer order lines
+   */
+  def createTable(selectedPO: PurchaseOrder, lines: ObservableBuffer[PurchaseOrderLine]): TableView[PurchaseOrderLine] = {
+       var itemIDCollumn = new TableColumn[PurchaseOrderLine, String] {
       text = "Item ID"
       cellValueFactory = { _.value itemID }
       prefWidth = 100
@@ -83,19 +81,16 @@ object IndividualPurchaseOrderStage {
       prefWidth = 250
     }
 
-    /**
-     * Create table and add collumns to it
-     */
     val lineTable = new TableView[PurchaseOrderLine](lines) {
       columns ++= List(itemIDCollumn, itemNmaeCollumn, quantityCollumn, quantityDamagedCollumn)
     }
     lineTable
   }
 
-  def createButtonPane(selectedPO: PurchaseOrder, stage: Stage, employee: String, lines: ObservableBuffer[PurchaseOrderLine]): Node = {
     /**
-     * Initialize values
-     */
+   * function to create a gridPane containig control buttons
+   */
+  def createButtonPane(selectedPO: PurchaseOrder, stage: Stage, employee: String, lines: ObservableBuffer[PurchaseOrderLine]): Node = {
     val grid: GridPane = new GridPane
     grid setHgap (10)
     grid setVgap (10)
@@ -125,9 +120,6 @@ object IndividualPurchaseOrderStage {
     if (selectedPO.isCheckedOut)
       closeB.setDisable(true)
 
-    /**
-     * add componenents to grid pane
-     */
     grid.add(checkInB, 1, 1)
     grid.add(checkOutB, 2, 1)
     grid.add(updateB, 1, 2)
@@ -135,6 +127,9 @@ object IndividualPurchaseOrderStage {
     grid
   }
 
+  /**
+ * Function to create the content for the frame
+ */
   def createContentPane(selectedPO: PurchaseOrder, stage: Stage, employee:String): GridPane = {
     val lines = PurchaseOrderLineLoad.getPurchaseOrderLinesByPurchaseOrderID(selectedPO.idPurchaseOrder_)
     val contentPane: GridPane = new GridPane
@@ -143,9 +138,6 @@ object IndividualPurchaseOrderStage {
     contentPane setVgap (10);
     contentPane setPadding (new Insets(0, 10, 0, 10));
 
-    /**
-     * Set up labels
-     */
     val idLabel: Label = new Label("ID:")
     idLabel setFont (Font.font("Arial", FontWeight.BOLD, 20))
     val statusL: Label = new Label("Status:")
@@ -159,9 +151,6 @@ object IndividualPurchaseOrderStage {
     val employeeL: Label = new Label("Last Checked Out By:")
     employeeL setFont (Font.font("Arial", FontWeight.BOLD, 20))
 
-    /**
-     * Set up value labels
-     */
     val idV: Label = new Label("" + selectedPO.idPurchaseOrder_)
     idV setFont (Font.font("Arial", 20))
     val statusV: Label = new Label(selectedPO.purchaseOrderStatus_)
@@ -175,9 +164,6 @@ object IndividualPurchaseOrderStage {
     val employeeV: Label = new Label(CustomerOrderLoad.getUserByID(selectedPO.employee))
     employeeV setFont (Font.font("Arial", 20))
 
-    /**
-     * add componenents to grid pane
-     */
     contentPane add (idLabel, 1, 1)
     contentPane add (statusL, 1, 2)
     contentPane add (datePlacedL, 1, 3)
@@ -200,10 +186,6 @@ object IndividualPurchaseOrderStage {
    * open a new frame showing a purchase order's details
    */
   def Open(selectedPO: PurchaseOrder, employee: String): Unit = {
-    /**
-     * set up and show stage
-     */
-
     val secondScene: Scene = new Scene
     secondScene stylesheets = List(getClass.getResource("/controlStyle2.css").toExternalForm)
     secondScene.fill = Color.rgb(109, 158, 104)

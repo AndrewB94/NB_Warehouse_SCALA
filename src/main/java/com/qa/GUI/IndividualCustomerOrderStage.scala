@@ -34,15 +34,16 @@ import com.qa.Entities.CustomerOrder
  * An object that displays all the information about a customer order
  */
 object IndividualCustomerOrderStage {
+  
+  /**
+   * Function to create the scene for a customer order
+   */
   def getScene(selectedCO: CustomerOrder, stage: Stage, employee: String): Node = {
 
     val secondaryLayout: BorderPane = new BorderPane
     val secondLabel: Label = new Label("Purchase Order - ID: " + selectedCO.idCustomerOrder_)
     secondLabel setFont (Font.font("Verdana", 30))
 
-    /**
-     * add components to border pane
-     */
     secondaryLayout.top = secondLabel
     secondaryLayout.center = createContentPane(selectedCO, stage, employee)
 
@@ -55,10 +56,11 @@ object IndividualCustomerOrderStage {
 
   }
 
+  /**
+   * Function to create a table of customer order lines
+   */
   def createTable(SelectedCO: CustomerOrder, lines: ObservableBuffer[CustomerOrderLine]): TableView[CustomerOrderLine] = {
-    /**
-     * set up table columns
-     */
+
     var itemIDCollumn = new TableColumn[CustomerOrderLine, String] {
       text = "Item ID"
       cellValueFactory = { _.value itemID }
@@ -77,18 +79,16 @@ object IndividualCustomerOrderStage {
       prefWidth = 200
     }
 
-    /**
-     * Create table and add collumns to it
-     */
     val lineTable = new TableView[CustomerOrderLine](lines) {
       columns ++= List(itemIDCollumn, itemNmaeCollumn, quantityCollumn)
     }
     lineTable
   }
+  
+  /**
+   * function to create a gridPane containig control buttons
+   */
   def createButtonPane(selectedCO: CustomerOrder, stage: Stage, employee: String): GridPane = {
-    /**
-     * Initialize values
-     */
     val grid: GridPane = new GridPane
     grid setHgap (10)
     grid setVgap (10)
@@ -99,20 +99,12 @@ object IndividualCustomerOrderStage {
     val checkInB: Button = new Button("Check In Order")
     val checkOutB: Button = new Button("Check Out Order")
 
-    /**
-     * set up action event on buttons
-     */
-    travelB onAction = { ae: ActionEvent =>
-      TravelScene.open(selectedCO, employee)
-    }
+    travelB onAction = { ae: ActionEvent => TravelScene.open(selectedCO, employee)    }
     closeB onAction = { ae: ActionEvent => stage.hide }
     updateB onAction = { ae: ActionEvent => CustomerOrderLogic.updateStatus(selectedCO, stage, employee) }
     checkOutB onAction = { ae: ActionEvent => CustomerOrderLogic.checkOut(selectedCO, stage, employee) }
     checkInB onAction = { ae: ActionEvent => CustomerOrderLogic.checkIn(selectedCO, stage, employee) }
 
-    /**
-     * Disable/Enable buttons
-     */
     if (!selectedCO.isCheckedOut)
       checkInB.setDisable(true)
 
@@ -131,38 +123,27 @@ object IndividualCustomerOrderStage {
     checkOutB.prefWidth = 250
     updateB.prefWidth = 250
 
-    /**
-     * add componenents to grid pane
-     */
     grid.add(travelB, 1, 1, 2, 1)
     grid.add(checkInB, 1, 2)
     grid.add(checkOutB, 2, 2)
     grid.add(updateB, 1, 3)
     grid.add(closeB, 2, 3)
     grid
-
   }
-
+/**
+ * Function to create the content for the frame
+ */
   def createContentPane(selectedCO: CustomerOrder, stage: Stage, employee: String): GridPane = {
-    /**
-     * Initialize values
-     */
     val secondLabel: Label = new Label("Customer Order - ID: " + selectedCO.idCustomerOrder_)
     val secondaryLayout: BorderPane = new BorderPane
     val lines = CustomerOrderLineLoad.getCustomerOrderLinesByCustomerOrderID(selectedCO.idCustomerOrder_)
     val lineTable = createTable(selectedCO, lines)
 
-    /**
-     * set up grid pane
-     */
     val contentPane: GridPane = new GridPane
     contentPane setHgap (10)
     contentPane setVgap (10)
     contentPane setPadding (new Insets(0, 10, 0, 10))
 
-    /**
-     * Set up labels
-     */
     val idLabel: Label = new Label("ID:")
     idLabel setFont (Font.font("Arial", FontWeight.BOLD, 20))
     val statusL: Label = new Label("Status:")
@@ -174,9 +155,6 @@ object IndividualCustomerOrderStage {
     val employeeL: Label = new Label("Last Checked Out By:")
     employeeL setFont (Font.font("Arial", FontWeight.BOLD, 20))
 
-    /**
-     * Set up value labels
-     */
     val idV: Label = new Label("" + selectedCO.idCustomerOrder_)
     idV setFont (Font.font("Arial", 20))
     val statusV: Label = new Label(selectedCO.customerOrderStatus_)
@@ -188,9 +166,6 @@ object IndividualCustomerOrderStage {
     val employeeV: Label = new Label(CustomerOrderLoad.getUserByID(selectedCO.employee_))
     employeeV setFont (Font.font("Arial", 20))
 
-    /**
-     * add componenents to grid pane
-     */
     contentPane add (idLabel, 1, 1)
     contentPane add (statusL, 1, 2)
     contentPane add (datePlacedL, 1, 3)
@@ -213,9 +188,6 @@ object IndividualCustomerOrderStage {
    * open a new frame showing a purchase order's details
    */
   def Open(selectedCO: CustomerOrder, employee: String): Unit = {
-    /**
-     * set up and show stage
-     */
     val secondScene: Scene = new Scene
     secondScene stylesheets = List(getClass.getResource("/controlStyle2.css").toExternalForm)
     secondScene.fill = Color.rgb(109, 158, 104)
