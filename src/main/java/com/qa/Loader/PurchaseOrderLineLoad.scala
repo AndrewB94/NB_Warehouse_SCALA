@@ -4,23 +4,24 @@ import com.qa.DBConnector.SQL
 import com.qa.Entities.PurchaseOrderLine
 import java.sql.ResultSet
 import scalafx.collections.ObservableBuffer
+import java.sql.Connection
 
 /**
  * @author abutcher
  */
 object PurchaseOrderLineLoad {
   var connector: SQL = new SQL
-  var purchaseOrderLineList: ObservableBuffer[PurchaseOrderLine] = new ObservableBuffer[PurchaseOrderLine]
 
   /**
    * Function to iterate through a result set and create purchase order entities
    * @param sql String to be executed
    */
-  def constructResults(sql: String) = {
+  def constructResults(sql: String):ObservableBuffer[PurchaseOrderLine] = {
 
-    purchaseOrderLineList clear ()
+    var purchaseOrderLineList: ObservableBuffer[PurchaseOrderLine] = new ObservableBuffer[PurchaseOrderLine]
+
     val conn = connector.openSQLCon
-    try {     
+    try {
       val rs: ResultSet = connector querySQLDB (sql, conn)
       def scanResultSet: Unit = {
         if (rs.next) {
@@ -39,22 +40,22 @@ object PurchaseOrderLineLoad {
     } catch {
       case e: Exception => println("Error Executing Query")
     } finally {
-      connector closeSQLCon(conn)
+      connector closeSQLCon (conn)
     }
+    purchaseOrderLineList
   }
 
   def getPurchaseOrderLinesByPurchaseOrderID(id: Int): ObservableBuffer[PurchaseOrderLine] = {
     val sql: String = "SELECT * FROM nbgardensdata.purchaseorderline WHERE idpurchaseorder =" + id + ";"
     constructResults(sql)
-    purchaseOrderLineList
   }
-  
-    def getItemNameByItemID(id:Int):String = {
-        val sql: String = "SELECT * FROM nbgardensdata.item WHERE itemID =" + id + ";"
+
+  def getItemNameByItemID(id: Int): String = {
+    val sql: String = "SELECT * FROM nbgardensdata.item WHERE itemID =" + id + ";"
     var iN: String = null
     val conn = connector.openSQLCon
     try {
-      
+
       val rs: ResultSet = connector querySQLDB (sql, conn)
       def scanResultSet: Unit = {
         if (rs.next) {
@@ -66,7 +67,7 @@ object PurchaseOrderLineLoad {
     } catch {
       case e: Exception => println("Error Executing Name Query")
     } finally {
-      connector closeSQLCon(conn)
+      connector closeSQLCon (conn)
     }
     iN
   }

@@ -13,8 +13,7 @@ import java.lang.Byte
  * @date 09/11/201
  * class to encrypt passwords
  */
-class EncryptPassword {
-  var crypt: MessageDigest = null;
+object EncryptPassword {
 
   /**
    * Function to convert a given string into SHA1 for comparison against SHA1 password stored in MySQL database
@@ -22,7 +21,7 @@ class EncryptPassword {
    * @return returns string encrypted in SHA1
    */
   def checkSHA1(passwordString: String): String = {
-
+    var crypt: MessageDigest = null;
     try {
       crypt = MessageDigest.getInstance("SHA1");
     } catch {

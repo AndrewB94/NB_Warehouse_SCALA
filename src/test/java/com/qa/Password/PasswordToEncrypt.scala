@@ -8,8 +8,7 @@ import com.qa.Logic.EncryptPassword
  * A claas with a main for converting a string into SHA1 encryption and then printing out the result for entry into database
  */
 object PasswordToEncrypt {
-    def main(args: Array[String]) {
-    val e:EncryptPassword = new EncryptPassword
-    println(e.checkSHA1("1"))
+  def main(args: Array[String]) {
+    println(EncryptPassword.checkSHA1("1"))
   }
 }

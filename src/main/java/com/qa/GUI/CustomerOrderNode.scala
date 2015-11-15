@@ -25,7 +25,7 @@ class CustomerOrderNode(stage: PrimaryStage, employee: String, pane: BorderPane)
   var layout: BorderPane = new BorderPane
 
   def createTable(showStored: Boolean) = {
-    var orders = CustomerOrderLoad.getAllNotStoredCustomerOrders
+    var orders = CustomerOrderLoad.getAllNotDispatchedCustomerOrders
 
     if (showStored) {
       orders = CustomerOrderLoad.getAllCustomerOrders

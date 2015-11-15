@@ -63,7 +63,7 @@ object CustomerOrderLoad {
    * function that retrieves all the customer orders in the database excluding dispatched orders
    * @return purchaseOrderLine an observable buffer containing every customer order
    */
-  def getAllNotStoredCustomerOrders: ObservableBuffer[CustomerOrder] = {
+  def getAllNotDispatchedCustomerOrders: ObservableBuffer[CustomerOrder] = {
     val sql: String = "SELECT * FROM nbgardensdata.customerorder WHERE idCustomerOrderStatus !=6"
     constructResults(sql)
   }
@@ -153,7 +153,6 @@ object CustomerOrderLoad {
     if (newCheckedOut) {
       var checkedOutInt = 0
     }
-
     val sql: String = "UPDATE `nbgardensdata`.`customerorder` SET `isCheckedOut`='" + checkedOutInt + "' WHERE `idcustomerorder`='" + orderID + "';"
     val conn = connector.openSQLCon
     try {
@@ -166,7 +165,6 @@ object CustomerOrderLoad {
   }
 
   def updateCheckOutBy(orderID: Int, employeeID: Int) = {
-    println(employeeID)
     val sql: String = "UPDATE `nbgardensdata`.`customerorder` SET `idEmployee`='" + employeeID + "' WHERE `idcustomerorder`='" + orderID + "';"
     val conn = connector.openSQLCon
     try {

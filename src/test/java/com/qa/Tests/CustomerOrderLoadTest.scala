@@ -22,7 +22,7 @@ class CustomerOrderLoadTest extends TestBase {
   }
 
   it should "create an observable buffer of customer orders not including dispatched orders" in {
-    val result = CustomerOrderLoad.getAllNotStoredCustomerOrders
+    val result = CustomerOrderLoad.getAllNotDispatchedCustomerOrders
     assert(result.isInstanceOf[ObservableBuffer[CustomerOrder]])
     var i = 0
     var isNotDispatched = true

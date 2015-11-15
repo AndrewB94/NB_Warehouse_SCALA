@@ -209,7 +209,7 @@ class IndividualPurchaseOrderStage {
       var result: Optional[javafx.scene.control.ButtonType] = alert.showAndWait()
       if (result.get() == javafx.scene.control.ButtonType.OK) {
         // ... user chose OK        
-        PurchaseOrderLoad.upadteState(selectedPO.idPurchaseOrder_, newStateID)
+        PurchaseOrderLoad.updateState(selectedPO.idPurchaseOrder_, newStateID)
         stage.hide
         Open(PurchaseOrderLoad.getPurchaseOrderByID(selectedPO.idPurchaseOrder_)(0), employee)
 
@@ -235,8 +235,8 @@ class IndividualPurchaseOrderStage {
 
         alert showAndWait
       } else {
-        PurchaseOrderLoad updateCheckedOut (selectedPO idPurchaseOrder_, 1)
-        PurchaseOrderLoad.updateCheckOutBy(selectedPO idPurchaseOrder_, employee)
+        PurchaseOrderLoad updateCheckedOut (selectedPO idPurchaseOrder_, true)
+        PurchaseOrderLoad.updateCheckOutBy(selectedPO idPurchaseOrder_, Integer.parseInt(employee))
         stage.hide
         Open(PurchaseOrderLoad.getPurchaseOrderByID(selectedPO idPurchaseOrder_)(0), employee)
       }
@@ -248,7 +248,7 @@ class IndividualPurchaseOrderStage {
     def checkIn: Unit = {
       var newCheckedOut = 0
       if (selectedPO.isCheckedOut) {
-        PurchaseOrderLoad.updateCheckedOut(selectedPO.idPurchaseOrder_, 0)
+        PurchaseOrderLoad.updateCheckedOut(selectedPO.idPurchaseOrder_, false)
         stage.hide
         Open(PurchaseOrderLoad.getPurchaseOrderByID(selectedPO.idPurchaseOrder_)(0), employee)
       } else {
