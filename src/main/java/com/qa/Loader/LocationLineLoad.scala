@@ -13,6 +13,11 @@ import java.sql.ResultSet
 object LocationLineLoad {
   var connector: SQL = new SQL
 
+  /**
+ * Function to iterate through a result set and create Location Line entities
+ * @param sql : String to be executed
+ * @return  ObservableBuffer[LocationLine]
+   */
   def constructResults(sql: String): ObservableBuffer[LocationLine] = {
     var LocationList: ObservableBuffer[LocationLine] = new ObservableBuffer[LocationLine]
     val conn = connector.openSQLCon
@@ -39,16 +44,35 @@ object LocationLineLoad {
     LocationList
   }
 
+  /**
+   * Function to return all the locations an item is stored
+   * @param id : Int the id of the item to find
+   * @return  ObservableBuffer[LocationLine] of locationLines
+   */
   def getLocationLineByItemID(id: Int): ObservableBuffer[LocationLine] = {
     val sql: String = "SELECT * FROM nbgardensdata.locationline WHERE idItem =" + id + ";"
     constructResults(sql)
   }
 
+    /**
+   * Function to return a location if a specific item is stored there
+   * @param itemID : Int the id of the item to find
+   * @param x : String x coordinate
+   * @param y : String y coordinate
+   * @return  ObservableBuffer[LocationLine] of locationLine
+   */
   def getLocationLineByItemIDandLoaction(itemID: Int, x: String, y: String): ObservableBuffer[LocationLine] = {
     val sql: String = "SELECT * FROM nbgardensdata.locationline WHERE idItem =" + itemID + " && locationX =" + x + " && locationY = " + y + ";"
     constructResults(sql)
   }
-
+  
+    /**
+   * Function to check if a location has a specific item is stored there
+   * @param itemID : Int the id of the item to find
+   * @param x : String x coordinate
+   * @param y : String y coordinate
+   * @return  Int : 0 if not found
+   */
   def checkLocationLineIDByItemIDandLoaction(itemID: Int, x: String, y: String): Int = {
     val sql: String = "SELECT * FROM nbgardensdata.locationline WHERE idItem =" + itemID + " && locationX =" + x + " && locationY = " + y + ";"
     var id = 0
@@ -70,6 +94,13 @@ object LocationLineLoad {
     id
   }
 
+  /**
+   * Function update a location lines quantity
+   * @param itemID : Int the id of the item to find
+   * @param x : Int x coordinate
+   * @param y : Int y coordinate
+   * @param newQuantity : the new quantity of the line
+     */
   def updateQuantity(lineX: Int, lineY: Int, itemID: Int, newQuantity: Int) = {
     val sql: String = "UPDATE `nbgardensdata`.`locationline` SET `quantity`='" + newQuantity + "' WHERE `idItem`='" + itemID + "' and`locationX`='" + lineX + "' and`locationY`='" + lineY + "';"
     val conn = connector.openSQLCon
@@ -82,6 +113,13 @@ object LocationLineLoad {
     }
   }
 
+   /**
+   * Function to create a location line
+   * @param itemID : Int the id of the item
+   * @param x : Int x coordinate
+   * @param y : Int y coordinate
+   * @param newQuantity : the quantity of the line
+     */
   def createLine(lineX: Int, lineY: Int, itemID: Int, newQuantity: Int) = {
     val sql = "INSERT INTO `nbgardensdata`.`locationline` (`idItem`, `locationX`, `locationY`, `quantity`) VALUES ('" + itemID + "', '" + lineX + "', '" + lineY + "', '" + newQuantity + "');"
     val conn = connector.openSQLCon

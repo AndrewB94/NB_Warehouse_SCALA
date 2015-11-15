@@ -13,7 +13,11 @@ import scalafx.collections.ObservableBuffer
 object ItemLoad {
   val connector: SQL = new SQL
   
-
+/**
+ * Function to iterate through a result set and create Item entities
+ * @param sql : String to be executed
+ * @return  ObservableBuffer[Item]
+ */
   def constructResults(sql: String):  ObservableBuffer[Item] = {
 
     var ItemList: ObservableBuffer[Item] = new ObservableBuffer[Item]
@@ -42,7 +46,11 @@ object ItemLoad {
     }
     ItemList
   }
-
+  
+/**
+ * Function to retrieve all items in the database
+ * @return ObservableBuffer[Item] : All items
+ */
   def getAllItems: ObservableBuffer[Item] = {
     val sql: String = "SELECT * FROM nbgardensdata.item;"
     constructResults(sql)
@@ -74,6 +82,11 @@ object ItemLoad {
     s
   }
   
+  /**
+   * A function to calculate the current stock of an item
+   * @param itemID : Int  ID of item to find stock level
+   * @return Int : the total stock of an item
+   */
   def getStock(itemID:Int):Int = {
     val buffer = LocationLineLoad.getLocationLineByItemID(itemID)
     var totalStock:Int = 0

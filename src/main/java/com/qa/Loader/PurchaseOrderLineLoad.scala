@@ -47,11 +47,21 @@ object PurchaseOrderLineLoad {
     purchaseOrderLineList
   }
 
+    /**
+   * A function that gets all purchase order lines of a given purchase order id
+   * @param id : Int the purchase order to find the lines for
+   * @return ObservableBuffer[PurchaseOrderLine] : the buffer of customer order lines
+   */
   def getPurchaseOrderLinesByPurchaseOrderID(id: Int): ObservableBuffer[PurchaseOrderLine] = {
     val sql: String = "SELECT * FROM nbgardensdata.purchaseorderline WHERE idpurchaseorder =" + id + ";"
     constructResults(sql)
   }
 
+    /**
+   * A function to get the name of an item
+   * @param id : Int the ID of the item to get the name
+   * @return String : the name of the item 
+   */
   def getItemNameByItemID(id: Int): String = {
     val sql: String = "SELECT * FROM nbgardensdata.item WHERE itemID =" + id + ";"
     var iN: String = null

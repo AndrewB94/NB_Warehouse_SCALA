@@ -129,6 +129,11 @@ object PurchaseOrderLoad {
     s
   }
 
+    /**
+   * Function to update the state of a purchase order
+   * @param orderID the ID of the purchase order to be updated
+   * @param statusID the ID of the new status for the order
+   */
   def updateState(purchaseOrderID: Int, newStatusID: Int) = {
     val sql: String = "UPDATE `nbgardensdata`.`purchaseorder` SET `idPurchaseOrderStatus`='" + newStatusID + "' WHERE `idpurchaseorder`='" + purchaseOrderID + "';"
     val conn = connector.openSQLCon
@@ -141,6 +146,11 @@ object PurchaseOrderLoad {
     }
   }
 
+    /**
+   * Funtion to update the checked out boolean
+   * @param orderID : Int the order to be updated
+   * @param newCheckedOut : Boolean to be changed to
+   */
   def updateCheckedOut(purchaseOrderID: Int, newCheckedOut: Boolean) = {
     var checkedOutInt = 1
     if (newCheckedOut) {
@@ -157,6 +167,10 @@ object PurchaseOrderLoad {
     }
   }
 
+    /**
+   * Funtion to update the delivery
+   * @param orderID : Int the order to be updated
+   */
   def updateDeliverd(purchaseOrderID: Int) = {
     val sql: String = "UPDATE nbgardensdata.purchaseorder SET dateExpected = CURDATE() WHERE purchaseorder.idpurchaseorder=" + purchaseOrderID + ";"
     val conn = connector.openSQLCon
@@ -169,6 +183,11 @@ object PurchaseOrderLoad {
     }
   }
 
+    /**
+   * Funtion to update the checked outBy id
+   * @param orderID : Int the order to be updated
+   * @param employeeID : Int to be changed to
+   */
   def updateCheckOutBy(purchaseOrderID: Int, employeeID: Int) = {
     val sql: String = "UPDATE `nbgardensdata`.`purchaseorder` SET `idEmployee`='" + employeeID + "' WHERE `idpurchaseorder`='" + purchaseOrderID + "';"
     val conn = connector.openSQLCon

@@ -149,6 +149,11 @@ object CustomerOrderLoad {
     }
   }
 
+  /**
+   * Funtion to update the checked out boolean
+   * @param orderID : Int the order to be updated
+   * @param newCheckedOut : Boolean to be changed to
+   */
   def updateCheckedOut(orderID: Int, newCheckedOut: Boolean) = {
     var checkedOutInt = 1
     if (!newCheckedOut) {
@@ -166,6 +171,11 @@ object CustomerOrderLoad {
     }
   }
 
+  /**
+   * Funtion to update the checked outBy id
+   * @param orderID : Int the order to be updated
+   * @param employeeID : Int to be changed to
+   */
   def updateCheckOutBy(orderID: Int, employeeID: Int) = {
     val sql: String = "UPDATE `nbgardensdata`.`customerorder` SET `idEmployee`='" + employeeID + "' WHERE `idcustomerorder`='" + orderID + "';"
     val conn = connector.openSQLCon
