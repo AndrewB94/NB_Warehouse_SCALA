@@ -3,7 +3,7 @@ package com.qa.gui
 import com.qa.gui._
 import scalafx.application.JFXApp.PrimaryStage
 import scalafx.scene.Scene
-import com.qa.loader.PurchaseOrderLoad
+import com.qa.Loader.PurchaseOrderLoad
 import com.qa.Entities.PurchaseOrder
 import scalafx.scene.control._
 import scalafx.scene.layout.BorderPane

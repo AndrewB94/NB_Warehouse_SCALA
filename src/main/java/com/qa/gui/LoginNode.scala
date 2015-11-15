@@ -12,7 +12,7 @@ import scalafx.event.EventHandler
 import scalafx.Includes._
 import com.qa.logic.EncryptPassword
 import scalafx.scene.control.Alert.AlertType
-import com.qa.loader.LogInLoad
+import com.qa.Loader.LogInLoad
 import scalafx.stage.StageStyle
 import scalafx.scene.layout.BorderPane
 import scalafx.event.ActionEvent

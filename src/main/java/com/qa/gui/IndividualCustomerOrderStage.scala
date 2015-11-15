@@ -4,11 +4,11 @@ import com.qa.Entities.CustomerOrder
 import com.qa.Entities.CustomerOrderLine
 import scalafx.stage.Stage
 import scalafx.scene.Node
-import com.qa.loader.CustomerOrderLoad
-import com.qa.loader.CustomerOrderLineLoad
+import com.qa.Loader.CustomerOrderLoad
+import com.qa.Loader.CustomerOrderLineLoad
 import scalafx.scene.control._
 import scalafx.scene.layout.BorderPane
-import com.qa.loader.CustomerOrderLineLoad
+import com.qa.Loader.CustomerOrderLineLoad
 import scalafx.scene.layout.GridPane
 import javafx.geometry.Insets
 import scalafx.scene.text.Font

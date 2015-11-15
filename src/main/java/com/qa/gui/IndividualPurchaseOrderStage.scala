@@ -1,11 +1,11 @@
 package com.qa.gui
 
 import com.qa.gui._
-import com.qa.loader.CustomerOrderLoad
-import com.qa.loader.purchaseOrderLineLoad
+import com.qa.Loader.CustomerOrderLoad
+import com.qa.Loader.PurchaseOrderLineLoad
 import com.qa.Entities.PurchaseOrderLine
 import com.qa.Entities.PurchaseOrder
-import com.qa.loader.PurchaseOrderLoad
+import com.qa.Loader.PurchaseOrderLoad
 import scalafx.scene.control._
 import scalafx.scene.layout.BorderPane
 import scalafx.event.ActionEvent
@@ -36,7 +36,7 @@ class IndividualPurchaseOrderStage {
      */
     val secondLabel: Label = new Label("Purchase Order - ID: " + selectedPO.idPurchaseOrder_)
     val secondaryLayout: BorderPane = new BorderPane
-    val lines = purchaseOrderLineLoad.getPurchaseOrderLinesByPurchaseOrderID(selectedPO.idPurchaseOrder_)
+    val lines = PurchaseOrderLineLoad.getPurchaseOrderLinesByPurchaseOrderID(selectedPO.idPurchaseOrder_)
     var lineTable = new TableView[PurchaseOrderLine](lines)
 
     /**

@@ -1,6 +1,6 @@
-package com.qa.loader
+package com.qa.Loader
 
-import com.qa.dbConnector.SQL
+import com.qa.DBConnector.SQL
 import com.qa.Entities.PurchaseOrderLine
 import java.sql.ResultSet
 import scalafx.collections.ObservableBuffer
@@ -8,7 +8,7 @@ import scalafx.collections.ObservableBuffer
 /**
  * @author abutcher
  */
-object purchaseOrderLineLoad {
+object PurchaseOrderLineLoad {
   var connector: SQL = new SQL
   var purchaseOrderLineList: ObservableBuffer[PurchaseOrderLine] = new ObservableBuffer[PurchaseOrderLine]
 

@@ -4,7 +4,7 @@ import com.qa.gui._
 import scalafx.Includes._
 import scalafx.application.JFXApp.PrimaryStage
 import scalafx.scene.Scene
-import com.qa.loader.CustomerOrderLoad
+import com.qa.Loader.CustomerOrderLoad
 import com.qa.Entities.CustomerOrder
 import scalafx.scene.control.Label
 import scalafx.scene.control.TableView

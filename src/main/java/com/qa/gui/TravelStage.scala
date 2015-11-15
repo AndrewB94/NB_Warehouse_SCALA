@@ -4,8 +4,8 @@ import com.qa.Entities.CustomerOrder
 import scalafx.scene.Scene
 import scalafx.stage.Stage
 import scalafx.scene.Node
-import com.qa.loader.CustomerOrderLoad
-import com.qa.loader.CustomerOrderLineLoad
+import com.qa.Loader.CustomerOrderLoad
+import com.qa.Loader.CustomerOrderLineLoad
 import scalafx.scene.layout.BorderPane
 import scalafx.stage.StageStyle
 import javafx.scene.control._

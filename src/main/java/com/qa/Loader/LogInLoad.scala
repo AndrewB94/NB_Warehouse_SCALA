@@ -1,6 +1,6 @@
-package com.qa.loader
+package com.qa.Loader
 
-import com.qa.dbConnector.SQL
+import com.qa.DBConnector.SQL
 import java.sql.ResultSet
 import scalafx.collections.ObservableBuffer
 
@@ -13,7 +13,7 @@ object LogInLoad {
 
   /**
    * Function that takes input and check if the user ID and password are both contained in one record of the MySQL database
-   * @param idUser : int idUser
+   * @param idUser : Int idUser
    * @param password : String password
    * @return : Returns a boolean; true if ResulSet only contains one record, false if not
    */
