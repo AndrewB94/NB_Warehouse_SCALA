@@ -144,7 +144,7 @@ object PurchaseOrderLoad {
   def updateCheckedOut(purchaseOrderID: Int, newCheckedOut: Boolean) = {
     var checkedOutInt = 1
     if (newCheckedOut) {
-      var checkedOutInt = 0
+      checkedOutInt = 0
     }
     val sql: String = "UPDATE `nbgardensdata`.`purchaseorder` SET `isCheckedOut`='" + checkedOutInt + "' WHERE `idpurchaseorder`='" + purchaseOrderID + "';"
     val conn = connector.openSQLCon

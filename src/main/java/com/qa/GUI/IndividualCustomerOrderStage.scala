@@ -22,57 +22,40 @@ import com.qa.Entities.CustomerOrder
 import scalafx.stage.StageStyle
 import scalafx.Includes._
 import scalafx.scene.paint.Color
+import com.qa.Logic.CustomerOrderLogic
+import scalafx.collections.ObservableBuffer
+import com.qa.Entities.CustomerOrderLine
+import com.qa.Entities.CustomerOrderLine
+import com.qa.Entities.CustomerOrder
 
 /**
  * @author abutcher
  */
-class IndividualCustomerOrderStage {
+object IndividualCustomerOrderStage {
   def getScene(selectedCO: CustomerOrder, stage: Stage, employee: String): Node = {
-    /**
-     * Initialize values
-     */
-    val secondLabel: Label = new Label("Customer Order - ID: " + selectedCO.idCustomerOrder_)
-    val secondaryLayout: BorderPane = new BorderPane
-    val lines = CustomerOrderLineLoad.getCustomerOrderLinesByCustomerOrderID(selectedCO.idCustomerOrder_)
-    var lineTable = new TableView[CustomerOrderLine](lines)
+
+
+val secondaryLayout: BorderPane = new BorderPane
+    val secondLabel: Label = new Label("Purchase Order - ID: " + selectedCO.idCustomerOrder_)
+    secondLabel setFont (Font.font("Verdana", 30))
 
     /**
-     * set up grid pane
+     * add components to border pane
      */
-    val contentPane: GridPane = new GridPane
-    contentPane setHgap (10);
-    contentPane setVgap (10);
-    contentPane setPadding (new Insets(0, 10, 0, 10));
+    secondaryLayout.top = secondLabel
+    secondaryLayout.center = createContentPane(selectedCO, stage, employee)
 
-    /**
-     * Set up labels
-     */
-    val idLabel: Label = new Label("ID:")
-    idLabel setFont (Font.font("Arial", FontWeight.BOLD, 20))
-    val statusL: Label = new Label("Status:")
-    statusL setFont (Font.font("Arial", FontWeight.BOLD, 20))
-    val datePlacedL: Label = new Label("Date Placed:")
-    datePlacedL setFont (Font.font("Arial", FontWeight.BOLD, 20))
-    val customerL: Label = new Label("Customer:")
-    customerL setFont (Font.font("Arial", FontWeight.BOLD, 20))
-    val employeeL: Label = new Label("Last Checked Out By:")
-    employeeL setFont (Font.font("Arial", FontWeight.BOLD, 20))
+    var grid: GridPane = new GridPane
+    grid setHgap (10)
+    grid setVgap (10)
+    grid setPadding (new Insets(0, 10, 10, 10))
+    grid.add(secondaryLayout, 1, 1)
+    grid
 
-    /**
-     * Set up value labels
-     */
-    val idV: Label = new Label("" + selectedCO.idCustomerOrder_)
-    idV setFont (Font.font("Arial", 20))
-    val statusV: Label = new Label(selectedCO.customerOrderStatus_)
-    statusV setFont (Font.font("Arial", 20))
-    val datePlacedV: Label = new Label("" + selectedCO.datePlaced_)
-    datePlacedV setFont (Font.font("Arial", 20))
-    val customerV: Label = new Label("" + selectedCO.customer_)
-    customerV setFont (Font.font("Arial", 20))
-    val employeeV: Label = new Label(CustomerOrderLoad.getUserByID(selectedCO.employee_))
-    employeeV setFont (Font.font("Arial", 20))
-
-    /**
+  }
+    
+    def createTable(SelectedCO:CustomerOrder, lines: ObservableBuffer[CustomerOrderLine]):TableView[CustomerOrderLine] = {
+          /**
      * set up table columns
      */
     var itemIDCollumn = new TableColumn[CustomerOrderLine, String] {
@@ -96,36 +79,13 @@ class IndividualCustomerOrderStage {
     /**
      * Create table and add collumns to it
      */
-    lineTable = new TableView[CustomerOrderLine](lines) {
+    val lineTable = new TableView[CustomerOrderLine](lines) {
       columns ++= List(itemIDCollumn, itemNmaeCollumn, quantityCollumn)
     }
-
-    /**
-     * add componenents to grid pane
-     */
-    contentPane add (idLabel, 1, 1)
-    contentPane add (statusL, 1, 2)
-    contentPane add (datePlacedL, 1, 3)
-    contentPane add (customerL, 1, 4)
-    contentPane add (employeeL, 1, 5)
-
-    contentPane add (idV, 2, 1)
-    contentPane add (statusV, 2, 2)
-    contentPane add (datePlacedV, 2, 3)
-    contentPane add (customerV, 2, 4)
-    contentPane add (employeeV, 2, 5)
-    contentPane add (lineTable, 3, 1, 1, 6)
-    contentPane add (buttonPane, 1, 6, 2, 1)
-    secondLabel setFont (Font.font("Verdana", 30))
-
-    /**
-     * add componenents to border pane
-     */
-    secondaryLayout.top = secondLabel
-    secondaryLayout.center = contentPane
-
-    def buttonPane: Node = {
-      /**
+    lineTable
+    }
+    def createButtonPane(selectedCO:CustomerOrder, stage:Stage, employee:String):GridPane = {
+       /**
        * Initialize values
        */
       val grid: GridPane = new GridPane
@@ -146,9 +106,9 @@ class IndividualCustomerOrderStage {
         ts.open(selectedCO, employee)
       }
       closeB onAction = { ae: ActionEvent => stage.hide }
-      updateB onAction = { ae: ActionEvent => updateStatus }
-      checkOutB onAction = { ae: ActionEvent => checkOut }
-      checkInB onAction = { ae: ActionEvent => checkIn }
+      updateB onAction = { ae: ActionEvent => CustomerOrderLogic.updateStatus(selectedCO, stage, employee) }
+      checkOutB onAction = { ae: ActionEvent => CustomerOrderLogic.checkOut(selectedCO, stage, employee) }
+      checkInB onAction = { ae: ActionEvent => CustomerOrderLogic.checkIn(selectedCO, stage, employee) }
 
       /**
        * Disable/Enable buttons
@@ -180,78 +140,75 @@ class IndividualCustomerOrderStage {
       grid.add(updateB, 1, 3)
       grid.add(closeB, 2, 3)
       grid
+      
     }
+    
+    def createContentPane(selectedCO:CustomerOrder, stage:Stage, employee:String):GridPane = {
+          /**
+     * Initialize values
+     */
+    val secondLabel: Label = new Label("Customer Order - ID: " + selectedCO.idCustomerOrder_)
+    val secondaryLayout: BorderPane = new BorderPane
+    val lines = CustomerOrderLineLoad.getCustomerOrderLinesByCustomerOrderID(selectedCO.idCustomerOrder_)
+    val lineTable = createTable(selectedCO, lines)
 
     /**
-     * Function that updates the purchaseOrderStatus
+     * set up grid pane
      */
-    def updateStatus: Unit = {
-      var newStateID = 0
-      selectedCO.customerOrderStatusID match {
-        case 0 => newStateID = 1
-        case 1 => newStateID = 2
-        case 2 => newStateID = 3
-        case 3 => newStateID = 4
-        case 4 => newStateID = 5
-        case _ => newStateID = 6
-      }
-
-      var alert: Alert = new Alert(AlertType.Confirmation)
-      alert.setTitle("Update Status")
-      alert.setHeaderText(null)
-      alert.setContentText("New status: " + CustomerOrderLoad.getCustomerOrderStatusByID(newStateID) + "\nAre you ok with this?")
-
-      var result: Optional[javafx.scene.control.ButtonType] = alert.showAndWait()
-      if (result.get() == javafx.scene.control.ButtonType.OK) {
-        // ... user chose OK        
-        CustomerOrderLoad.updateState(selectedCO.idCustomerOrder_, newStateID)
-        stage.hide
-        Open(CustomerOrderLoad.getCustomerOrderByID(selectedCO.idCustomerOrder_)(0), employee)
-      } else {
-        // ... user chose CANCEL or closed the dialog
-      }
-    }
+    val contentPane: GridPane = new GridPane
+    contentPane setHgap (10)
+    contentPane setVgap (10)
+    contentPane setPadding (new Insets(0, 10, 0, 10))
+    
+      /**
+     * Set up labels
+     */
+    val idLabel: Label = new Label("ID:")
+    idLabel setFont (Font.font("Arial", FontWeight.BOLD, 20))
+    val statusL: Label = new Label("Status:")
+    statusL setFont (Font.font("Arial", FontWeight.BOLD, 20))
+    val datePlacedL: Label = new Label("Date Placed:")
+    datePlacedL setFont (Font.font("Arial", FontWeight.BOLD, 20))
+    val customerL: Label = new Label("Customer:")
+    customerL setFont (Font.font("Arial", FontWeight.BOLD, 20))
+    val employeeL: Label = new Label("Last Checked Out By:")
+    employeeL setFont (Font.font("Arial", FontWeight.BOLD, 20))
 
     /**
-     * function to check out an order
+     * Set up value labels
      */
-    def checkOut: Unit = {
-      var newCheckedOut = 0
-      if (selectedCO.isCheckedOut) {
-        val alert: Alert = new Alert(AlertType.Error)
-        alert setTitle ("Error - Can't check out")
-        alert setHeaderText (null)
-        alert setContentText ("This customer order has already been checked out!")
-
-        alert showAndWait
-      } else {
-        CustomerOrderLoad updateCheckedOut (selectedCO idCustomerOrder_, true)
-        CustomerOrderLoad.updateCheckOutBy(selectedCO idCustomerOrder_, Integer.parseInt(employee))
-        stage.hide
-        Open(CustomerOrderLoad.getCustomerOrderByID(selectedCO idCustomerOrder_)(0), employee)
-      }
-    }
-
-    /**
-     * function to check in an order
+    val idV: Label = new Label("" + selectedCO.idCustomerOrder_)
+    idV setFont (Font.font("Arial", 20))
+    val statusV: Label = new Label(selectedCO.customerOrderStatus_)
+    statusV setFont (Font.font("Arial", 20))
+    val datePlacedV: Label = new Label("" + selectedCO.datePlaced_)
+    datePlacedV setFont (Font.font("Arial", 20))
+    val customerV: Label = new Label("" + selectedCO.customer_)
+    customerV setFont (Font.font("Arial", 20))
+    val employeeV: Label = new Label(CustomerOrderLoad.getUserByID(selectedCO.employee_))
+    employeeV setFont (Font.font("Arial", 20))
+    
+        /**
+     * add componenents to grid pane
      */
-    def checkIn: Unit = {
-      var newCheckedOut = 0
-      if (selectedCO.isCheckedOut) {
-        CustomerOrderLoad.updateCheckedOut(selectedCO.idCustomerOrder_, false)
-        stage.hide
-        Open(CustomerOrderLoad.getCustomerOrderByID(selectedCO idCustomerOrder_)(0), employee)
-      } else {
-      }
-    }
-     var grid: GridPane = new GridPane
-      grid setHgap (10)
-      grid setVgap (10)
-      grid setPadding (new Insets(0, 10, 10, 10))
-      grid.add(secondaryLayout, 1, 1)
-    grid
-  }
+    contentPane add (idLabel, 1, 1)
+    contentPane add (statusL, 1, 2)
+    contentPane add (datePlacedL, 1, 3)
+    contentPane add (customerL, 1, 4)
+    contentPane add (employeeL, 1, 5)
 
+    contentPane add (idV, 2, 1)
+    contentPane add (statusV, 2, 2)
+    contentPane add (datePlacedV, 2, 3)
+    contentPane add (customerV, 2, 4)
+    contentPane add (employeeV, 2, 5)
+    contentPane add (lineTable, 3, 1, 1, 6)
+    contentPane add (createButtonPane(selectedCO, stage, employee), 1, 6, 2, 1)
+    secondLabel setFont (Font.font("Verdana", 30))
+      
+    contentPane
+    }
+    
   /**
    * open a new frame showing a purchase order's details
    */

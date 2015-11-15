@@ -19,30 +19,126 @@ import scalafx.scene.control.Alert.AlertType
 import javafx.scene.control.Alert
 import scalafx.scene.control.ButtonBar.ButtonData
 import javafx.geometry.Insets
-import java.util.Optional
 import scalafx.scene.Scene
 import scalafx.stage.StageStyle
 import scalafx.scene.paint.Color
+import com.qa.Entities.PurchaseOrder
+import scalafx.collections.ObservableBuffer
+import scalafx.application.JFXApp.PrimaryStage
+import com.qa.Logic.PurchaseOrderLogic
 
 /**
  * @author abutcher
  * @date 10/11/2015
  * class for creating a pane for displaying purchase orders
  */
-class IndividualPurchaseOrderStage {
+object IndividualPurchaseOrderStage {
   def getScene(selectedPO: PurchaseOrder, stage: Stage, employee: String): Node = {
     /**
      * Initialize values
      */
-    val secondLabel: Label = new Label("Purchase Order - ID: " + selectedPO.idPurchaseOrder_)
     val secondaryLayout: BorderPane = new BorderPane
-    val lines = PurchaseOrderLineLoad.getPurchaseOrderLinesByPurchaseOrderID(selectedPO.idPurchaseOrder_)
-    var lineTable = new TableView[PurchaseOrderLine](lines)
+    val secondLabel: Label = new Label("Purchase Order - ID: " + selectedPO.idPurchaseOrder_)
+    secondLabel setFont (Font.font("Verdana", 30))
 
     /**
-     * set up grid pane
+     * add components to border pane
      */
+    secondaryLayout.top = secondLabel
+    secondaryLayout.center = createContentPane(selectedPO, stage, employee)
+
+    var grid: GridPane = new GridPane
+    grid setHgap (10)
+    grid setVgap (10)
+    grid setPadding (new Insets(0, 10, 10, 10))
+    grid.add(secondaryLayout, 1, 1)
+    grid
+  }
+
+  def createTable(selectedPO: PurchaseOrder, lines: ObservableBuffer[PurchaseOrderLine]): TableView[PurchaseOrderLine] = {
+    /**
+     * set up table columns
+     */
+    var itemIDCollumn = new TableColumn[PurchaseOrderLine, String] {
+      text = "Item ID"
+      cellValueFactory = { _.value itemID }
+      prefWidth = 100
+    }
+
+    var itemNmaeCollumn = new TableColumn[PurchaseOrderLine, String] {
+      text = "Item Name"
+      cellValueFactory = { _.value itemName }
+      prefWidth = 250
+    }
+
+    var quantityCollumn = new TableColumn[PurchaseOrderLine, String] {
+      text = "Quantity Ordered"
+      cellValueFactory = { _.value quantity }
+      prefWidth = 250
+    }
+
+    var quantityDamagedCollumn = new TableColumn[PurchaseOrderLine, String] {
+      text = "Quantity Damaged"
+      cellValueFactory = { _.value.quantityDamaged }
+      prefWidth = 250
+    }
+
+    /**
+     * Create table and add collumns to it
+     */
+    val lineTable = new TableView[PurchaseOrderLine](lines) {
+      columns ++= List(itemIDCollumn, itemNmaeCollumn, quantityCollumn, quantityDamagedCollumn)
+    }
+    lineTable
+  }
+
+  def createButtonPane(selectedPO: PurchaseOrder, stage: Stage, employee: String, lines: ObservableBuffer[PurchaseOrderLine]): Node = {
+    /**
+     * Initialize values
+     */
+    val grid: GridPane = new GridPane
+    grid setHgap (10)
+    grid setVgap (10)
+    grid setPadding (new Insets(0, 10, 0, 10))
+    val closeB: Button = new Button("Close")
+    val updateB: Button = new Button("Update State")
+    val checkInB: Button = new Button("Check In Order")
+    val checkOutB: Button = new Button("Check Out Order")
+
+    /**
+     * set up action event on buttons
+     */
+    closeB onAction = { ae: ActionEvent => stage.hide }
+    updateB onAction = { ae: ActionEvent => PurchaseOrderLogic updateStatus (selectedPO, stage, employee, lines) }
+    checkOutB onAction = { ae: ActionEvent => PurchaseOrderLogic checkOut (selectedPO, stage, employee) }
+    checkInB onAction = { ae: ActionEvent => PurchaseOrderLogic checkIn (selectedPO, stage, employee) }
+
+    if (!selectedPO.isCheckedOut)
+      checkInB.setDisable(true)
+
+    if (selectedPO.isCheckedOut || selectedPO.idStatus == 4)
+      checkOutB.setDisable(true)
+
+    if (!selectedPO.isCheckedOut || selectedPO.idStatus == 4)
+      updateB.setDisable(true)
+
+    if (selectedPO.isCheckedOut)
+      closeB.setDisable(true)
+
+    /**
+     * add componenents to grid pane
+     */
+    grid.add(checkInB, 1, 1)
+    grid.add(checkOutB, 2, 1)
+    grid.add(updateB, 1, 2)
+    grid.add(closeB, 2, 2)
+    grid
+  }
+
+  def createContentPane(selectedPO: PurchaseOrder, stage: Stage, employee:String): GridPane = {
+    val lines = PurchaseOrderLineLoad.getPurchaseOrderLinesByPurchaseOrderID(selectedPO.idPurchaseOrder_)
     val contentPane: GridPane = new GridPane
+    val table = createTable(selectedPO, lines)
     contentPane setHgap (10);
     contentPane setVgap (10);
     contentPane setPadding (new Insets(0, 10, 0, 10));
@@ -80,40 +176,6 @@ class IndividualPurchaseOrderStage {
     employeeV setFont (Font.font("Arial", 20))
 
     /**
-     * set up table columns
-     */
-    var itemIDCollumn = new TableColumn[PurchaseOrderLine, String] {
-      text = "Item ID"
-      cellValueFactory = { _.value itemID }
-      prefWidth = 100
-    }
-
-    var itemNmaeCollumn = new TableColumn[PurchaseOrderLine, String] {
-      text = "Item Name"
-      cellValueFactory = { _.value itemName }
-      prefWidth = 250
-    }
-
-    var quantityCollumn = new TableColumn[PurchaseOrderLine, String] {
-      text = "Quantity Ordered"
-      cellValueFactory = { _.value quantity }
-      prefWidth = 250
-    }
-
-    var quantityDamagedCollumn = new TableColumn[PurchaseOrderLine, String] {
-      text = "Quantity Damaged"
-      cellValueFactory = { _.value.quantityDamaged }
-      prefWidth = 250
-    }
-
-    /**
-     * Create table and add collumns to it
-     */
-    lineTable = new TableView[PurchaseOrderLine](lines) {
-      columns ++= List(itemIDCollumn, itemNmaeCollumn, quantityCollumn, quantityDamagedCollumn)
-    }
-
-    /**
      * add componenents to grid pane
      */
     contentPane add (idLabel, 1, 1)
@@ -129,137 +191,9 @@ class IndividualPurchaseOrderStage {
     contentPane add (dateDeliveredV, 2, 4)
     contentPane add (supplierV, 2, 5)
     contentPane add (employeeV, 2, 6)
-    contentPane add (lineTable, 3, 1, 1, 7)
-    contentPane add (buttonPane, 1, 7, 2, 1)
-    secondLabel setFont (Font.font("Verdana", 30))
-
-    /**
-     * add componenents to border pane
-     */
-    secondaryLayout.top = secondLabel
-    secondaryLayout.center = contentPane
-
-    def buttonPane: Node = {
-      /**
-       * Initialize values
-       */
-      val grid: GridPane = new GridPane
-      grid setHgap (10)
-      grid setVgap (10)
-      grid setPadding (new Insets(0, 10, 0, 10))
-      val closeB: Button = new Button("Close")
-      val updateB: Button = new Button("Update State")
-      val checkInB: Button = new Button("Check In Order")
-      val checkOutB: Button = new Button("Check Out Order")
-
-      /**
-       * set up action event on buttons
-       */
-      closeB onAction = { ae: ActionEvent => stage.hide }
-      updateB onAction = { ae: ActionEvent => updateStatus }
-      checkOutB onAction = { ae: ActionEvent => checkOut }
-      checkInB onAction = { ae: ActionEvent => checkIn }
-
-      if (!selectedPO.isCheckedOut)
-        checkInB.setDisable(true)
-
-      if (selectedPO.isCheckedOut || selectedPO.idStatus == 4)
-        checkOutB.setDisable(true)
-
-      if (!selectedPO.isCheckedOut || selectedPO.idStatus == 4)
-        updateB.setDisable(true)
-
-      if (selectedPO.isCheckedOut)
-        closeB.setDisable(true)
-
-      /**
-       * add componenents to grid pane
-       */
-      grid.add(checkInB, 1, 1)
-      grid.add(checkOutB, 2, 1)
-      grid.add(updateB, 1, 2)
-      grid.add(closeB, 2, 2)
-      grid
-    }
-
-    /**
-     * Function that updates the purchaseOrderStatus
-     */
-    def updateStatus: Unit = {
-      var newStateID = 0
-      selectedPO.idStatus match {
-        case 0 => newStateID = 1
-        case 1 => newStateID = 2
-        case 2 => {
-          newStateID = 3
-          //TODO update no of damaged
-          PurchaseOrderLoad.updateDeliverd(selectedPO.idPurchaseOrder_)
-        }
-        case _ => {
-          //TODO add item to inventory Lines
-          newStateID = 4
-        }
-      }
-
-      var alert: Alert = new Alert(AlertType.Confirmation)
-      alert.setTitle("Update Status")
-      alert.setHeaderText(null)
-      alert.setContentText("New status: " + PurchaseOrderLoad.getPurchaseOrderStatusByID(newStateID) + "\nAre you ok with this?")
-
-      var result: Optional[javafx.scene.control.ButtonType] = alert.showAndWait()
-      if (result.get() == javafx.scene.control.ButtonType.OK) {
-        // ... user chose OK        
-        PurchaseOrderLoad.updateState(selectedPO.idPurchaseOrder_, newStateID)
-        stage.hide
-        Open(PurchaseOrderLoad.getPurchaseOrderByID(selectedPO.idPurchaseOrder_)(0), employee)
-
-        if (newStateID == 4) {
-          val storer:LocationStage = new LocationStage
-          lines.foreach { x => storer.open(x.itemID_, x.quantity_) }
-        }
-      } else {
-        // ... user chose CANCEL or closed the dialog
-      }
-    }
-
-    /**
-     * function to check out an order
-     */
-    def checkOut: Unit = {
-      var newCheckedOut = 0
-      if (selectedPO.isCheckedOut) {
-        val alert: Alert = new Alert(AlertType.Error)
-        alert setTitle ("Error - Can't check out")
-        alert setHeaderText (null)
-        alert setContentText ("This purchase order has already been checked out!")
-
-        alert showAndWait
-      } else {
-        PurchaseOrderLoad updateCheckedOut (selectedPO idPurchaseOrder_, true)
-        PurchaseOrderLoad.updateCheckOutBy(selectedPO idPurchaseOrder_, Integer.parseInt(employee))
-        stage.hide
-        Open(PurchaseOrderLoad.getPurchaseOrderByID(selectedPO idPurchaseOrder_)(0), employee)
-      }
-    }
-
-    /**
-     * function to check in an order
-     */
-    def checkIn: Unit = {
-      var newCheckedOut = 0
-      if (selectedPO.isCheckedOut) {
-        PurchaseOrderLoad.updateCheckedOut(selectedPO.idPurchaseOrder_, false)
-        stage.hide
-        Open(PurchaseOrderLoad.getPurchaseOrderByID(selectedPO.idPurchaseOrder_)(0), employee)
-      } else {
-      }
-    }
-    var grid: GridPane = new GridPane
-    grid setHgap (10)
-    grid setVgap (10)
-    grid setPadding (new Insets(0, 10, 10, 10))
-    grid.add(secondaryLayout, 1, 1)
-    grid
+    contentPane add (table, 3, 1, 1, 7)
+    contentPane add (createButtonPane(selectedPO, stage, employee, lines), 1, 7, 2, 1)
+    contentPane
   }
 
   /**
@@ -269,6 +203,7 @@ class IndividualPurchaseOrderStage {
     /**
      * set up and show stage
      */
+
     val secondScene: Scene = new Scene
     secondScene stylesheets = List(getClass.getResource("/controlStyle2.css").toExternalForm)
     secondScene.fill = Color.rgb(109, 158, 104)

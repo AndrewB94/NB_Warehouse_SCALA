@@ -64,13 +64,12 @@ class LoginNode(stage: PrimaryStage) {
     val logInB: Button = new Button("Log In") {
       onAction = { ae: ActionEvent =>
         if (LogInLogic.checkLoginEntered(userT.getText, passT.getText) && LogInLogic.checkAgainstDB(userT getText, passT getText)) {
-          new MainNode(stage, userT.getText)
+          MainNode.createScene(stage, userT.getText)
         } else {
           val alert: Alert = new Alert(AlertType.Information);
           alert.setTitle("Information");
           alert.setHeaderText(null);
           alert.setContentText("Invalid user name or password");
-
           alert.showAndWait()
         }
       }

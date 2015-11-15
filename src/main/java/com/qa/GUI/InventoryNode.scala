@@ -19,7 +19,7 @@ import com.qa.Entities.Item
 /**
  * @author abutcher
  */
-class InventoryNode(stage: PrimaryStage, employee: String, pane: BorderPane) {
+object InventoryNode {
   var layout: BorderPane = new BorderPane
 
   def createTable() = {
@@ -68,7 +68,7 @@ class InventoryNode(stage: PrimaryStage, employee: String, pane: BorderPane) {
    * function that creates a node containning the content
    * @retgurn Node the node containning the purchase orders table
    */
-  def createPane(): Unit = {
+  def createPane(pane:BorderPane): Unit = {
     createTable()
     pane.center = layout
   }

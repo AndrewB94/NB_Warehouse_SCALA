@@ -21,20 +21,14 @@ import javafx.geometry.Insets
  * @date 09/11/2015
  * class that creates a node contains a table of customer orders
  */
-class CustomerOrderNode(stage: PrimaryStage, employee: String, pane: BorderPane) {
-  var layout: BorderPane = new BorderPane
+object CustomerOrderNode {
 
-  def createTable(showStored: Boolean) = {
+  private def createTable(showStored: Boolean) = {
     var orders = CustomerOrderLoad.getAllNotDispatchedCustomerOrders
 
     if (showStored) {
       orders = CustomerOrderLoad.getAllCustomerOrders
     }
-
-    var table = new TableView[CustomerOrder](orders)
-    val selectB: Button = new Button("Select Order")
-    val toggleB: Button = new Button("Show/Hide - Dispatched Orders")
-
     /**
      * set up table collumns
      */
@@ -65,44 +59,48 @@ class CustomerOrderNode(stage: PrimaryStage, employee: String, pane: BorderPane)
     /**
      * Create table and add collumns to it
      */
-    table = new TableView[CustomerOrder](orders) {
+    val table = new TableView[CustomerOrder](orders) {
       columns ++= List(idColumn, statusCollumn, customerCollumn, datePlacedCollumn)
     }
-    layout.setCenter(table)
+    table
+  }
 
-    def addButtons = {
-      /**
-       * set up action event on select button
-       */
-      selectB.onAction = { ae: ActionEvent =>
-        val sCO: CustomerOrder = table.getSelectionModel.getSelectedItem
-        val iCOS: IndividualCustomerOrderStage = new IndividualCustomerOrderStage
-
-        iCOS.Open(sCO, employee)
-      }
-
-      toggleB.onAction = { ae: ActionEvent =>
-        createPane(!showStored)
-      }
-
-    }
-    addButtons
-
+  private def addButtons(table: TableView[CustomerOrder], employee: String, pane: BorderPane, showStored: Boolean): HBox = {
+    val selectB: Button = new Button("Select Order")
+    val toggleB: Button = new Button("Show/Hide - Stored Orders")
     val box: HBox = new HBox
     box setPadding (new Insets(10));
     box setSpacing (8);
+    /**
+     * set up action event on select button
+     */
+    selectB.onAction = { ae: ActionEvent =>
+      val sCO: CustomerOrder = table.getSelectionModel.getSelectedItem
+      IndividualCustomerOrderStage.Open(sCO, employee)
+    }
+
+    toggleB.onAction = { ae: ActionEvent =>
+      createPane(employee, pane, !showStored)
+    }
     box.children add (selectB)
     box.children add (toggleB)
 
-    layout.setBottom(box)
+    box
+  }
+
+  private def createLayout(showStored: Boolean, pane: BorderPane, employee: String): BorderPane = {
+    var layout: BorderPane = new BorderPane
+    val table: TableView[CustomerOrder] = createTable(showStored)
+    layout.center = table
+    layout.bottom = addButtons(table, employee, pane, showStored)
+    layout
   }
 
   /**
    * function that creates a node containning the content
    * @retgurn Node the node containning the purchase orders table
    */
-  def createPane(showStored: Boolean): Unit = {
-    createTable(showStored)
-    pane.center = layout
+  def createPane(employee: String, pane: BorderPane, showStored: Boolean): Unit = {
+    pane.center = createLayout(showStored, pane, employee)
   }
 }
