@@ -17,7 +17,7 @@ object EncryptPassword {
 
   /**
    * Function to convert a given string into SHA1 for comparison against SHA1 password stored in MySQL database
-   * @param passwordString: Takes on a string to convert into SHA1
+   * @param passwordString : Takes on a string to convert into SHA1
    * @return returns string encrypted in SHA1
    */
   def convertToSHA1(passwordString: String): String = {
@@ -37,8 +37,8 @@ object EncryptPassword {
 
     /**
      * function to turn an array of bytes into hexidecimal format
-     * @param Arra[scala.Byte] the array to be converted
-     * @return result the result of the conversion as a string
+     * @param hash : Array[scala.Byte] the array to be converted
+     * @return result the result : of the conversion as a string
      */
     def byteToHex(hash: Array[scala.Byte]): String = {
       val formatter: Formatter = new Formatter()

@@ -20,6 +20,9 @@ import scalafx.stage.Stage
 object PurchaseOrderLogic {
   /**
    * function to check in an order
+   * @param selectedPO : purchaseOrder to be changed
+   * @param stage : Stage being used
+   * @param employee : String id of the employee
    */
   def checkIn(selectedPO: PurchaseOrder,stage:Stage, employee:String): Unit = {
     var newCheckedOut = 0
@@ -27,12 +30,14 @@ object PurchaseOrderLogic {
       PurchaseOrderLoad.updateCheckedOut(selectedPO.idPurchaseOrder_, false)
       stage.hide
       IndividualPurchaseOrderStage.Open(PurchaseOrderLoad.getPurchaseOrderByID(selectedPO.idPurchaseOrder_)(0), employee)
-    } else {
     }
   }
 
   /**
    * function to check out an order
+   * @param selectedPO : purchaseOrder to be changed
+   * @param stage : Stage being used
+   * @param employee : String id of the employee
    */
   def checkOut(selectedPO: PurchaseOrder,stage:Stage, employee:String): Unit = {
     var newCheckedOut = 0
@@ -53,6 +58,10 @@ object PurchaseOrderLogic {
 
   /**
    * Function that updates the purchaseOrderStatus
+   * @param selectedPO : purchaseOrder to be changed
+   * @param stage : Stage being used
+   * @param employee : String id of the employee
+   * @param lines : the order lines
    */
   def updateStatus(selectedPO: PurchaseOrder,stage:Stage, employee:String, lines:ObservableBuffer[PurchaseOrderLine]): Unit = {
     var newStateID = 0
@@ -84,8 +93,6 @@ object PurchaseOrderLogic {
         val storer: LocationStage = new LocationStage
         lines.foreach { x => storer.open(x.itemID_, x.quantity_) }
       }
-    } else {
-      // ... user chose CANCEL or closed the dialog
     }
   }
 }

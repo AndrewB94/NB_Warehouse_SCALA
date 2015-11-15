@@ -12,6 +12,13 @@ import com.qa.Loader.LogInLoad
  * An object used to check if log in details are valid
  */
 object LogInLogic {
+  
+  /**
+   * function that checks two strings for if they are empty
+   * @param username : the user name entered by the user
+   * @param password : the password entered by the user
+   * @retur Boolean of if the strings are empty
+   */
   def checkLoginEntered(user: String, password: String): Boolean = {
     var returner: Boolean = true
     if (user.equals("")) {
@@ -21,15 +28,14 @@ object LogInLogic {
     if (password.equals("")) {
       returner = false
     }
-    if (!returner) {
-    }
     returner
   }
 
   /**
    * function that checks the log in credentials are valid
    * @param username the user name entered by the user
-   * @param password the password entered by the user
+   * @param password the password entered by the user  
+   * @retur Boolean of if the strings are valid
    */
   def checkAgainstDB(username: String, password: String): Boolean = {
 

@@ -13,6 +13,7 @@ class SQL(var stmt: Statement) {
 
   /**
    * Function to open a connection to the SQL database
+   * @return conn : the connection that has been opened
    */
   def openSQLCon: Connection = {
     var conn: Connection = null
@@ -30,7 +31,8 @@ class SQL(var stmt: Statement) {
   }
 
   /**
-   * Function to close the connection to the SQL database
+   * Function to close the connection to the SQL database   
+   * @param conn : the connection to close
    */
   def closeSQLCon(conn: Connection): Unit = {
     try {
@@ -42,8 +44,9 @@ class SQL(var stmt: Statement) {
 
   /**
    * Function to query the SQL Database
-   * @param sql the string of SQL to execute
-   * @return resultSet recieved from the SQL
+   * @param sql : the string of SQL to execute
+   * @param conn : the connection to use
+   * @return resultSet : recieved from the SQL
    */
   def querySQLDB(sql: String, conn: Connection): ResultSet = {
     stmt = conn createStatement
@@ -53,6 +56,7 @@ class SQL(var stmt: Statement) {
 
   /**
    * Function to update the SQL database
+   * @param conn : the connection to use
    * @param sql the string of SQL to execute
    */
   def updateSQLDB(sql: String, conn: Connection): Unit = {

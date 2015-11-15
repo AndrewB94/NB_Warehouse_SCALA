@@ -16,6 +16,7 @@ object CustomerOrderLoad {
   /**
    * Function to iterate through a result set and create customer order entities
    * @param sql String to be executed
+   * @return ObservableBuffer[CustomerOrder] : a buffer of customer orders
    */
   def constructResults(sql: String): ObservableBuffer[CustomerOrder] = {
 
@@ -52,7 +53,7 @@ object CustomerOrderLoad {
   }
   /**
    * function that retrieves all the customer orders in the database
-   * @return customerOrderLine an observable buffer containing every customer order
+   * @return ObservableBuffer[CustomerOrder] : a buffer of customer orders
    */
   def getAllCustomerOrders: ObservableBuffer[CustomerOrder] = {
     val sql: String = "SELECT * FROM nbgardensdata.customerorder;"
@@ -61,7 +62,7 @@ object CustomerOrderLoad {
 
   /**
    * function that retrieves all the customer orders in the database excluding dispatched orders
-   * @return purchaseOrderLine an observable buffer containing every customer order
+   * @return ObservableBuffer[CustomerOrder] : a buffer of customer orders
    */
   def getAllNotDispatchedCustomerOrders: ObservableBuffer[CustomerOrder] = {
     val sql: String = "SELECT * FROM nbgardensdata.customerorder WHERE idCustomerOrderStatus !=6"
@@ -71,7 +72,7 @@ object CustomerOrderLoad {
   /**
    * function that retrieves a specific customer order from the database
    * @param id the customer order id of the order to be retrieved
-   * @return customerOrderLine an observable buffer containing the customer order
+   * @return ObservableBuffer[CustomerOrder] : a buffer of customer orders
    */
   def getCustomerOrderByID(id: Int): ObservableBuffer[CustomerOrder] = {
     val sql: String = "SELECT * FROM nbgardensdata.customerorder WHERE idCustomerOrder =" + id + ";"

@@ -13,6 +13,14 @@ import scala.collection.mutable.PriorityQueue
 class TravelingSales(warehouse: Array[Array[Int]] /*, items: ObservableBuffer[Int]*/ ) {
   var result: ObservableBuffer[ObservableBuffer[Int]] = new ObservableBuffer[ObservableBuffer[Int]]
 
+  /**
+   * A Function to find a route betwwn two points
+   * @param startX : Int the grid X position to start
+   * @param startY : Int the grid Y position to start
+   * @param finishX : Int the grid X position to finish
+   * @param finishY : Int the grid y position to finish
+   * @return ObservableBuffer[Coord] : a sorted collection to trace back through the route
+   */
   def findRoute(startX: Int, startY: Int, finishX: Int, finishY: Int): ObservableBuffer[Coord] = {
 
     var start: Coord = new Coord(1, startX, startY, 0)
@@ -25,7 +33,6 @@ class TravelingSales(warehouse: Array[Array[Int]] /*, items: ObservableBuffer[In
     def router {
       if (!frontier.isEmpty) {
         val current = frontier dequeue
-
 
         if (current.x != finishX && current.y != finishY) {
 
@@ -52,7 +59,7 @@ class TravelingSales(warehouse: Array[Array[Int]] /*, items: ObservableBuffer[In
 
           try {
             val nextX = current.x
-            val nextY = current.y +1
+            val nextY = current.y + 1
             println(nextX + ", " + nextY)
             cost = 1000
             prority = 0
@@ -60,7 +67,7 @@ class TravelingSales(warehouse: Array[Array[Int]] /*, items: ObservableBuffer[In
               cost = 1
               prority = 1
             }
-            var neighbourSouth = new Coord(prority,nextX ,  nextY, cost)
+            var neighbourSouth = new Coord(prority, nextX, nextY, cost)
 
             if (!checkifInClosedList(neighbourSouth, closedList)) {
               frontier.+=(neighbourSouth)
