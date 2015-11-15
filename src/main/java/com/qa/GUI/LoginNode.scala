@@ -1,6 +1,6 @@
-package com.qa.gui
+package com.qa.GUI
 
-import com.qa.gui._
+import com.qa.GUI._
 import scalafx.application.JFXApp.PrimaryStage
 import scalafx.scene.Scene
 import scalafx.scene.layout.GridPane
@@ -10,7 +10,7 @@ import scalafx.scene.control._
 import scalafx.event.ActionEvent
 import scalafx.event.EventHandler
 import scalafx.Includes._
-import com.qa.logic.EncryptPassword
+import com.qa.Logic.EncryptPassword
 import scalafx.scene.control.Alert.AlertType
 import com.qa.Loader.LogInLoad
 import scalafx.stage.StageStyle

@@ -1,4 +1,4 @@
-package com.qa.gui
+package com.qa.GUI
 
 import com.qa.Entities.CustomerOrder
 import scalafx.scene.Scene
@@ -17,7 +17,7 @@ import scalafx.scene.text.Font
 import scalafx.scene.layout.VBox
 import javafx.geometry.Insets
 import scalafx.scene.control.Button
-import com.qa.logic.TravelingSales
+import com.qa.Logic.TravelingSales
 
 /**
  * @author abutcher

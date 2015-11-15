@@ -1,6 +1,6 @@
-package com.qa.gui
+package com.qa.GUI
 
-import com.qa.gui._
+import com.qa.GUI._
 import com.qa.Loader.CustomerOrderLoad
 import com.qa.Loader.PurchaseOrderLineLoad
 import com.qa.Entities.PurchaseOrderLine

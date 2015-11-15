@@ -1,9 +1,9 @@
-package com.qa.gui
+package com.qa.GUI
 
-import com.qa.gui._
+import com.qa.GUI._
 import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
-import com.qa.logic.EncryptPassword
+import com.qa.Logic.EncryptPassword
 import scalafx.stage.StageStyle
 
 

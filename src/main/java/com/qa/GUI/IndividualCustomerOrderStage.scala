@@ -1,4 +1,4 @@
-package com.qa.gui
+package com.qa.GUI
 
 import com.qa.Entities.CustomerOrder
 import com.qa.Entities.CustomerOrderLine

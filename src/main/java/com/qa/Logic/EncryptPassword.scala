@@ -1,5 +1,5 @@
 
-package com.qa.logic
+package com.qa.Logic
 
 import java.io.UnsupportedEncodingException
 import java.security.MessageDigest
