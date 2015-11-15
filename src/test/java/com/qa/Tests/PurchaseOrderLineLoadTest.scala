@@ -9,6 +9,8 @@ import com.qa.Entities.PurchaseOrderLine
 
 /**
  * @author abutcher
+ * @date 15/11/2015
+ * A test class to test the purchase order line loader
  */
 class PurchaseOrderLineLoadTest extends TestBase {
   "A PurchaseOrderLineLoad" should "craete an observable buffer of PurchaseOrderLines" in {

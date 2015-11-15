@@ -14,6 +14,8 @@ import scalafx.stage.Stage
 
 /**
  * @author abutcher
+ * @date 15/11/2015
+ * a object used in updating a purchase order
  */
 object PurchaseOrderLogic {
   /**

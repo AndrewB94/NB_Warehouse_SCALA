@@ -7,6 +7,8 @@ import scalafx.collections.ObservableBuffer
 
 /**
  * @author abutcher
+ * @date 10/11/2015
+ * An object to load information relivent a customer order line 
  */
 object CustomerOrderLineLoad {
   var connector: SQL = new SQL

@@ -7,6 +7,8 @@ import java.sql.ResultSet
 
 /**
  * @author abutcher
+ * @date 11/11/2015
+ * An object to load information relivent a location line 
  */
 object LocationLineLoad {
   var connector: SQL = new SQL

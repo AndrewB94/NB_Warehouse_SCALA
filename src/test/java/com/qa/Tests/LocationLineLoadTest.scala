@@ -10,6 +10,8 @@ import java.sql.Connection
 
 /**
  * @author abutcher
+ * @date 14/11/2015
+ * a class to test the location line loader
  */
 class LocationLineLoadTest extends TestBase {
   "A LocationLineLoad" should "create an observable bauffer of Location Lines when given a SELECT query" in {

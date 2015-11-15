@@ -30,7 +30,7 @@ import com.qa.Logic.PurchaseOrderLogic
 /**
  * @author abutcher
  * @date 10/11/2015
- * class for creating a pane for displaying purchase orders
+ * class for creating a frame for displaying purchase orders
  */
 object IndividualPurchaseOrderStage {
   def getScene(selectedPO: PurchaseOrder, stage: Stage, employee: String): Node = {

@@ -30,12 +30,13 @@ import com.qa.Entities.CustomerOrder
 
 /**
  * @author abutcher
+ * @date 11/11/2015
+ * An object that displays all the information about a customer order
  */
 object IndividualCustomerOrderStage {
   def getScene(selectedCO: CustomerOrder, stage: Stage, employee: String): Node = {
 
-
-val secondaryLayout: BorderPane = new BorderPane
+    val secondaryLayout: BorderPane = new BorderPane
     val secondLabel: Label = new Label("Purchase Order - ID: " + selectedCO.idCustomerOrder_)
     secondLabel setFont (Font.font("Verdana", 30))
 
@@ -53,9 +54,9 @@ val secondaryLayout: BorderPane = new BorderPane
     grid
 
   }
-    
-    def createTable(SelectedCO:CustomerOrder, lines: ObservableBuffer[CustomerOrderLine]):TableView[CustomerOrderLine] = {
-          /**
+
+  def createTable(SelectedCO: CustomerOrder, lines: ObservableBuffer[CustomerOrderLine]): TableView[CustomerOrderLine] = {
+    /**
      * set up table columns
      */
     var itemIDCollumn = new TableColumn[CustomerOrderLine, String] {
@@ -83,68 +84,67 @@ val secondaryLayout: BorderPane = new BorderPane
       columns ++= List(itemIDCollumn, itemNmaeCollumn, quantityCollumn)
     }
     lineTable
+  }
+  def createButtonPane(selectedCO: CustomerOrder, stage: Stage, employee: String): GridPane = {
+    /**
+     * Initialize values
+     */
+    val grid: GridPane = new GridPane
+    grid setHgap (10)
+    grid setVgap (10)
+    grid setPadding (new Insets(0, 10, 0, 10))
+    val travelB: Button = new Button("Find Products")
+    val closeB: Button = new Button("Close")
+    val updateB: Button = new Button("Update State")
+    val checkInB: Button = new Button("Check In Order")
+    val checkOutB: Button = new Button("Check Out Order")
+
+    /**
+     * set up action event on buttons
+     */
+    travelB onAction = { ae: ActionEvent =>
+      TravelScene.open(selectedCO, employee)
     }
-    def createButtonPane(selectedCO:CustomerOrder, stage:Stage, employee:String):GridPane = {
-       /**
-       * Initialize values
-       */
-      val grid: GridPane = new GridPane
-      grid setHgap (10)
-      grid setVgap (10)
-      grid setPadding (new Insets(0, 10, 0, 10))
-      val travelB: Button = new Button("Find Products")
-      val closeB: Button = new Button("Close")
-      val updateB: Button = new Button("Update State")
-      val checkInB: Button = new Button("Check In Order")
-      val checkOutB: Button = new Button("Check Out Order")
+    closeB onAction = { ae: ActionEvent => stage.hide }
+    updateB onAction = { ae: ActionEvent => CustomerOrderLogic.updateStatus(selectedCO, stage, employee) }
+    checkOutB onAction = { ae: ActionEvent => CustomerOrderLogic.checkOut(selectedCO, stage, employee) }
+    checkInB onAction = { ae: ActionEvent => CustomerOrderLogic.checkIn(selectedCO, stage, employee) }
 
-      /**
-       * set up action event on buttons
-       */
-      travelB onAction = { ae: ActionEvent =>
-        val ts = new TravelScene
-        ts.open(selectedCO, employee)
-      }
-      closeB onAction = { ae: ActionEvent => stage.hide }
-      updateB onAction = { ae: ActionEvent => CustomerOrderLogic.updateStatus(selectedCO, stage, employee) }
-      checkOutB onAction = { ae: ActionEvent => CustomerOrderLogic.checkOut(selectedCO, stage, employee) }
-      checkInB onAction = { ae: ActionEvent => CustomerOrderLogic.checkIn(selectedCO, stage, employee) }
+    /**
+     * Disable/Enable buttons
+     */
+    if (!selectedCO.isCheckedOut)
+      checkInB.setDisable(true)
 
-      /**
-       * Disable/Enable buttons
-       */
-      if (!selectedCO.isCheckedOut)
-        checkInB.setDisable(true)
+    if (selectedCO.isCheckedOut || selectedCO.customerOrderStatus_ == 6)
+      checkOutB.setDisable(true)
 
-      if (selectedCO.isCheckedOut || selectedCO.customerOrderStatus_ == 6)
-        checkOutB.setDisable(true)
+    if (!selectedCO.isCheckedOut || selectedCO.customerOrderStatus_ == 6)
+      updateB.setDisable(true)
 
-      if (!selectedCO.isCheckedOut || selectedCO.customerOrderStatus_ == 6)
-        updateB.setDisable(true)
+    if (selectedCO.isCheckedOut)
+      closeB.setDisable(true)
 
-      if (selectedCO.isCheckedOut)
-        closeB.setDisable(true)
+    travelB.prefWidth = 510
+    closeB.prefWidth = 250
+    checkInB.prefWidth = 250
+    checkOutB.prefWidth = 250
+    updateB.prefWidth = 250
 
-        travelB.prefWidth = 510
-        closeB.prefWidth = 250
-        checkInB.prefWidth = 250
-        checkOutB.prefWidth = 250
-        updateB.prefWidth = 250
-        
-      /**
-       * add componenents to grid pane
-       */
-      grid.add(travelB, 1, 1, 2, 1)
-      grid.add(checkInB, 1, 2)
-      grid.add(checkOutB, 2, 2)
-      grid.add(updateB, 1, 3)
-      grid.add(closeB, 2, 3)
-      grid
-      
-    }
-    
-    def createContentPane(selectedCO:CustomerOrder, stage:Stage, employee:String):GridPane = {
-          /**
+    /**
+     * add componenents to grid pane
+     */
+    grid.add(travelB, 1, 1, 2, 1)
+    grid.add(checkInB, 1, 2)
+    grid.add(checkOutB, 2, 2)
+    grid.add(updateB, 1, 3)
+    grid.add(closeB, 2, 3)
+    grid
+
+  }
+
+  def createContentPane(selectedCO: CustomerOrder, stage: Stage, employee: String): GridPane = {
+    /**
      * Initialize values
      */
     val secondLabel: Label = new Label("Customer Order - ID: " + selectedCO.idCustomerOrder_)
@@ -159,8 +159,8 @@ val secondaryLayout: BorderPane = new BorderPane
     contentPane setHgap (10)
     contentPane setVgap (10)
     contentPane setPadding (new Insets(0, 10, 0, 10))
-    
-      /**
+
+    /**
      * Set up labels
      */
     val idLabel: Label = new Label("ID:")
@@ -187,8 +187,8 @@ val secondaryLayout: BorderPane = new BorderPane
     customerV setFont (Font.font("Arial", 20))
     val employeeV: Label = new Label(CustomerOrderLoad.getUserByID(selectedCO.employee_))
     employeeV setFont (Font.font("Arial", 20))
-    
-        /**
+
+    /**
      * add componenents to grid pane
      */
     contentPane add (idLabel, 1, 1)
@@ -205,10 +205,10 @@ val secondaryLayout: BorderPane = new BorderPane
     contentPane add (lineTable, 3, 1, 1, 6)
     contentPane add (createButtonPane(selectedCO, stage, employee), 1, 6, 2, 1)
     secondLabel setFont (Font.font("Verdana", 30))
-      
+
     contentPane
-    }
-    
+  }
+
   /**
    * open a new frame showing a purchase order's details
    */
@@ -217,10 +217,10 @@ val secondaryLayout: BorderPane = new BorderPane
      * set up and show stage
      */
     val secondScene: Scene = new Scene
-    secondScene stylesheets = List(getClass.getResource("/controlStyle2.css").toExternalForm)    
+    secondScene stylesheets = List(getClass.getResource("/controlStyle2.css").toExternalForm)
     secondScene.fill = Color.rgb(109, 158, 104)
     val secondStage: Stage = new Stage
-//    secondStage.initStyle(StageStyle.UNDECORATED)
+    //    secondStage.initStyle(StageStyle.UNDECORATED)
 
     secondScene.getChildren.add(getScene(selectedCO, secondStage, employee))
     secondStage setTitle ("Purchase Order")

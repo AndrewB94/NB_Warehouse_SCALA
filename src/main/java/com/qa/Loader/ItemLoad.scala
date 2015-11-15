@@ -7,6 +7,8 @@ import scalafx.collections.ObservableBuffer
 
 /**
  * @author abutcher
+ * @date 12/11/2015
+ * An object to load information relivent to an item
  */
 object ItemLoad {
   val connector: SQL = new SQL

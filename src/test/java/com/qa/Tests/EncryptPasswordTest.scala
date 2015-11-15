@@ -7,6 +7,8 @@ import com.qa.Logic.EncryptPassword
 
 /**
  * @author abutcher
+ * @date 15/11/2015
+ * A class to test the EncryptPassword object
  */
 class EncryptPasswordTest extends TestBase {
   "A EncryptPassword" should "convert a string SHA1" in {

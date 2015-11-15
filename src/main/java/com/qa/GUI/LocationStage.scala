@@ -20,6 +20,8 @@ import com.qa.Entities.LocationLine
 
 /**
  * @author abutcher
+ * @date 12/11/2015
+ * An object to enter the location of an item in the warehouse
  */
 class LocationStage {
   def getScene(selectedItem: Int, stage: Stage, quantity: Int): Node = {

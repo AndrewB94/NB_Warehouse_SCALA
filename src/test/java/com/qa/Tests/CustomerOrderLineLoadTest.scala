@@ -9,6 +9,7 @@ import com.qa.Loader.CustomerOrderLineLoad
 /**
  * @author abutcher
  * @date 13/11/2015
+ * A test class to test the customer order line loader
  */
 class CustomerOrderLineLoadTest extends TestBase {
   "A CustomerOrderLineLoad" should "create an observable buffer of customer order lines" in {

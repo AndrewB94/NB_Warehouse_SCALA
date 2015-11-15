@@ -18,6 +18,8 @@ import com.qa.Entities.Item
 
 /**
  * @author abutcher
+ * @date 12/11/2015
+ * An object to display a table showing the inventory of the warehouse
  */
 object InventoryNode {
   var layout: BorderPane = new BorderPane

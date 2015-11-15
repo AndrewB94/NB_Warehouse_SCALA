@@ -6,6 +6,8 @@ import com.qa.Loader.LogInLoad
 
 /**
  * @author abutcher
+ * @date 14/11/2105
+ * A class that tests the login loader
  */
 class LoginLoadTest extends TestBase {
   "A LoginLoad" should "allow a user with the correct credentials" in {

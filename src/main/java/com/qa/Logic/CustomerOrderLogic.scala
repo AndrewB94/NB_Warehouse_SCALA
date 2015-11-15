@@ -14,6 +14,8 @@ import com.qa.GUI.IndividualCustomerOrderStage
 
 /**
  * @author abutcher
+ * @date 15/11/2015
+ * a object used in updating a customer order
  */
 object CustomerOrderLogic {
     /**

@@ -21,8 +21,10 @@ import com.qa.Logic.TravelingSales
 
 /**
  * @author abutcher
+ * @date 11/11/2015
+ * An object to display the route through the warehouse to collect the items
  */
-class TravelScene {
+object TravelScene {
 
   val recs = Array(
       Array(3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,3),

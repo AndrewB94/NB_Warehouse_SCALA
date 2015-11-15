@@ -9,6 +9,8 @@ import com.qa.Entities.PurchaseOrder
 
 /**
  * @author abutcher
+ * @date 15/11/2015
+ * A test class testing the Purchase Order Loader
  */
 class PurchaseOrderLoadTest extends TestBase {
   "A PurchaseOrderLoad" should "create an observable buffer of purchase orders when given a SELECT query" in {

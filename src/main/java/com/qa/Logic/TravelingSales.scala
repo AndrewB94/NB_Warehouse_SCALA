@@ -7,6 +7,8 @@ import scala.collection.mutable.PriorityQueue
 
 /**
  * @author abutcher
+ * @date 11/11/2015
+ * A class containing the traveling salesman algoritm and all its logic
  */
 class TravelingSales(warehouse: Array[Array[Int]] /*, items: ObservableBuffer[Int]*/ ) {
   var result: ObservableBuffer[ObservableBuffer[Int]] = new ObservableBuffer[ObservableBuffer[Int]]

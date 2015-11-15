@@ -8,6 +8,8 @@ import com.qa.Loader.LogInLoad
 
 /**
  * @author abutcher
+ * @date 15/11/2015
+ * An object used to check if log in details are valid
  */
 object LogInLogic {
   def checkLoginEntered(user: String, password: String): Boolean = {

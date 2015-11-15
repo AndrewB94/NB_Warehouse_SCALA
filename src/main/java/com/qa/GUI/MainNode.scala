@@ -16,6 +16,7 @@ import scalafx.application.JFXApp.PrimaryStage
 
 /**
  * @author abutcher
+ * @date 09/11/2015
  * Class that surrounds the content
  */
 object MainNode {
