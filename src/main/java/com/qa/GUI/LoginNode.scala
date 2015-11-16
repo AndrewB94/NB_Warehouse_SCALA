@@ -36,31 +36,20 @@ class LoginNode(stage: PrimaryStage) {
 
   /**
    * function that creates the log in scene
+   * @return Scene : that contains the content
    */
   def createScene: Scene = {
-    /**
-     * initialize values
-     */
     val userNameL: Label = new Label("Username:")
     val passwordL: Label = new Label("Password:")
     val userT: TextField = new TextField
     val passT: PasswordField = new PasswordField
 
-    /**
-     * set textField prompts
-     */
     userT setPromptText ("username")
     passT setPromptText ("Password")
 
-    /**
-     * set label fonts
-     */
     userNameL setFont (Font.font("Arial", FontWeight.BOLD, 20))
     passwordL setFont (Font.font("Arial", FontWeight.BOLD, 20))
 
-    /**
-     * set up action events for buttons
-     */
     val logInB: Button = new Button("Log In") {
       onAction = { ae: ActionEvent =>
         if (LogInLogic.checkLoginEntered(userT.getText, passT.getText) && LogInLogic.checkAgainstDB(userT getText, passT getText)) {
@@ -81,21 +70,12 @@ class LoginNode(stage: PrimaryStage) {
       onAction = { ae: ActionEvent => stage.hide() }
     }
 
-    /**
-     * create the scene
-     */
     var scene: Scene = new Scene {
-      /**
-       * Initialize grid pane
-       */
       var grid: GridPane = new GridPane
       grid setHgap (10)
       grid setVgap (10)
       grid setPadding (new Insets(0, 10, 10, 10))
 
-      /**
-       * add components to grid pane
-       */
       grid add (userNameL, 0, 2)
       grid add (passwordL, 0, 3)
       grid add (userT, 1, 2, 2, 1)
@@ -103,9 +83,6 @@ class LoginNode(stage: PrimaryStage) {
       grid add (logInB, 1, 4)
       grid add (cancelB, 2, 4)
 
-      /**
-       * add gridpane to scene
-       */
       content.addAll(grid)
 
     }
@@ -113,9 +90,5 @@ class LoginNode(stage: PrimaryStage) {
     scene.fill = Color.rgb(109, 158, 104)
     scene
   }
-
-  /**
-   * set the cene
-   */
   stage.setScene(createScene)
 }

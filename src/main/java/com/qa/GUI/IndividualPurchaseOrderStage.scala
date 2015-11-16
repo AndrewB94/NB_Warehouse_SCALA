@@ -5,7 +5,6 @@ import com.qa.Loader.CustomerOrderLoad
 import com.qa.Loader.PurchaseOrderLineLoad
 import com.qa.Entities.PurchaseOrderLine
 import com.qa.Entities.PurchaseOrder
-import com.qa.Loader.PurchaseOrderLoad
 import scalafx.scene.control._
 import scalafx.scene.layout.BorderPane
 import scalafx.event.ActionEvent
@@ -33,9 +32,13 @@ import com.qa.Logic.PurchaseOrderLogic
  * class for creating a frame for displaying purchase orders
  */
 object IndividualPurchaseOrderStage {
-  
-    /**
+
+  /**
    * Function to create the scene for a purchase order
+   * @param selectedPO : PurchaseOrder the currently selected order
+   * @param stage : Stage the stage on which the scene is built
+   * @param employee : String employee currently logged in
+   * @return Node : the node containing the scene
    */
   def getScene(selectedPO: PurchaseOrder, stage: Stage, employee: String): Node = {
     val secondaryLayout: BorderPane = new BorderPane
@@ -53,11 +56,14 @@ object IndividualPurchaseOrderStage {
     grid
   }
 
-    /**
+  /**
    * Function to create a table of customer order lines
+   * @param selectedPO : PurchaseOrder the currently selected order
+   * @param lines : ObservableBuffer[PurchaseOrderLine] the customer order lines
+   * @return TableView[CustomerOrderLine] : the table of lines
    */
   def createTable(selectedPO: PurchaseOrder, lines: ObservableBuffer[PurchaseOrderLine]): TableView[PurchaseOrderLine] = {
-       var itemIDCollumn = new TableColumn[PurchaseOrderLine, String] {
+    var itemIDCollumn = new TableColumn[PurchaseOrderLine, String] {
       text = "Item ID"
       cellValueFactory = { _.value itemID }
       prefWidth = 100
@@ -87,8 +93,12 @@ object IndividualPurchaseOrderStage {
     lineTable
   }
 
-    /**
-   * function to create a gridPane containig control buttons
+  /**
+   * function to create a gridPane containing control buttons
+   * @param selectedPO : PurchaseOrder the currently selected order
+   * @param stage : Stage the stage on which the scene is built
+   * @param employee : String employee currently logged in
+   * @return GridPane : containing the buttons
    */
   def createButtonPane(selectedPO: PurchaseOrder, stage: Stage, employee: String, lines: ObservableBuffer[PurchaseOrderLine]): Node = {
     val grid: GridPane = new GridPane
@@ -128,9 +138,13 @@ object IndividualPurchaseOrderStage {
   }
 
   /**
- * Function to create the content for the frame
- */
-  def createContentPane(selectedPO: PurchaseOrder, stage: Stage, employee:String): GridPane = {
+   * Function to create the content for the frame
+   * @param selectedPO : PurchaseOrder the currently selected order
+   * @param stage : Stage the stage on which the scene is built
+   * @param employee : String employee currently logged in
+   * @return GridPane : containing the content
+   */
+  def createContentPane(selectedPO: PurchaseOrder, stage: Stage, employee: String): GridPane = {
     val lines = PurchaseOrderLineLoad.getPurchaseOrderLinesByPurchaseOrderID(selectedPO.idPurchaseOrder_)
     val contentPane: GridPane = new GridPane
     val table = createTable(selectedPO, lines)
@@ -184,6 +198,8 @@ object IndividualPurchaseOrderStage {
 
   /**
    * open a new frame showing a purchase order's details
+   * @param selectedPO : PurchaseOrder the currently selected order
+   * @param employee : String employee currently logged in
    */
   def Open(selectedPO: PurchaseOrder, employee: String): Unit = {
     val secondScene: Scene = new Scene

@@ -153,7 +153,7 @@ object PurchaseOrderLoad {
    */
   def updateCheckedOut(purchaseOrderID: Int, newCheckedOut: Boolean) = {
     var checkedOutInt = 1
-    if (newCheckedOut) {
+    if (!newCheckedOut) {
       checkedOutInt = 0
     }
     val sql: String = "UPDATE `nbgardensdata`.`purchaseorder` SET `isCheckedOut`='" + checkedOutInt + "' WHERE `idpurchaseorder`='" + purchaseOrderID + "';"

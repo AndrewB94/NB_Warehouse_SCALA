@@ -24,33 +24,27 @@ import com.qa.Entities.LocationLine
  * An object to enter the location of an item in the warehouse
  */
 class LocationStage {
+  /**
+   * Function create all the content for the scene and return it
+   * @param selectedItem : Int the id of the selected item
+   * @param stage : Stage the stage to display
+   * @param quantity : Int the quantity on the order
+   * @return Node : containnig the scene
+   */
   def getScene(selectedItem: Int, stage: Stage, quantity: Int): Node = {
-
-    /**
-     * initialize values
-     */
     val title: Label = new Label("Enter Stored Location of Item ID: " + selectedItem)
     val collumnL: Label = new Label("Collumn:")
     val rowL: Label = new Label("Row:")
     val xT: TextField = new TextField
     val yT: TextField = new TextField
 
-    /**
-     * set textField prompts
-     */
     xT setPromptText ("1")
     yT setPromptText ("1")
 
-    /**
-     * set label fonts
-     */
     title setFont (Font.font("Arial", FontWeight.BOLD, 30))
     collumnL setFont (Font.font("Arial", FontWeight.BOLD, 20))
     rowL setFont (Font.font("Arial", FontWeight.BOLD, 20))
 
-    /**
-     * set up action events for buttons
-     */
     val confirmB: Button = new Button("Confirm") {
       onAction = { ae: ActionEvent =>
         if (xT.getText != "" && yT.getText != "") {
@@ -69,17 +63,11 @@ class LocationStage {
       }
     }
 
-    /**
-     * Initialize grid pane
-     */
     var grid: GridPane = new GridPane
     grid setHgap (10)
     grid setVgap (10)
     grid setPadding (new Insets(0, 10, 10, 10))
 
-    /**
-     * add components to grid pane
-     */
     grid add (title, 0, 1, 2, 1)
     grid add (collumnL, 0, 2)
     grid add (rowL, 0, 3)
@@ -88,11 +76,14 @@ class LocationStage {
     grid add (confirmB, 1, 4)
     grid
   }
+  
+  /**
+   * Open the stage with all the content
+   * @param selectedItem : Int the id of the selected item
+   * @param quantity : Int the quantity on the order
+   * 
+   */
   def open(itemId: Int, quantity: Int): Unit = {
-
-    /**
-     * set up and show stage
-     */
     val secondScene: Scene = new Scene
     secondScene stylesheets = List(getClass.getResource("/controlStyle2.css").toExternalForm)
     secondScene.fill = Color.rgb(109, 158, 104)

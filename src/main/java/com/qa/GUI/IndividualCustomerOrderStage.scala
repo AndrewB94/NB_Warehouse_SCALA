@@ -8,7 +8,6 @@ import com.qa.Loader.CustomerOrderLoad
 import com.qa.Loader.CustomerOrderLineLoad
 import scalafx.scene.control._
 import scalafx.scene.layout.BorderPane
-import com.qa.Loader.CustomerOrderLineLoad
 import scalafx.scene.layout.GridPane
 import javafx.geometry.Insets
 import scalafx.scene.text.Font
@@ -24,9 +23,6 @@ import scalafx.Includes._
 import scalafx.scene.paint.Color
 import com.qa.Logic.CustomerOrderLogic
 import scalafx.collections.ObservableBuffer
-import com.qa.Entities.CustomerOrderLine
-import com.qa.Entities.CustomerOrderLine
-import com.qa.Entities.CustomerOrder
 
 /**
  * @author abutcher
@@ -34,9 +30,13 @@ import com.qa.Entities.CustomerOrder
  * An object that displays all the information about a customer order
  */
 object IndividualCustomerOrderStage {
-  
+
   /**
    * Function to create the scene for a customer order
+   * @param selectedCO : CustomerOrder the currently selected order
+   * @param stage : Stage the stage on which the scene is built
+   * @param employee : String employee currently logged in
+   * @return Node : the node containing the scene
    */
   def getScene(selectedCO: CustomerOrder, stage: Stage, employee: String): Node = {
 
@@ -58,6 +58,9 @@ object IndividualCustomerOrderStage {
 
   /**
    * Function to create a table of customer order lines
+   * @param selectedCO : CustomerOrder the currently selected order
+   * @param lines : ObservableBuffer[CustomerOrderLine] the customer order lines
+   * @return TableView[CustomerOrderLine] : the table of lines
    */
   def createTable(SelectedCO: CustomerOrder, lines: ObservableBuffer[CustomerOrderLine]): TableView[CustomerOrderLine] = {
 
@@ -84,9 +87,13 @@ object IndividualCustomerOrderStage {
     }
     lineTable
   }
-  
+
   /**
-   * function to create a gridPane containig control buttons
+   * function to create a gridPane containing control buttons
+   * @param selectedCO : CustomerOrder the currently selected order
+   * @param stage : Stage the stage on which the scene is built
+   * @param employee : String employee currently logged in
+   * @return GridPane : containing the buttons
    */
   def createButtonPane(selectedCO: CustomerOrder, stage: Stage, employee: String): GridPane = {
     val grid: GridPane = new GridPane
@@ -99,7 +106,7 @@ object IndividualCustomerOrderStage {
     val checkInB: Button = new Button("Check In Order")
     val checkOutB: Button = new Button("Check Out Order")
 
-    travelB onAction = { ae: ActionEvent => TravelScene.open(selectedCO, employee)    }
+    travelB onAction = { ae: ActionEvent => TravelScene.open(selectedCO, employee) }
     closeB onAction = { ae: ActionEvent => stage.hide }
     updateB onAction = { ae: ActionEvent => CustomerOrderLogic.updateStatus(selectedCO, stage, employee) }
     checkOutB onAction = { ae: ActionEvent => CustomerOrderLogic.checkOut(selectedCO, stage, employee) }
@@ -130,9 +137,13 @@ object IndividualCustomerOrderStage {
     grid.add(closeB, 2, 3)
     grid
   }
-/**
- * Function to create the content for the frame
- */
+  /**
+   * Function to create the content for the frame
+   * @param selectedCO : CustomerOrder the currently selected order
+   * @param stage : Stage the stage on which the scene is built
+   * @param employee : String employee currently logged in
+   * @return GridPane : containing the content
+   */
   def createContentPane(selectedCO: CustomerOrder, stage: Stage, employee: String): GridPane = {
     val secondLabel: Label = new Label("Customer Order - ID: " + selectedCO.idCustomerOrder_)
     val secondaryLayout: BorderPane = new BorderPane
@@ -186,6 +197,8 @@ object IndividualCustomerOrderStage {
 
   /**
    * open a new frame showing a purchase order's details
+   * @param selectedCO : CustomerOrder the currently selected order
+   * @param employee : String employee currently logged in
    */
   def Open(selectedCO: CustomerOrder, employee: String): Unit = {
     val secondScene: Scene = new Scene

@@ -21,6 +21,14 @@ import scalafx.application.JFXApp.PrimaryStage
  */
 object MainNode {
 
+  /**
+   * Function to create VBox containing the buttons for navigation
+   * @param stage : PrimaryStage the stage which the scene will be displayed
+   * @param label : Label to manipulate
+   * @param border : the border pane to pass through
+   * @param employee : String the employee currently logged in
+   * @return VBox : containing the sideBar content
+   */
   private def createSideBar(stage: PrimaryStage, label: Label, border: BorderPane, employee: String): VBox = {
     val titleS: String = "NB Gardens - Warehouse Order Tracking System - "
     val poB: Button = new Button("Purchase Orders")
@@ -33,16 +41,10 @@ object MainNode {
     coB prefWidth = 300
     poB prefWidth = 300
 
-    /**
-     * Initialize the sidebar
-     */
     val sideBar: VBox = new VBox
     sideBar.setPadding(new Insets(10));
     sideBar.setSpacing(8);
 
-    /**
-     * set up action events for buttons
-     */
     poB.onAction = { ae: ActionEvent =>
       stage.setTitle(titleS + "Purchase Orders")
       label.setText("Purchase Orders")
@@ -62,9 +64,6 @@ object MainNode {
 
     logOB.onAction = { ae: ActionEvent => stage.hide }
 
-    /**
-     * add buttons to side bar
-     */
     sideBar.children add (poB)
     sideBar.children add (coB)
     sideBar.children add (invB)
@@ -73,7 +72,9 @@ object MainNode {
   }
 
   /**
-   * function that stores all the components in a scene
+   * Create the scene that makes up the main scene
+   * @param stage : PrimaryStage to add the scene
+   * @param employee : String the employee currently logged in
    */
   def createScene(stage: PrimaryStage, employee: String): Unit = {
     val label: Label = new Label("Inventory")
@@ -102,9 +103,4 @@ object MainNode {
     stage.minHeight = 550
     stage.maxHeight = 550
   }
-
-  /**
-   * set the main scene
-   */
-
 }

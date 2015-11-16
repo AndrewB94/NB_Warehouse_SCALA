@@ -41,6 +41,13 @@ object TravelScene {
       Array(3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1,3),
       Array(3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,3))
   
+      /**
+       * A function to create a scene to display the warehouse
+       * @param selectedCO : CustomerOrder the customer order to find items for
+       * @param stage : Stage the stage to build the scene on
+       * @param employee : String the currently logged in employee
+       * @return Node : containing the scene
+       */
   def getScene(selectedCO: CustomerOrder, stage: Stage, employee: String): Node = {
     val layout: BorderPane = new BorderPane
     val label: Label = new Label("Customer Order - ID: " + selectedCO.idCustomerOrder_)
@@ -62,6 +69,9 @@ object TravelScene {
     grid
   }
 
+  /**
+   * 
+   */
   def sideBar: VBox = {
     val sideBar: VBox = new VBox
     sideBar.setPadding(new Insets(10));

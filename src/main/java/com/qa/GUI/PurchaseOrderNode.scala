@@ -26,6 +26,11 @@ import scalafx.scene.layout.HBox
  */
 object PurchaseOrderNode {
 
+  /**
+   * Function to create a Table of purchase Orders
+   * @param showStored : Boolean to display or not display stored orders
+   * @return TableView[PurchaseOrder] : the table created by the function
+   */
   private def createTable(showStored: Boolean): TableView[PurchaseOrder] = {
     var orders = PurchaseOrderLoad.getAllNotStoredPurchaseOrders
 
@@ -33,9 +38,6 @@ object PurchaseOrderNode {
       orders = PurchaseOrderLoad.getAllPurchaseOrders
     }
 
-    /**
-     * set up table collumns
-     */
     var idColumn = new TableColumn[PurchaseOrder, String] {
       text = "ID"
       cellValueFactory = { _.value id }
@@ -60,26 +62,29 @@ object PurchaseOrderNode {
       prefWidth = 200
     }
 
-    /**
-     * Create table and add collumns to it
-     */
     val table = new TableView[PurchaseOrder](orders) {
       columns ++= List(idColumn, statusCollumn, supplierCollumn, datePlacedCollumn)
     }
     table
   }
 
+  /**
+   * Function to create a HBox of buttons
+   * @param table : TableView[PurchaseOrder] the table to get selected from
+   * @param showStored : Boolean to display or not display stored orders
+   * @param pane : BorderPAne to be passed through
+   * @param employee : String employee currently logged in
+   * @return HBox : containing the buttons
+   */
   private def addButtons(table: TableView[PurchaseOrder], employee: String, pane: BorderPane, showStored: Boolean): HBox = {
     val selectB: Button = new Button("Select Order")
     val toggleB: Button = new Button("Show/Hide - Stored Orders")
     val box: HBox = new HBox
     box setPadding (new Insets(10));
     box setSpacing (8);
-    /**
-     * set up action event on select button
-     */
+
     selectB.onAction = { ae: ActionEvent =>
-      val sPO: PurchaseOrder = table.getSelectionModel.getSelectedItem     
+      val sPO: PurchaseOrder = table.getSelectionModel.getSelectedItem
       IndividualPurchaseOrderStage.Open(sPO, employee)
     }
 
@@ -92,6 +97,12 @@ object PurchaseOrderNode {
     box
   }
 
+  /**
+   * Function to create a borderPane containing the content
+   * @param showStored : Boolean to display or not display stored orders
+   * @param pane : BorderPAne to be passed through
+   * @param employee : String employee currently logged in
+   */
   private def createLayout(showStored: Boolean, pane: BorderPane, employee: String): BorderPane = {
     var layout: BorderPane = new BorderPane
     val table: TableView[PurchaseOrder] = createTable(showStored)
@@ -101,8 +112,11 @@ object PurchaseOrderNode {
   }
 
   /**
-   * function that creates a node containning the content
-   * @retgurn Node the node containning the purchase orders table
+   * function that creates a node containing the content
+   * @param showStored : Boolean to display or not display stored orders
+   * @param pane : BorderPAne to be passed through
+   * @param employee : String employee currently logged in
+   * @return Node the node containing the purchase orders table
    */
   def createPane(employee: String, pane: BorderPane, showStored: Boolean): Unit = {
     pane.center = createLayout(showStored, pane, employee)

@@ -24,10 +24,10 @@ import com.qa.Entities.Item
 object InventoryNode {
   var layout: BorderPane = new BorderPane
 
-     /**
+  /**
    * Function to create a table of customer items
    */
-  def createTable() = { 
+  def createTable() = {
     var orders = ItemLoad.getAllItems
     var table = new TableView[Item](orders)
     var idColumn = new TableColumn[Item, String] {
@@ -64,7 +64,7 @@ object InventoryNode {
    * function that creates a node containning the content
    * @retgurn Node the node containning the purchase orders table
    */
-  def createPane(pane:BorderPane): Unit = {
+  def createPane(pane: BorderPane): Unit = {
     createTable()
     pane.center = layout
   }
