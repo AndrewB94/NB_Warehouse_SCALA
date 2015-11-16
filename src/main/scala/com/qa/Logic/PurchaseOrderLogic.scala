@@ -24,12 +24,13 @@ object PurchaseOrderLogic {
    * @param stage : Stage being used
    * @param employee : String id of the employee
    */
-  def checkIn(selectedPO: PurchaseOrder,stage:Stage, employee:String): Unit = {
+  def checkIn(selectedPO: PurchaseOrder): Boolean = {
     var newCheckedOut = 0
-    if (selectedPO.isCheckedOut ) {
+    if (selectedPO.isCheckedOut) {
       PurchaseOrderLoad.updateCheckedOut(selectedPO.idPurchaseOrder_, false)
-      stage.hide
-      IndividualPurchaseOrderStage.Open(PurchaseOrderLoad.getPurchaseOrderByID(selectedPO.idPurchaseOrder_)(0), employee)
+      true
+    } else {
+      false
     }
   }
 
@@ -39,20 +40,14 @@ object PurchaseOrderLogic {
    * @param stage : Stage being used
    * @param employee : String id of the employee
    */
-  def checkOut(selectedPO: PurchaseOrder,stage:Stage, employee:String): Unit = {
+  def checkOut(selectedPO: PurchaseOrder, employee: String): Boolean = {
     var newCheckedOut = 0
     if (selectedPO.isCheckedOut) {
-      val alert: Alert = new Alert(AlertType.Error)
-      alert setTitle ("Error - Can't check out")
-      alert setHeaderText (null)
-      alert setContentText ("This purchase order has already been checked out!")
-
-      alert showAndWait
+      false
     } else {
       PurchaseOrderLoad updateCheckedOut (selectedPO idPurchaseOrder_, true)
       PurchaseOrderLoad.updateCheckOutBy(selectedPO idPurchaseOrder_, Integer.parseInt(employee))
-      stage.hide
-      IndividualPurchaseOrderStage.Open(PurchaseOrderLoad.getPurchaseOrderByID(selectedPO idPurchaseOrder_)(0), employee)
+      true
     }
   }
 
@@ -63,7 +58,7 @@ object PurchaseOrderLogic {
    * @param employee : String id of the employee
    * @param lines : the order lines
    */
-  def updateStatus(selectedPO: PurchaseOrder,stage:Stage, employee:String, lines:ObservableBuffer[PurchaseOrderLine]): Unit = {
+  def updateStatus(selectedPO: PurchaseOrder, stage: Stage, employee: String, lines: ObservableBuffer[PurchaseOrderLine]): Unit = {
     var newStateID = 0
     selectedPO.idStatus match {
       case 0 => newStateID = 1
@@ -94,5 +89,18 @@ object PurchaseOrderLogic {
         lines.foreach { x => storer.open(x.itemID_, x.quantity_) }
       }
     }
+  }
+
+  /**
+   * Function to show an alert box
+   * @param alertTitle : String the title of the frame
+   * @param alertString : String to display
+   */
+  def showAlert(alertTitle: String, alertString: String): Unit = {
+    val alert: Alert = new Alert(AlertType.Error)
+    alert setTitle (alertTitle)
+    alert setHeaderText (null)
+    alert setContentText (alertString)
+    alert showAndWait
   }
 }

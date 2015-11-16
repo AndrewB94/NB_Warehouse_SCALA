@@ -4,7 +4,6 @@ import org.scalatest._
 import com.qa.TestBase
 import scalafx.collections.ObservableBuffer
 import com.qa.entities.CustomerOrderLine
-import com.qa.loader.CustomerOrderLineLoad
 
 /**
  * @author abutcher

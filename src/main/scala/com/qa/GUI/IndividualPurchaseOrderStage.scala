@@ -24,6 +24,7 @@ import scalafx.scene.paint.Color
 import scalafx.collections.ObservableBuffer
 import scalafx.application.JFXApp.PrimaryStage
 import com.qa.logic.PurchaseOrderLogic
+import com.qa.loader.PurchaseOrderLoad
 
 /**
  * @author abutcher
@@ -114,8 +115,17 @@ object IndividualPurchaseOrderStage {
      */
     closeB onAction = { ae: ActionEvent => stage.hide }
     updateB onAction = { ae: ActionEvent => PurchaseOrderLogic updateStatus (selectedPO, stage, employee, lines) }
-    checkOutB onAction = { ae: ActionEvent => PurchaseOrderLogic checkOut (selectedPO, stage, employee) }
-    checkInB onAction = { ae: ActionEvent => PurchaseOrderLogic checkIn (selectedPO, stage, employee) }
+    checkOutB onAction = { ae: ActionEvent =>
+      if (PurchaseOrderLogic.checkOut(selectedPO, employee)) {
+        stage.hide
+        IndividualPurchaseOrderStage.Open(PurchaseOrderLoad.getPurchaseOrderByID(selectedPO idPurchaseOrder_)(0), employee)
+      } else {
+        PurchaseOrderLogic.showAlert("Error - Can't check out", "This purchase order has already been checked out!")
+      }
+    }
+    checkInB onAction = { ae: ActionEvent => if(!PurchaseOrderLogic.checkIn(selectedPO)) {
+      stage.hide
+      IndividualPurchaseOrderStage.Open(PurchaseOrderLoad.getPurchaseOrderByID(selectedPO idPurchaseOrder_)(0), employee) } }
 
     if (!selectedPO.isCheckedOut)
       checkInB.setDisable(true)

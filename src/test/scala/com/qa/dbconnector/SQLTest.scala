@@ -3,7 +3,6 @@ package com.qa.dbconnector
 import org.scalatest._
 import com.qa.TestBase
 import java.sql.ResultSet
-import com.qa.dbconnector.SQL
 
 /**
  * @author abutcher

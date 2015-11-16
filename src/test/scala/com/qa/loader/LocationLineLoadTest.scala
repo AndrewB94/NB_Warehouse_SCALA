@@ -2,7 +2,6 @@ package com.qa.loader
 
 import org.scalatest._
 import com.qa.TestBase
-import com.qa.loader.LocationLineLoad
 import scalafx.collections.ObservableBuffer
 import com.qa.entities.LocationLine
 import com.qa.dbconnector.SQL

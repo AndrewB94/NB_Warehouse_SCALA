@@ -2,7 +2,6 @@ package com.qa.logic
 
 import org.scalatest._
 import com.qa.TestBase
-import com.qa.logic.LogInLogic
 
 /**
  * @author abutcher

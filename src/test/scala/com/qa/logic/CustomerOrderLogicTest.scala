@@ -12,14 +12,17 @@ import java.util.Date
  */
 class CustomerOrderLogicTest extends TestBase {
   "A CustomerOrderLogic" should "check in an order" in {
-    val date:Date = new Date()
-    val test :CustomerOrder = new CustomerOrder("",date, "", 0,true,0,1L,1,null, false, 2)
+    val date: Date = new Date()
+    val test: CustomerOrder = new CustomerOrder("", date, "", 0, true, 0, 1L, 1, null, true, 2)
     CustomerOrderLogic.checkIn(test)
     assert(!CustomerOrderLoad.getCustomerOrderByID(2)(0).isCheckedOut)
-    CustomerOrderLogic.checkOut(test, "1")
   }
-  
+
   it should "check an order out" in {
-    fail
+    val date: Date = new Date()
+    val test: CustomerOrder = new CustomerOrder("", date, "", 0, true, 0, 1L, 1, null, false, 2)
+    CustomerOrderLogic.checkOut(test, "1")
+    assert(!CustomerOrderLoad.getCustomerOrderByID(2)(0).isCheckedOut)
+    CustomerOrderLogic.checkIn(test)
   }
 }

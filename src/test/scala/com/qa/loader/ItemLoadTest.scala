@@ -1,7 +1,6 @@
 package com.qa.loader
 
 import com.qa.TestBase
-import com.qa.loader.ItemLoad
 import scalafx.collections.ObservableBuffer
 import com.qa.entities.Item
 

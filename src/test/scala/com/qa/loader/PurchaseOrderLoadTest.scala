@@ -2,10 +2,9 @@ package com.qa.loader
 
 import org.scalatest._
 import com.qa.TestBase
-import com.qa.loader.PurchaseOrderLoad
 import scalafx.collections.ObservableBuffer
 import com.qa.entities.PurchaseOrder
-import com.qa.entities.PurchaseOrder
+
 
 /**
  * @author abutcher
