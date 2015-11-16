@@ -1,4 +1,4 @@
-package com.qa.Password
+package com.qa.password
 
 import com.qa.Logic.EncryptPassword
 

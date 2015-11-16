@@ -1,4 +1,4 @@
-package com.qa.Tests
+package com.qa.tests
 
 import com.qa.TestBase
 import com.qa.Loader.ItemLoad

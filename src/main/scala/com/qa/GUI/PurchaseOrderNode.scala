@@ -1,10 +1,10 @@
-package com.qa.GUI
+package com.qa.gUI
 
-import com.qa.GUI._
+import com.qa.gUI._
 import scalafx.application.JFXApp.PrimaryStage
 import scalafx.scene.Scene
-import com.qa.Loader.PurchaseOrderLoad
-import com.qa.Entities.PurchaseOrder
+import com.qa.loader.PurchaseOrderLoad
+import com.qa.entities.PurchaseOrder
 import scalafx.scene.control._
 import scalafx.scene.layout.BorderPane
 import scalafx.event.ActionEvent

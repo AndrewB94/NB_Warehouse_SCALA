@@ -1,6 +1,6 @@
-package com.qa.GUI
+package com.qa.gUI
 
-import com.qa.GUI._
+import com.qa.gUI._
 import scalafx.Includes._
 import scalafx.application.JFXApp.PrimaryStage
 import scalafx.scene.Scene
@@ -13,8 +13,8 @@ import scalafx.scene.control.Button
 import scalafx.event.ActionEvent
 import scalafx.scene.Node
 import javafx.geometry.Insets
-import com.qa.Loader.ItemLoad
-import com.qa.Entities.Item
+import com.qa.loader.ItemLoad
+import com.qa.entities.Item
 
 /**
  * @author abutcher

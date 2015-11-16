@@ -1,4 +1,4 @@
-package com.qa.Loader
+package com.qa.loader
 
 import com.qa.DBConnector.SQL
 import java.sql.ResultSet

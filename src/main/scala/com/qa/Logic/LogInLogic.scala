@@ -1,4 +1,4 @@
-package com.qa.Logic
+package com.qa.logic
 
 import scalafx.scene.control.TextField
 import scalafx.scene.control.PasswordField

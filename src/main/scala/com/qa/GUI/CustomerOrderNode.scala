@@ -1,11 +1,11 @@
-package com.qa.GUI
+package com.qa.gUI
 
-import com.qa.GUI._
+import com.qa.gUI._
 import scalafx.Includes._
 import scalafx.application.JFXApp.PrimaryStage
 import scalafx.scene.Scene
-import com.qa.Loader.CustomerOrderLoad
-import com.qa.Entities.CustomerOrder
+import com.qa.loader.CustomerOrderLoad
+import com.qa.entities.CustomerOrder
 import scalafx.scene.control.Label
 import scalafx.scene.control.TableView
 import scalafx.scene.control.TableColumn

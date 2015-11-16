@@ -1,4 +1,4 @@
-package com.qa.Logic
+package com.qa.logic
 
 import com.qa.Entities.CustomerOrder
 import javafx.scene.control.Alert
@@ -54,20 +54,14 @@ object CustomerOrderLogic {
    * @param stage : Stage being used
    * @param employee : String id of the employee
    */
-  def checkOut(selectedCO: CustomerOrder, stage: Stage, employee: String): Unit = {
+  def checkOut(selectedCO: CustomerOrder, stage: Stage, employee: String): Boolean = {
     var newCheckedOut = 0
     if (selectedCO.isCheckedOut) {
-      val alert: Alert = new Alert(AlertType.Error)
-      alert setTitle ("Error - Can't check out")
-      alert setHeaderText (null)
-      alert setContentText ("This customer order has already been checked out!")
-
-      alert showAndWait
+      false
     } else {
       CustomerOrderLoad updateCheckedOut (selectedCO idCustomerOrder_, true)
       CustomerOrderLoad.updateCheckOutBy(selectedCO idCustomerOrder_, Integer.parseInt(employee))
-      stage.hide
-      IndividualCustomerOrderStage.Open(CustomerOrderLoad.getCustomerOrderByID(selectedCO idCustomerOrder_)(0), employee)
+      true
     }
   }
 
@@ -86,5 +80,17 @@ object CustomerOrderLogic {
     } else {
     }
   }
-
+  
+  /**
+   * Function to show an alert box
+   * @param alertTitle : String the title of the frame
+   * @param alertString : String to display
+   */
+def showAlert(alertTitle:String, alertString:String):Unit = {
+        val alert: Alert = new Alert(AlertType.Error)
+      alert setTitle (alertTitle)
+      alert setHeaderText (null)
+      alert setContentText (alertString)
+      alert showAndWait
+}
 }

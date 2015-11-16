@@ -1,10 +1,10 @@
-package com.qa.GUI
+package com.qa.gUI
 
-import com.qa.GUI._
-import com.qa.Loader.CustomerOrderLoad
-import com.qa.Loader.PurchaseOrderLineLoad
-import com.qa.Entities.PurchaseOrderLine
-import com.qa.Entities.PurchaseOrder
+import com.qa.gUI._
+import com.qa.loader.CustomerOrderLoad
+import com.qa.loader.PurchaseOrderLineLoad
+import com.qa.entities.PurchaseOrderLine
+import com.qa.entities.PurchaseOrder
 import scalafx.scene.control._
 import scalafx.scene.layout.BorderPane
 import scalafx.event.ActionEvent
@@ -21,10 +21,9 @@ import javafx.geometry.Insets
 import scalafx.scene.Scene
 import scalafx.stage.StageStyle
 import scalafx.scene.paint.Color
-import com.qa.Entities.PurchaseOrder
 import scalafx.collections.ObservableBuffer
 import scalafx.application.JFXApp.PrimaryStage
-import com.qa.Logic.PurchaseOrderLogic
+import com.qa.logic.PurchaseOrderLogic
 
 /**
  * @author abutcher

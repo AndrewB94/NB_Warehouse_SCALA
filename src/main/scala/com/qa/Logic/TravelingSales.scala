@@ -1,4 +1,4 @@
-package com.qa.Logic
+package com.qa.logic
 
 import scalafx.collections.ObservableBuffer
 import com.qa.Loader.LocationLineLoad

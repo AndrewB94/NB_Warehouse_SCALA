@@ -1,11 +1,11 @@
-package com.qa.GUI
+package com.qa.gUI
 
-import com.qa.Entities.CustomerOrder
-import com.qa.Entities.CustomerOrderLine
+import com.qa.entities.CustomerOrder
+import com.qa.entities.CustomerOrderLine
 import scalafx.stage.Stage
 import scalafx.scene.Node
-import com.qa.Loader.CustomerOrderLoad
-import com.qa.Loader.CustomerOrderLineLoad
+import com.qa.loader.CustomerOrderLoad
+import com.qa.loader.CustomerOrderLineLoad
 import scalafx.scene.control._
 import scalafx.scene.layout.BorderPane
 import scalafx.scene.layout.GridPane
@@ -17,11 +17,10 @@ import scalafx.scene.control.Alert.AlertType
 import java.util.Optional
 import javafx.scene.control.Alert
 import scalafx.scene.Scene
-import com.qa.Entities.CustomerOrder
 import scalafx.stage.StageStyle
 import scalafx.Includes._
 import scalafx.scene.paint.Color
-import com.qa.Logic.CustomerOrderLogic
+import com.qa.logic.CustomerOrderLogic
 import scalafx.collections.ObservableBuffer
 
 /**
@@ -109,7 +108,14 @@ object IndividualCustomerOrderStage {
     travelB onAction = { ae: ActionEvent => TravelScene.open(selectedCO, employee) }
     closeB onAction = { ae: ActionEvent => stage.hide }
     updateB onAction = { ae: ActionEvent => CustomerOrderLogic.updateStatus(selectedCO, stage, employee) }
-    checkOutB onAction = { ae: ActionEvent => CustomerOrderLogic.checkOut(selectedCO, stage, employee) }
+    checkOutB onAction = { ae: ActionEvent =>
+      if (CustomerOrderLogic.checkOut(selectedCO, stage, employee)) {
+        stage.hide
+        IndividualCustomerOrderStage.Open(CustomerOrderLoad.getCustomerOrderByID(selectedCO idCustomerOrder_)(0), employee)
+      } else {
+        CustomerOrderLogic.showAlert("Error - Can't check out", "This customer order has already been checked out!")
+      }
+    }
     checkInB onAction = { ae: ActionEvent => CustomerOrderLogic.checkIn(selectedCO, stage, employee) }
 
     if (!selectedCO.isCheckedOut)

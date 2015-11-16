@@ -1,4 +1,4 @@
-package com.qa.Logic
+package com.qa.logic
 
 import com.qa.Entities.PurchaseOrder
 import com.qa.Loader.PurchaseOrderLoad

@@ -1,4 +1,4 @@
-package com.qa.Entities
+package com.qa.entities
 
 /**
  * @author abutcher

@@ -1,6 +1,6 @@
-package com.qa.GUI
+package com.qa.gUI
 
-import com.qa.GUI._
+import com.qa.gUI._
 import scalafx.application.JFXApp.PrimaryStage
 import scalafx.scene.Scene
 import scalafx.scene.layout.GridPane

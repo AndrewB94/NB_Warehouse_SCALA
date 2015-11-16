@@ -1,8 +1,8 @@
-package com.qa.Loader
+package com.qa.loader
 
 import scalafx.collections.ObservableBuffer
-import com.qa.DBConnector.SQL
-import com.qa.Entities.LocationLine
+import com.qa.dbConnector.SQL
+import com.qa.entities.LocationLine
 import java.sql.ResultSet
 
 /**

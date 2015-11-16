@@ -1,11 +1,11 @@
-package com.qa.GUI
+package com.qa.gUI
 
-import com.qa.Entities.CustomerOrder
+import com.qa.entities.CustomerOrder
 import scalafx.scene.Scene
 import scalafx.stage.Stage
 import scalafx.scene.Node
-import com.qa.Loader.CustomerOrderLoad
-import com.qa.Loader.CustomerOrderLineLoad
+import com.qa.loader.CustomerOrderLoad
+import com.qa.loader.CustomerOrderLineLoad
 import scalafx.scene.layout.BorderPane
 import scalafx.stage.StageStyle
 import javafx.scene.control._
@@ -17,7 +17,7 @@ import scalafx.scene.text.Font
 import scalafx.scene.layout.VBox
 import javafx.geometry.Insets
 import scalafx.scene.control.Button
-import com.qa.Logic.TravelingSales
+import com.qa.logic.TravelingSales
 
 /**
  * @author abutcher

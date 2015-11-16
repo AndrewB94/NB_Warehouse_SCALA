@@ -1,6 +1,6 @@
-package com.qa.GUI
+package com.qa.gUI
 
-import com.qa.Entities.PurchaseOrder
+import com.qa.entities.PurchaseOrder
 import scalafx.stage.Stage
 import scalafx.scene.Node
 import scalafx.scene.control._
@@ -13,10 +13,9 @@ import scalafx.scene.Scene
 import scalafx.scene.layout.GridPane
 import javafx.geometry.Insets
 import scalafx.scene.paint.Color
-import com.qa.Entities.PurchaseOrder
 import scalafx.stage.StageStyle
-import com.qa.Loader.LocationLineLoad
-import com.qa.Entities.LocationLine
+import com.qa.loader.LocationLineLoad
+import com.qa.entities.LocationLine
 
 /**
  * @author abutcher

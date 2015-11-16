@@ -1,6 +1,6 @@
-package com.qa.GUI
+package com.qa.gUI
 
-import com.qa.GUI._
+import com.qa.gUI._
 import scalafx.application.JFXApp.PrimaryStage
 import scalafx.scene.Scene
 import scalafx.scene.layout.GridPane
@@ -10,9 +10,9 @@ import scalafx.scene.control._
 import scalafx.event.ActionEvent
 import scalafx.event.EventHandler
 import scalafx.Includes._
-import com.qa.Logic.EncryptPassword
+import com.qa.logic.EncryptPassword
 import scalafx.scene.control.Alert.AlertType
-import com.qa.Loader.LogInLoad
+import com.qa.loader.LogInLoad
 import scalafx.stage.StageStyle
 import scalafx.scene.layout.BorderPane
 import scalafx.event.ActionEvent
@@ -24,7 +24,7 @@ import scalafx.scene.{ Scene, Group, Node }
 import scalafx.Includes._
 import scalafx.beans.property.BooleanProperty
 import scalafx.scene.paint.Color
-import com.qa.Logic.LogInLogic
+import com.qa.logic.LogInLogic
 
 /**
  * @author abutcher
