@@ -51,10 +51,10 @@ object CustomerOrderLogic {
   /**
    * function to check out an order
    * @param selectedCO : customerOrder to be changed
-   * @param stage : Stage being used
    * @param employee : String id of the employee
+   * @return Boolean : true if updated
    */
-  def checkOut(selectedCO: CustomerOrder, stage: Stage, employee: String): Boolean = {
+  def checkOut(selectedCO: CustomerOrder, employee: String): Boolean = {
     var newCheckedOut = 0
     if (selectedCO.isCheckedOut) {
       false
@@ -68,29 +68,28 @@ object CustomerOrderLogic {
   /**
    * function to check in an order
    * @param selectedCO : customerOrder to be changed
-   * @param stage : Stage being used
-   * @param employee : String id of the employee
+   * @return Boolean : true if updated
    */
-  def checkIn(selectedCO: CustomerOrder, stage: Stage, employee: String): Unit = {
+  def checkIn(selectedCO: CustomerOrder): Boolean = {
     var newCheckedOut = 0
     if (selectedCO.isCheckedOut) {
       CustomerOrderLoad.updateCheckedOut(selectedCO.idCustomerOrder_, false)
-      stage.hide
-      IndividualCustomerOrderStage.Open(CustomerOrderLoad.getCustomerOrderByID(selectedCO idCustomerOrder_)(0), employee)
+      true
     } else {
+      false
     }
   }
-  
+
   /**
    * Function to show an alert box
    * @param alertTitle : String the title of the frame
    * @param alertString : String to display
    */
-def showAlert(alertTitle:String, alertString:String):Unit = {
-        val alert: Alert = new Alert(AlertType.Error)
-      alert setTitle (alertTitle)
-      alert setHeaderText (null)
-      alert setContentText (alertString)
-      alert showAndWait
-}
+  def showAlert(alertTitle: String, alertString: String): Unit = {
+    val alert: Alert = new Alert(AlertType.Error)
+    alert setTitle (alertTitle)
+    alert setHeaderText (null)
+    alert setContentText (alertString)
+    alert showAndWait
+  }
 }

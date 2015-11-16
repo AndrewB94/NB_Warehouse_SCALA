@@ -1,9 +1,7 @@
-package com.qa.tests
+package com.qa.logic
 
 import org.scalatest._
 import com.qa.TestBase
-import scalafx.scene.control.TextField
-import scalafx.scene.control.PasswordField
 import com.qa.logic.LogInLogic
 
 /**

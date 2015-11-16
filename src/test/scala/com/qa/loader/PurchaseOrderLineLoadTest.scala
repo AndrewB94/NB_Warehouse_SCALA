@@ -1,4 +1,4 @@
-package com.qa.tests
+package com.qa.loader
 
 import org.scalatest._
 import com.qa.TestBase

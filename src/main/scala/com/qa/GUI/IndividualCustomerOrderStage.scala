@@ -109,14 +109,17 @@ object IndividualCustomerOrderStage {
     closeB onAction = { ae: ActionEvent => stage.hide }
     updateB onAction = { ae: ActionEvent => CustomerOrderLogic.updateStatus(selectedCO, stage, employee) }
     checkOutB onAction = { ae: ActionEvent =>
-      if (CustomerOrderLogic.checkOut(selectedCO, stage, employee)) {
+      if (CustomerOrderLogic.checkOut(selectedCO, employee)) {
         stage.hide
         IndividualCustomerOrderStage.Open(CustomerOrderLoad.getCustomerOrderByID(selectedCO idCustomerOrder_)(0), employee)
       } else {
         CustomerOrderLogic.showAlert("Error - Can't check out", "This customer order has already been checked out!")
       }
     }
-    checkInB onAction = { ae: ActionEvent => CustomerOrderLogic.checkIn(selectedCO, stage, employee) }
+    checkInB onAction = { ae: ActionEvent => if(!CustomerOrderLogic.checkIn(selectedCO)) {
+      stage.hide
+      IndividualCustomerOrderStage.Open(CustomerOrderLoad.getCustomerOrderByID(selectedCO idCustomerOrder_)(0), employee)
+    } }
 
     if (!selectedCO.isCheckedOut)
       checkInB.setDisable(true)
