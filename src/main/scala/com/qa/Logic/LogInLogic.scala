@@ -4,7 +4,7 @@ import scalafx.scene.control.TextField
 import scalafx.scene.control.PasswordField
 import scalafx.scene.control.Alert
 import scalafx.scene.control.Alert.AlertType
-import com.qa.Loader.LogInLoad
+import com.qa.loader.LogInLoad
 
 /**
  * @author abutcher

@@ -2,9 +2,9 @@ package com.qa.tests
 
 import org.scalatest._
 import com.qa.TestBase
-import com.qa.Loader.PurchaseOrderLineLoad
+import com.qa.loader.PurchaseOrderLineLoad
 import scalafx.collections.ObservableBuffer
-import com.qa.Entities.PurchaseOrderLine
+import com.qa.entities.PurchaseOrderLine
 
 
 /**

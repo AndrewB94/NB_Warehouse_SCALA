@@ -1,7 +1,7 @@
 package com.qa.loader
 
-import com.qa.DBConnector.SQL
-import com.qa.Entities.PurchaseOrderLine
+import com.qa.dbconnector.SQL
+import com.qa.entities.PurchaseOrderLine
 import java.sql.ResultSet
 import scalafx.collections.ObservableBuffer
 import java.sql.Connection

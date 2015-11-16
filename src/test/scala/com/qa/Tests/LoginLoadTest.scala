@@ -2,7 +2,7 @@ package com.qa.tests
 
 import org.scalatest._
 import com.qa.TestBase
-import com.qa.Loader.LogInLoad
+import com.qa.loader.LogInLoad
 
 /**
  * @author abutcher

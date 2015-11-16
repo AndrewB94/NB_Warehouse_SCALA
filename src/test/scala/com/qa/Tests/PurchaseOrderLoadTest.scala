@@ -2,15 +2,15 @@ package com.qa.tests
 
 import org.scalatest._
 import com.qa.TestBase
-import com.qa.Loader.PurchaseOrderLoad
+import com.qa.loader.PurchaseOrderLoad
 import scalafx.collections.ObservableBuffer
-import com.qa.Entities.PurchaseOrder
-import com.qa.Entities.PurchaseOrder
+import com.qa.entities.PurchaseOrder
+import com.qa.entities.PurchaseOrder
 
 /**
  * @author abutcher
  * @date 15/11/2015
- * A test class testing the Purchase Order Loader
+ * A test class testing the Purchase Order loader
  */
 class PurchaseOrderLoadTest extends TestBase {
   "A PurchaseOrderLoad" should "create an observable buffer of purchase orders when given a SELECT query" in {

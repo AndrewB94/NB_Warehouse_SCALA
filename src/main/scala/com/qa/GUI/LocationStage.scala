@@ -1,4 +1,4 @@
-package com.qa.gUI
+package com.qa.gui
 
 import com.qa.entities.PurchaseOrder
 import scalafx.stage.Stage

@@ -1,6 +1,6 @@
 package com.qa.password
 
-import com.qa.Logic.EncryptPassword
+import com.qa.logic.EncryptPassword
 
 /**
  * @author abutcher

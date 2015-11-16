@@ -1,14 +1,14 @@
 package com.qa.tests
 
 import com.qa.TestBase
-import com.qa.Loader.ItemLoad
+import com.qa.loader.ItemLoad
 import scalafx.collections.ObservableBuffer
-import com.qa.Entities.Item
+import com.qa.entities.Item
 
 /**
  * @author abutcher
  * @date 14/11/2015
- * A test class testing the Item Loader
+ * A test class testing the Item loader
  */
 class ItemLoadTest extends TestBase {
   "An ItemLoad" should "create an observable buffer of  when given a SELECT query" in {

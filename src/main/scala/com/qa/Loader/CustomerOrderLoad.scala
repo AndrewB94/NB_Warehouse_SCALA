@@ -1,6 +1,6 @@
 package com.qa.loader
 
-import com.qa.dbConnector.SQL
+import com.qa.dbconnector.SQL
 import com.qa.entities.CustomerOrder
 import java.sql.ResultSet
 import scalafx.collections.ObservableBuffer

@@ -1,7 +1,7 @@
 package com.qa.logic
 
 import scalafx.collections.ObservableBuffer
-import com.qa.Loader.LocationLineLoad
+import com.qa.loader.LocationLineLoad
 import scala.collection.mutable.Queue
 import scala.collection.mutable.PriorityQueue
 

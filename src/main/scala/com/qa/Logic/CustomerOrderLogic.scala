@@ -1,15 +1,15 @@
 package com.qa.logic
 
-import com.qa.Entities.CustomerOrder
+import com.qa.entities.CustomerOrder
 import javafx.scene.control.Alert
 import scalafx.scene.control.Alert.AlertType
 import java.util.Optional
-import com.qa.GUI.LocationStage
+import com.qa.gui.LocationStage
 import scalafx.collections.ObservableBuffer
 import scalafx.stage.Stage
-import com.qa.Entities.CustomerOrder
-import com.qa.Loader.CustomerOrderLoad
-import com.qa.GUI.IndividualCustomerOrderStage
+import com.qa.entities.CustomerOrder
+import com.qa.loader.CustomerOrderLoad
+import com.qa.gui.IndividualCustomerOrderStage
 
 /**
  * @author abutcher

@@ -3,8 +3,8 @@ package com.qa.tests
 import org.scalatest._
 import com.qa.TestBase
 import scalafx.collections.ObservableBuffer
-import com.qa.Entities.CustomerOrderLine
-import com.qa.Loader.CustomerOrderLineLoad
+import com.qa.entities.CustomerOrderLine
+import com.qa.loader.CustomerOrderLineLoad
 
 /**
  * @author abutcher

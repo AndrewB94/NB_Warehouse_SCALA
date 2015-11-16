@@ -1,4 +1,4 @@
-package com.qa.dbConnector
+package com.qa.dbconnector
 
 import java.sql._
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource

@@ -1,15 +1,15 @@
 package com.qa.logic
 
-import com.qa.Entities.PurchaseOrder
-import com.qa.Loader.PurchaseOrderLoad
+import com.qa.entities.PurchaseOrder
+import com.qa.loader.PurchaseOrderLoad
 import scalafx.application.JFXApp.PrimaryStage
-import com.qa.GUI.IndividualPurchaseOrderStage
+import com.qa.gui.IndividualPurchaseOrderStage
 import javafx.scene.control.Alert
 import scalafx.scene.control.Alert.AlertType
 import java.util.Optional
-import com.qa.GUI.LocationStage
+import com.qa.gui.LocationStage
 import scalafx.collections.ObservableBuffer
-import com.qa.Entities.PurchaseOrderLine
+import com.qa.entities.PurchaseOrderLine
 import scalafx.stage.Stage
 
 /**

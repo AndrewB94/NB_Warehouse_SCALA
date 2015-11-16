@@ -2,14 +2,14 @@ package com.qa.tests
 
 import org.scalatest._
 import com.qa.TestBase
-import com.qa.Loader.CustomerOrderLoad
+import com.qa.loader.CustomerOrderLoad
 import scalafx.collections.ObservableBuffer
-import com.qa.Entities.CustomerOrder
+import com.qa.entities.CustomerOrder
 
 /**
  * @author abutcher
  * @date 13/11/2015
- * A test class testing the Customer Order Loader
+ * A test class testing the Customer Order loader
  */
 class CustomerOrderLoadTest extends TestBase {
   "A CustomerOrderLoad" should "create an observable buffer of customer orders when given a SELECT query" in {
